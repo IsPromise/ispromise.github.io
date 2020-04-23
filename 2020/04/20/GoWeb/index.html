@@ -17,7 +17,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.images.ac.cn/image/5e9d552241c8b">
 <meta property="article:published_time" content="2020-04-20T09:12:34.900Z">
-<meta property="article:modified_time" content="2020-04-20T10:22:31.192Z">
+<meta property="article:modified_time" content="2020-04-23T12:06:24.324Z">
 <meta property="article:author" content="IsPromise">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic.images.ac.cn/image/5e9d552241c8b">
@@ -192,7 +192,7 @@
 
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListenAndServe</span><span class="params">(addr <span class="keyword">string</span>, handler Handler)</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
 
-<p><code>ListenAndServe</code>监听<code>TCP</code>地址``addr，并且会使用handler参数调用Serve<code>函数处理接收到的连接。</code>handler<code>参数一般会设为</code>nil<code>，此时会使用默认的多路复用器</code>DefaultServeMux` 。</p>
+<p><code>ListenAndServe</code>监听<code>TCP</code>地址<code>addr</code>，并且会使用<code>handler</code>参数调用<code>Serve</code>函数处理接收到的连接。<code>handler</code>参数一般会设为<code>nil</code>，此时会使用默认的多路复用器<code>DefaultServeMux</code> 。</p>
 <p>也可以调用<code>NewServeMux</code>函数创建一个多路复用器。多路复用器接收到用户请求之后根据请求的<code>URL</code>来判断使用哪个处理器来处理请求。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HandleFunc</span><span class="params">(pattern <span class="keyword">string</span>, handler <span class="keyword">func</span>(ResponseWriter, *Request)</span>)</span></span><br></pre></td></tr></table></figure>
 
