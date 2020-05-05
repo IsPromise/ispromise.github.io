@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | Hexo</title>
+  <title>GoRedis | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoRedis">
+<meta property="og:url" content="http://yoursite.com/2020/05/05/GoRedis/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Redis">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-05T07:38:51.523Z">
+<meta property="article:modified_time" content="2020-05-05T07:38:09.940Z">
 <meta property="article:author" content="IsPromise">
 <meta name="twitter:card" content="summary">
   
@@ -154,157 +158,289 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-GoRedis" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      GoRedis
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/05/GoRedis/" class="archive-article-date">
+
+        
+        <a href="/2020/05/05/GoRedis/" class="archive-article-date">
   	<time datetime="2020-05-05T07:38:51.523Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/05/GoRedis/">GoRedis</a>
-    </h1>
-  
+        
+		
+		 
+        <span class="archive-article-date">
+            阅读量 <span id="busuanzi_value_page_pv"></span>
+        </span>
+		
 
-        <div class="article-info info-on-right">
-          
-          
+		
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><a id="more"></a>
 
+<p>Redis是一种高性能的<code>Key-Value</code>数据库。</p>
+<h2 id="NoSQL介绍"><a href="#NoSQL介绍" class="headerlink" title="NoSQL介绍"></a>NoSQL介绍</h2><p><code>NoSQL</code>：一类新出现的数据库（not only sql），是一种缓存型数据库。</p>
+<blockquote>
+<p>NoSQL特点</p>
+</blockquote>
+<p>1、不支持<code>SQL</code>语法。</p>
+<p>2、存储结构跟传统型数据库中的表关系完全不同，<code>NoSQL</code>中存储的数据都是<code>Key-Value</code>形式。</p>
+<p>3、<code>NoSQL</code>数据库没用通用语言，每种<code>NoSQL</code>数据库都有自己的<code>API</code>和语法，以及擅长的业务场景。</p>
+<blockquote>
+<p>NoSQL常见品类</p>
+</blockquote>
+<p>Mongodb、Redis、Hbase hadoop、Cassandra hadoop</p>
+<blockquote>
+<p>NoSQL和SQL数据库比较</p>
+</blockquote>
+<p>适用场景不同：SQL数据库适合用于关系特别复杂的数据查询场景，<code>NoSQL</code>相反。</p>
+<h2 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h2><p>Redis是开源的<code>ANSI C</code>语言编写，支持网络、可基于内存可持久化的日志型、<code>Key-Value</code>数据库，遵守BSD协议。 </p>
+<h3 id="Redis特点："><a href="#Redis特点：" class="headerlink" title="Redis特点："></a>Redis特点：</h3><p>1、 <code>Redis</code>支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</p>
+<p>2、 <code>Redis</code>不仅仅支持简单的<code>key-value</code>类型的数据，同时还提供<code>string</code>、<code>list</code>（链表）、<code>set</code>（集合）、<code>hash</code>表等数据结构的存储。</p>
+<p>3、 <code>Redis</code>支持数据的备份，即<code>master-slave</code>模式的数据备份。</p>
+<h3 id="Redis优势"><a href="#Redis优势" class="headerlink" title="Redis优势"></a>Redis优势</h3><ul>
+<li><p>性能极高 – <code>Redis</code>能读的速度是110000次/s,写的速度是81000次/s ，单机能够达到15w qps，通常适合做缓存。</p>
+</li>
+<li><p>丰富的数据类型 – <code>Redis</code>支持二进制案例的 <code>Strings</code>, <code>Lists</code>, <code>Hashes</code>, <code>Sets</code>及<code>Ordered Sets</code> 数据类型操作。</p>
+</li>
+<li><p>原子 – <code>Redis</code>的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过<code>MULTI</code>和<code>EXEC</code>指令包起来。</p>
+</li>
+<li><p>丰富的特性 – <code>Redis</code>还支持 <code>publish/subscribe</code>, 通知,<code>key</code> 过期等等特性。</p>
+</li>
+</ul>
+<blockquote>
+<p> Redis与其他key-value存储有什么不同？</p>
+</blockquote>
+<p><code>Redis</code>有着更为复杂的数据结构并且提供对他们的原子性操作，这是一个不同于其他数据库的进化路径。<code>Redis</code>的数据类型都是基于基本数据结构的同时对程序员透明，无需进行额外的抽象。</p>
+<p><code>Redis</code>运行在内存中但是可以持久化到磁盘，所以在对不同数据集进行高速读写时需要权衡内存，因为数据量不能大于硬件内存。在内存数据库方面的另一个优点是，相比在磁盘上相同的复杂的数据结构，在内存中操作起来非常简单，这样<code>Redis</code>可以做很多内部复杂性很强的事情。同时，在磁盘格式方面他们是紧凑的以追加的方式产生的，因为他们并不需要进行随机访问。</p>
+<blockquote>
+<p>应用场景</p>
+</blockquote>
+<ul>
+<li>缓存系统，减轻主数据库的压力</li>
+<li>技术场景，比如粉丝数</li>
+<li>热门排行榜</li>
+<li>利用<code>LIST</code>可以实现队列的功能</li>
+</ul>
+<h3 id="Redis简单操作"><a href="#Redis简单操作" class="headerlink" title="Redis简单操作"></a>Redis简单操作</h3><blockquote>
+<p>启动</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//启动</span><br><span class="line">redis<span class="literal">-cli</span></span><br><span class="line"></span><br><span class="line">//处理中文，以下面命令启动</span><br><span class="line">redis<span class="literal">-cli</span> -<span class="literal">-raw</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>key操作</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">//设置单个值</span><br><span class="line">//set key value</span><br><span class="line">set name IsPromise</span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">//取值</span><br><span class="line"> get name</span><br><span class="line"> </span><br><span class="line">//返回值</span><br><span class="line"><span class="string">"IsPromise"</span></span><br><span class="line"></span><br><span class="line">//设置多个值</span><br><span class="line">//mset key value key value</span><br><span class="line">mset name IsPromise age <span class="number">20</span></span><br><span class="line"></span><br><span class="line">//设置时效</span><br><span class="line">//setex key seconds value</span><br><span class="line">setex <span class="class"><span class="keyword">class</span> 10 1、</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//追加值 <span class="title">append</span> <span class="title">key</span> <span class="title">value</span></span></span><br><span class="line"><span class="class"><span class="title">append</span> <span class="title">name</span> <span class="title">s</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值：追加后字符串长度</span></span><br><span class="line"><span class="class">(<span class="title">integer</span>) 10</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">get</span> <span class="title">name</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值</span></span><br><span class="line"><span class="class">"<span class="title">IsPromises</span>"</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//一次获取多个值</span></span><br><span class="line"><span class="class">//<span class="title">mget</span> <span class="title">key</span> [<span class="title">key</span> ...] </span></span><br><span class="line"><span class="class"><span class="title">mget</span> <span class="title">name</span> <span class="title">age</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值</span></span><br><span class="line"><span class="class">1) "<span class="title">IsPromises</span>"</span></span><br><span class="line"><span class="class">2) "20"</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//查询键相关</span></span><br><span class="line"><span class="class">//<span class="title">keys</span> * 查询所有键</span></span><br><span class="line"><span class="class"><span class="title">keys</span> *</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值</span></span><br><span class="line"><span class="class">1) "<span class="title">age</span>"</span></span><br><span class="line"><span class="class">2) "<span class="title">name</span>"</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//查询某个字符开头的所有键</span></span><br><span class="line"><span class="class">//存储值</span></span><br><span class="line"><span class="class"><span class="title">mset</span> <span class="title">a1</span> 1 <span class="title">a2</span> 2 <span class="title">a3</span> 3</span></span><br><span class="line"><span class="class">//查询</span></span><br><span class="line"><span class="class"><span class="title">keys</span> <span class="title">a</span>*</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值</span></span><br><span class="line"><span class="class">1) "<span class="title">a3</span>"</span></span><br><span class="line"><span class="class">2) "<span class="title">a2</span>"</span></span><br><span class="line"><span class="class">3) "<span class="title">age</span>"</span></span><br><span class="line"><span class="class">4) "<span class="title">a1</span>"</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//查询是否存在某个键</span></span><br><span class="line"><span class="class">// <span class="title">exists</span> <span class="title">key</span> [<span class="title">key</span> ...] </span></span><br><span class="line"><span class="class"><span class="title">exists</span> <span class="title">a1</span> <span class="title">name</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值 返回存在的个数</span></span><br><span class="line"><span class="class">(<span class="title">integer</span>) 2</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">exists</span> <span class="title">name</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值 存在一个返回1</span></span><br><span class="line"><span class="class">(<span class="title">integer</span>) 1</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">exists</span> <span class="title">aa</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值 不存在返回0</span></span><br><span class="line"><span class="class">(<span class="title">integer</span>) 0</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//删除操作 删除键</span></span><br><span class="line"><span class="class">//<span class="title">del</span> <span class="title">key</span> [<span class="title">key</span> ...] </span></span><br><span class="line"><span class="class"><span class="title">del</span> <span class="title">a1</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值 删除单个成功返回1</span></span><br><span class="line"><span class="class">(<span class="title">integer</span>) 1</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">del</span> <span class="title">a1</span> <span class="title">a2</span> <span class="title">a3</span> </span></span><br><span class="line"><span class="class"> </span></span><br><span class="line"><span class="class">//返回值 返回删除成功的个数</span></span><br><span class="line"><span class="class">(<span class="title">integer</span>) 2</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//追加时限</span></span><br><span class="line"><span class="class">//<span class="title">expire</span> <span class="title">key</span> <span class="title">seconds</span></span></span><br><span class="line"><span class="class"><span class="title">expire</span> <span class="title">age</span> 10</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值</span></span><br><span class="line"><span class="class">(<span class="title">integer</span>) 1</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//查看剩余时限</span></span><br><span class="line"><span class="class">//<span class="title">ttl</span> <span class="title">key</span></span></span><br><span class="line"><span class="class"><span class="title">ttl</span> <span class="title">age</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值</span></span><br><span class="line"><span class="class">(<span class="title">integer</span>) -2</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Hash操作</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">//hash操作</span><br><span class="line">//hset key field value </span><br><span class="line"> hset hash name IsPromise</span><br><span class="line">//【键：hash】 【属性：name】 【值：IsPromise】</span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line">(integer) <span class="number">1</span></span><br><span class="line"></span><br><span class="line">//查询键类型</span><br><span class="line">//type key  </span><br><span class="line">type hash</span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line">hash</span><br><span class="line"></span><br><span class="line">//获取单个属性值</span><br><span class="line">// hget key field</span><br><span class="line">hget hash name</span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line"><span class="string">"IsPromise"</span></span><br><span class="line"></span><br><span class="line">//一次设置多个属性值</span><br><span class="line">//hmset key field value [<span class="type">field</span> <span class="type">value</span> <span class="type">...</span>]</span><br><span class="line">hmset hash age <span class="number">19</span> test <span class="number">1</span></span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">//一次获取多个属性值</span><br><span class="line">// hmget key field [<span class="type">field</span> <span class="type">...</span>] （后面跟属性名）</span><br><span class="line">hmget hash age test</span><br><span class="line"> </span><br><span class="line">//返回值</span><br><span class="line"><span class="number">1</span>) <span class="string">"19"</span></span><br><span class="line"><span class="number">2</span>) <span class="string">"1"</span></span><br><span class="line"></span><br><span class="line">//查询所有属性名</span><br><span class="line">//hkeys key </span><br><span class="line">hkeys hash</span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line"><span class="number">1</span>) <span class="string">"name"</span></span><br><span class="line"><span class="number">2</span>) <span class="string">"age"</span></span><br><span class="line"><span class="number">3</span>) <span class="string">"class"</span></span><br><span class="line"><span class="number">4</span>) <span class="string">"test"</span></span><br><span class="line"></span><br><span class="line">//查看所有属性值</span><br><span class="line">// hvals key</span><br><span class="line">hvals hash</span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line"><span class="number">1</span>) <span class="string">"IsPromise"</span></span><br><span class="line"><span class="number">2</span>) <span class="string">"19"</span></span><br><span class="line"><span class="number">3</span>) <span class="string">"Redis"</span></span><br><span class="line"><span class="number">4</span>) <span class="string">"1"</span></span><br><span class="line"></span><br><span class="line">//删除属性</span><br><span class="line">//hdel key field [<span class="type">field</span> <span class="type">...</span>] </span><br><span class="line">hdel hash <span class="class"><span class="keyword">class</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//返回值 删除成功的个数</span></span><br><span class="line"><span class="class">(<span class="title">integer</span>) 1</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>List操作</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">//List操作</span><br><span class="line">//建立List加入数据</span><br><span class="line">//头部插入方式</span><br><span class="line">//lpush key value [<span class="type">value</span> <span class="type">...</span>]</span><br><span class="line">lpush list a1 a2 a3 a4</span><br><span class="line"></span><br><span class="line">//返回值 插入数据个数</span><br><span class="line">(integer) <span class="number">4</span></span><br><span class="line"></span><br><span class="line">//获取所有值</span><br><span class="line">// lrange key start stop</span><br><span class="line">lrange list <span class="number">0</span> <span class="number">3</span></span><br><span class="line"></span><br><span class="line">//返回值 </span><br><span class="line"><span class="number">1</span>) <span class="string">"a4"</span></span><br><span class="line"><span class="number">2</span>) <span class="string">"a3"</span></span><br><span class="line"><span class="number">3</span>) <span class="string">"a2"</span></span><br><span class="line"><span class="number">4</span>) <span class="string">"a1"</span></span><br><span class="line"></span><br><span class="line">//尾部追加方式</span><br><span class="line">//rpush key value [<span class="type">value</span> <span class="type">...</span>] </span><br><span class="line">rpush list1 <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span></span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line">(integer) <span class="number">5</span></span><br><span class="line"></span><br><span class="line">lrange list1 <span class="number">0</span> <span class="number">4</span></span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line"><span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line"><span class="number">2</span>) <span class="string">"2"</span></span><br><span class="line"><span class="number">3</span>) <span class="string">"3"</span></span><br><span class="line"><span class="number">4</span>) <span class="string">"4"</span></span><br><span class="line"><span class="number">5</span>) <span class="string">"5"</span></span><br><span class="line"></span><br><span class="line">//删除属性</span><br><span class="line">//lrem key count value </span><br><span class="line">//【count：大于<span class="number">0</span>从左往右删除，小于<span class="number">0</span>从右往左删除，<span class="number">0</span>代表全部删除对应value值】 【value：要删除的value值】</span><br><span class="line">lrem list1 <span class="number">1</span> <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">lrange list1 <span class="number">0</span> <span class="literal">-1</span></span><br><span class="line"> </span><br><span class="line">//返回值</span><br><span class="line"><span class="number">1</span>) <span class="string">"2"</span></span><br><span class="line"><span class="number">2</span>) <span class="string">"3"</span></span><br><span class="line"><span class="number">3</span>) <span class="string">"4"</span></span><br><span class="line"><span class="number">4</span>) <span class="string">"5"</span></span><br><span class="line"></span><br><span class="line">//插入操作</span><br><span class="line">// linsert key BEFORE|AFTER pivot value </span><br><span class="line">linsert list1 before <span class="number">2</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">//返回插入后的长度</span><br><span class="line">(integer) <span class="number">5</span></span><br><span class="line">linsert list1 after <span class="number">5</span> <span class="number">6</span></span><br><span class="line">//插入插入和数据</span><br><span class="line">lrange list1 <span class="number">0</span> <span class="literal">-1</span></span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line"><span class="number">1</span>) <span class="string">"1"</span></span><br><span class="line"><span class="number">2</span>) <span class="string">"2"</span></span><br><span class="line"><span class="number">3</span>) <span class="string">"3"</span></span><br><span class="line"><span class="number">4</span>) <span class="string">"4"</span></span><br><span class="line"><span class="number">5</span>) <span class="string">"5"</span></span><br><span class="line"><span class="number">6</span>) <span class="string">"6"</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Set操作</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">//Set操作</span><br><span class="line">//增加</span><br><span class="line">//sadd key member [<span class="type">member</span> <span class="type">...</span>]</span><br><span class="line">sadd set a1 a2 a4 a3 a5 a1</span><br><span class="line"> </span><br><span class="line">//查询</span><br><span class="line">//smembers key </span><br><span class="line">smembers set</span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line">a4</span><br><span class="line">a3</span><br><span class="line">a1</span><br><span class="line">a5</span><br><span class="line">a2</span><br><span class="line"></span><br><span class="line">//删除元素</span><br><span class="line">//srem key member [<span class="type">member</span> <span class="type">...</span>] </span><br><span class="line">srem ser a1 a2</span><br><span class="line"></span><br><span class="line">//创建有序Set 增加权重</span><br><span class="line">//zadd key [<span class="type">NX</span>|<span class="type">XX</span>] [<span class="type">CH</span>] [<span class="type">INCR</span>] score member [<span class="type">score</span> <span class="type">member</span> <span class="type">...</span>]</span><br><span class="line">zadd set1 <span class="number">4</span> b1 <span class="number">5</span> b2 <span class="number">1</span> b3 <span class="number">2</span> b4</span><br><span class="line"></span><br><span class="line">//获取Set值 权重小到大排列</span><br><span class="line">//zrange key start stop [<span class="type">WITHSCORES</span>]</span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line">b3</span><br><span class="line">b4</span><br><span class="line">b1</span><br><span class="line">b2</span><br><span class="line"></span><br><span class="line">//根据权重获取值 两个权重值之间的值</span><br><span class="line">//zrangebyscore key min max [<span class="type">WITHSCORES</span>] [<span class="type">LIMIT</span> <span class="type">offset</span> <span class="type">count</span>]</span><br><span class="line">zrangebyscore set1 <span class="number">2</span> <span class="number">4</span></span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line">b4</span><br><span class="line">b1</span><br><span class="line"></span><br><span class="line">//获取权重</span><br><span class="line">//zscore key member</span><br><span class="line">zscore set1 b1</span><br><span class="line"></span><br><span class="line">//返回值</span><br><span class="line"><span class="number">4</span></span><br><span class="line"></span><br><span class="line">//按照权重删除</span><br><span class="line">//zremrangebyscore key min max</span><br><span class="line">zremrangebyscore set1 <span class="number">2</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="连接Redis"><a href="#连接Redis" class="headerlink" title="连接Redis"></a>连接Redis</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//redisgo</span><br><span class="line">go get -u github.com/garyburd/redigo/redis</span><br><span class="line">//go-redis</span><br><span class="line">go get -u github.com/go-redis/redis</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="操作数据库"><a href="#操作数据库" class="headerlink" title="操作数据库"></a>操作数据库</h3><blockquote>
+<p>github.com/go-redis/redis 包的使用</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 	github.com/go-redis/redis 包的使用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"github.com/go-redis/redis"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> redisdb *redis.Client</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化Redis</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initRedis</span><span class="params">()</span> <span class="params">(err error)</span></span> &#123;</span><br><span class="line">	redisdb = redis.NewClient(&amp;redis.Options&#123;</span><br><span class="line">		Addr:     <span class="string">"127.0.0.1:6379"</span>,</span><br><span class="line">		Password: <span class="string">""</span>,</span><br><span class="line">		DB:       <span class="number">0</span>,</span><br><span class="line">	&#125;)</span><br><span class="line">	_, err = redisdb.Ping().Result()</span><br><span class="line">	<span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Redis操作函数名和Redis数据库操作基本同名</span></span><br><span class="line"><span class="comment">//对需要的操作调用redisdb对象的对应方法即可</span></span><br><span class="line"><span class="comment">//set/get操作测试</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testSG</span><span class="params">()</span></span>  &#123;</span><br><span class="line">	<span class="comment">//Set方法接收key-value-值时效三个参数</span></span><br><span class="line">	err:=redisdb.Set(<span class="string">"name"</span>,<span class="string">"ispromise"</span>,<span class="number">0</span>).Err()</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"set key-value failed,err:%v\n"</span>,err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//返回string结果和一个错误</span></span><br><span class="line">	val,err := redisdb.Get(<span class="string">"name"</span>).Result()</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"get value failed,err:%v\n"</span>,err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">"Value:%s\n"</span>,val)</span><br><span class="line">	</span><br><span class="line">	vals,err := redisdb.Get(<span class="string">"key"</span>).Result()</span><br><span class="line">	<span class="comment">//表示键不存在</span></span><br><span class="line">	<span class="keyword">if</span> err==redis.Nil &#123;</span><br><span class="line">		fmt.Println(<span class="string">"key don't exist"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> err!=<span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"get name failed,err:%v\n"</span>,err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"key:"</span>,vals)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Zset测试</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">redisExample2</span><span class="params">()</span></span> &#123;</span><br><span class="line">	zsetKey := <span class="string">"language_rank"</span></span><br><span class="line">	languages := []*redis.Z&#123;</span><br><span class="line">		&amp;redis.Z&#123;Score: <span class="number">90.0</span>, Member: <span class="string">"Golang"</span>&#125;,</span><br><span class="line">		&amp;redis.Z&#123;Score: <span class="number">98.0</span>, Member: <span class="string">"Java"</span>&#125;,</span><br><span class="line">		&amp;redis.Z&#123;Score: <span class="number">95.0</span>, Member: <span class="string">"Python"</span>&#125;,</span><br><span class="line">		&amp;redis.Z&#123;Score: <span class="number">97.0</span>, Member: <span class="string">"JavaScript"</span>&#125;,</span><br><span class="line">		&amp;redis.Z&#123;Score: <span class="number">99.0</span>, Member: <span class="string">"C/C++"</span>&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// ZAdd</span></span><br><span class="line">	num, err := rdb.ZAdd(zsetKey, languages...).Result()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"zadd failed, err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">"zadd %d succ.\n"</span>, num)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 把Golang的分数加10</span></span><br><span class="line">	newScore, err := rdb.ZIncrBy(zsetKey, <span class="number">10.0</span>, <span class="string">"Golang"</span>).Result()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"zincrby failed, err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">"Golang's score is %f now.\n"</span>, newScore)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 取分数最高的3个</span></span><br><span class="line">	ret, err := rdb.ZRevRangeWithScores(zsetKey, <span class="number">0</span>, <span class="number">2</span>).Result()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"zrevrange failed, err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> _, z := <span class="keyword">range</span> ret &#123;</span><br><span class="line">		fmt.Println(z.Member, z.Score)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 取95~100分的</span></span><br><span class="line">	op := &amp;redis.ZRangeBy&#123;</span><br><span class="line">		Min: <span class="string">"95"</span>,</span><br><span class="line">		Max: <span class="string">"100"</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	ret, err = rdb.ZRangeByScoreWithScores(zsetKey, op).Result()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"zrangebyscore failed, err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> _, z := <span class="keyword">range</span> ret &#123;</span><br><span class="line">		fmt.Println(z.Member, z.Score)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	err := initRedis()</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"connect redis failed,err:%v\n"</span>,err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	testSG()</span><br><span class="line">    redisExample2()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//连接Redis哨兵模式</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initClient</span><span class="params">()</span><span class="params">(err error)</span></span>&#123;</span><br><span class="line">	rdb := redis.NewFailoverClient(&amp;redis.FailoverOptions&#123;</span><br><span class="line">		MasterName:    <span class="string">"master"</span>,</span><br><span class="line">		SentinelAddrs: []<span class="keyword">string</span>&#123;<span class="string">"x.x.x.x:26379"</span>, <span class="string">"xx.xx.xx.xx:26379"</span>, <span class="string">"xxx.xxx.xxx.xxx:26379"</span>&#125;,</span><br><span class="line">	&#125;)</span><br><span class="line">	_, err = rdb.Ping().Result()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//连接Redis集群</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initClient</span><span class="params">()</span><span class="params">(err error)</span></span>&#123;</span><br><span class="line">	rdb := redis.NewClusterClient(&amp;redis.ClusterOptions&#123;</span><br><span class="line">		Addrs: []<span class="keyword">string</span>&#123;<span class="string">":7000"</span>, <span class="string">":7001"</span>, <span class="string">":7002"</span>, <span class="string">":7003"</span>, <span class="string">":7004"</span>, <span class="string">":7005"</span>&#125;,</span><br><span class="line">	&#125;)</span><br><span class="line">	_, err = rdb.Ping().Result()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>github.com/garyburd/redigo/redis</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"github.com/garyburd/redigo/redis"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> conn redis.Conn</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testSend</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//Send方法把命令存入缓存区</span></span><br><span class="line">	err := conn.Send(<span class="string">"set"</span>, <span class="string">"key"</span>, <span class="string">"value"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"do Send failed,err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Flush方法把缓存区命令传至服务器</span></span><br><span class="line">	conn.Flush()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//接收数据库返回的内容，只保留第一条命令执行的结果</span></span><br><span class="line">	rel, err := conn.Receive()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"Receive failed,err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(rel)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testDo</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//Do方法接收执行的命令，接收多个参数，之间执行并返回结果（字节形式）</span></span><br><span class="line">	<span class="comment">//redis内置回复助手函数(以类型名位名字的方法)可以将结果转型</span></span><br><span class="line">	rel, err := redis.String(conn.Do(<span class="string">"get"</span>, <span class="string">"key"</span>))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"Do failed,err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">"Value:"</span>, rel)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testScan</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//Scan可以将结果集分开为不同类型</span></span><br><span class="line">	<span class="keyword">var</span> key <span class="keyword">string</span></span><br><span class="line">	<span class="keyword">var</span> name <span class="keyword">string</span></span><br><span class="line">	<span class="keyword">var</span> age <span class="keyword">int</span></span><br><span class="line">	<span class="comment">//不存在的键值</span></span><br><span class="line">	<span class="keyword">var</span> hello <span class="keyword">string</span></span><br><span class="line">	<span class="comment">//Values返回字节流</span></span><br><span class="line">	rel, err := redis.Values(conn.Do(<span class="string">"mget"</span>, <span class="string">"key"</span>, <span class="string">"name"</span>, <span class="string">"age"</span>, <span class="string">"hello"</span>))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"get values failed,err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	redis.Scan(rel, &amp;key, &amp;name, &amp;age, &amp;hello)</span><br><span class="line">	fmt.Println(key, name, age, hello)</span><br><span class="line">	<span class="comment">//value ispromise 20</span></span><br><span class="line">	<span class="comment">//不存在的键取值为空</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//Dial方法连接,参数：连接方式、地址端口</span></span><br><span class="line">	<span class="keyword">var</span> err error</span><br><span class="line">	conn, err = redis.Dial(<span class="string">"tcp"</span>, <span class="string">"127.0.0.1:6379"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"connect redis failed,err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//关闭连接</span></span><br><span class="line">	<span class="keyword">defer</span> conn.Close()</span><br><span class="line"></span><br><span class="line">	testSend()</span><br><span class="line">	testDo()</span><br><span class="line">	testScan()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Redis连接池</span></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span>(</span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">    <span class="string">"github.com/garyburd/redigo/redis"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pool *redis.Pool  <span class="comment">//创建redis连接池</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    pool = &amp;redis.Pool&#123;     <span class="comment">//实例化一个连接池</span></span><br><span class="line">        MaxIdle:<span class="number">16</span>,    <span class="comment">//最初的连接数量</span></span><br><span class="line">        <span class="comment">// MaxActive:1000000,    //最大连接数量</span></span><br><span class="line">        MaxActive:<span class="number">0</span>,    <span class="comment">//连接池最大连接数量,不确定可以用0（0表示自动定义），按需分配</span></span><br><span class="line">        IdleTimeout:<span class="number">300</span>,    <span class="comment">//连接关闭时间 300秒 （300秒不使用自动关闭）    </span></span><br><span class="line">        Dial: <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="params">(redis.Conn ,error)</span></span>&#123;     <span class="comment">//要连接的redis数据库</span></span><br><span class="line">            <span class="keyword">return</span> redis.Dial(<span class="string">"tcp"</span>,<span class="string">"localhost:6379"</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    c := pool.Get() <span class="comment">//从连接池，取一个链接</span></span><br><span class="line">    <span class="keyword">defer</span> c.Close() <span class="comment">//函数运行结束 ，把连接放回连接池</span></span><br><span class="line"></span><br><span class="line">        _,err := c.Do(<span class="string">"Set"</span>,<span class="string">"abc"</span>,<span class="number">200</span>)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            fmt.Println(err)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        r,err := redis.Int(c.Do(<span class="string">"Get"</span>,<span class="string">"abc"</span>))</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            fmt.Println(<span class="string">"get abc faild :"</span>,err)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println(r)</span><br><span class="line">        pool.Close() <span class="comment">//关闭连接池</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//官方文档所在地址</span><br><span class="line"><span class="attribute">https://godoc.org/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+			  
+			<span id="busuanzi_container_page_pv">
+				本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+			</span>  
+			  
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/05/GoRedis/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/GoWeb/" class="archive-article-date">
-  	<time datetime="2020-04-20T09:12:34.900Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/20/GoWeb/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">GoWeb</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/GoWeb/">GoWeb</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis"><span class="toc-number">1.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NoSQL介绍"><span class="toc-number">1.1.</span> <span class="toc-text">NoSQL介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis简介"><span class="toc-number">1.2.</span> <span class="toc-text">Redis简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis特点："><span class="toc-number">1.2.1.</span> <span class="toc-text">Redis特点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis优势"><span class="toc-number">1.2.2.</span> <span class="toc-text">Redis优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis简单操作"><span class="toc-number">1.2.3.</span> <span class="toc-text">Redis简单操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接Redis"><span class="toc-number">1.3.</span> <span class="toc-text">连接Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作数据库"><span class="toc-number">1.3.2.</span> <span class="toc-text">操作数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#官方文档"><span class="toc-number">1.4.</span> <span class="toc-text">官方文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.5.</span> <span class="toc-text"></span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/12/Golang/" class="archive-article-date">
-  	<time datetime="2020-04-12T12:56:54.596Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/12/Golang/">Golang</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/Java/" class="archive-article-date">
-  	<time datetime="2020-04-04T04:28:59.561Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/Java/">Java</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="archive-article-date">
-  	<time datetime="2020-04-03T12:47:30.484Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
 
 
           </div>
@@ -332,8 +468,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
