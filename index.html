@@ -156,6 +156,229 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-GC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/15/GC/">GC</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/15/GC/" class="archive-article-date">
+  	<time datetime="2020-12-15T07:18:19.807Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-15</time>
+</a>
+        
+		
+		 
+
+		
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="GC回收"><a href="#GC回收" class="headerlink" title="GC回收"></a><code>GC</code>回收</h1><p>[toc]</p>
+<h2 id="标记清除-Mark-and-sweep"><a href="#标记清除-Mark-and-sweep" class="headerlink" title="标记清除(Mark and sweep)"></a>标记清除(<code>Mark and sweep</code>)</h2><blockquote>
+<p>什么是标记-清除</p>
+</blockquote>
+<p><code>Go V1.3</code>之前所采用的<code>GC</code>回收机制。</p>
+<p><code>STW(stop the word)</code>、自动释放、垃圾回收、内存管理、三色标记法。</p>
+<p><strong>可达关系</strong>：可以有根节点找到该对象。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212730631.png" alt="image-20201214212730631"></p>
+<p>由程序可达关系，进行<code>STW</code>操作，同时对可达对象进行标记：</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212824054.png" alt="image-20201214212824054"></p>
+<p>然后，不可达对象被清楚回收，回收完成后<code>STW</code>结束：</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212952637.png" alt="image-20201214212952637"></p>
+<blockquote>
+<p>标记-清楚方法的缺点</p>
+</blockquote>
+<ul>
+<li><code>STW</code>：让程序暂停，程序出现卡顿（重要问题）</li>
+<li>标记需要扫描整个<code>heap</code>（对象信息）</li>
+<li>清楚数据会产生<code>heap</code>碎片</li>
+</ul>
+<blockquote>
+<p>早期的优化方式</p>
+</blockquote>
+<p>正常的<code>STW</code>过程：</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214214017732.png" alt="image-20201214214017732"></p>
+<p>优化思路：</p>
+<p>第四步和第三步互换位置：</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214214035182.png" alt="image-20201214214035182"></p>
+<p>通过将清除步骤与应用程序并行来缩短<code>STW</code>的范围。</p>
+<p>虽然缩短了<code>STW</code>的范围，但是整体依然不高效。</p>
+<h2 id="三色标记法"><a href="#三色标记法" class="headerlink" title="三色标记法"></a>三色标记法</h2><p><code>Go V1.5</code> 引入三色标记法</p>
+<blockquote>
+<p>什么是三色标记法</p>
+</blockquote>
+<p>程序起初创建,全部标记为白色，将所有对象放入白色集合中。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215216020.png" alt="image-20201214215216020"></p>
+<p>程序按照跟集合展开：</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215419014.png" alt="image-20201214215419014"></p>
+<p>变量<code>Root Set</code>（非递归形式，只遍历一次），得到灰色节点。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215731735.png" alt="image-20201214215731735"></p>
+<p>遍历灰色标记表，将可达对象从白色标记为灰色。遍历之后的灰色标记为黑色。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215913847.png" alt="image-20201214215913847"></p>
+<p>灰色结点表示一种临时状态，所以需要重复上一步，直到灰色标记表中无任何对象。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214220035646.png" alt="image-20201214220035646"></p>
+<p>收集所有的白色标记（垃圾）</p>
+<blockquote>
+<p>三色标记表不被<code>STW</code>时出现的问题</p>
+</blockquote>
+<p>如果三色标记不启动<code>STW</code>，会存在一些情况：</p>
+<p>已经标记为灰色的对象2有指针p指向白色对象3，同时在还没有扫描到对象2时，已经标记为黑色的对象4创建指针q指向对象3，与此同时对象2的p指针被移除。按照正常的逻辑运行，此时对象3会被清除而不会被扫描。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214221016343.png" alt="image-20201214221016343"></p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214221142767.png" alt="image-20201214221142767"></p>
+<p>所以三色标记的缺陷：</p>
+<ul>
+<li>一个白色对象被黑色对象引用（白色被挂在黑色下）</li>
+<li>灰色对象与它之间的可达关系的白色对象遭到破坏（灰色同时丢了该白色）</li>
+</ul>
+<p>当两个条件同时被满足，就会出现对象丢失现象。解决此问题的最简单方法就是使用<code>STW</code>机制。但<code>STW</code>会有明显的资源浪费。</p>
+<h3 id="强弱三色不变式"><a href="#强弱三色不变式" class="headerlink" title="强弱三色不变式"></a>强弱三色不变式</h3><p>通过破坏两个条件同时满足的情况来防止出现问题：</p>
+<ul>
+<li>强三色不变式：<ul>
+<li>强制性不允许黑色对象引用白色对象，破坏条件1</li>
+<li><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214222216761.png" alt="image-20201214222216761"></li>
+</ul>
+</li>
+<li>若三色不变式：<ul>
+<li>黑色对象可以引用白色对象，白色对象存在其他灰色对象对它的引用，或者可达它的链路上游存在灰色对象，破坏条件2</li>
+<li><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214222130180.png" alt="image-20201214222130180"></li>
+</ul>
+</li>
+</ul>
+<p>强弱三色不变色满足其一，就可以保证不丢失对象。</p>
+<h3 id="屏障机制"><a href="#屏障机制" class="headerlink" title="屏障机制"></a>屏障机制</h3><p>屏障：通过添加额外的判断机制不打扰正常流程。</p>
+<ul>
+<li>插入屏障：对象被引用时触发的机制（不在栈上使用）<ul>
+<li>对象A引用对象B时，B对象被标记为灰色。即将B挂在A下游B必须被标记为灰色。</li>
+</ul>
+</li>
+</ul>
+<p>插入写屏障流程：</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135014689.png" alt="image-20201215135014689"></p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135039152.png" alt="image-20201215135039152"></p>
+<p>由于并发特性，此刻外界向对象4添加对象8、对象1添加对象9。对象4在堆区，即将触发插入屏障机制，对象1不触发。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135148404.png" alt="image-20201215135148404"></p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135212362.png" alt="image-20201215135212362"></p>
+<p>在准备回收白色前，重新遍历扫描一次栈空间。此时加<code>STW</code>暂停保护栈，防止外界干扰(有新的白色被黑色添加)。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135342913.png" alt="image-20201215135342913"></p>
+<p>此后停止<code>STW</code>，清除白色。</p>
+<p>插入写屏障缺陷：结束时需要<code>STW</code>来重新扫描栈。</p>
+<ul>
+<li>删除屏障：对象被删除时触发的机制<ul>
+<li>被删除的对象，如果自身为灰色或者白色，那么被标记为灰色</li>
+</ul>
+</li>
+</ul>
+<p>删除写屏障流程：</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215140158791.png" alt="image-20201215140158791"></p>
+<p>遍历Root Set(非递归形式,只遍历一次).得到灰色节点。当灰色对象1删除对象5，如果不触发删除写屏障，5-2-3路径与主链路断开，最后均会被清除。此时触发删除写屏障，被删除的对象5自身被标记为灰色。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215140355838.png" alt="image-20201215140355838"></p>
+<p>循环上面流程进行三色标记，直到没有灰色结点</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215140528336.png" alt="image-20201215140528336"></p>
+<p>删除写屏障的不足：</p>
+<p>回收精度低，即使一个对象被删除了最后一个指向它的指针也依然要到下一轮<code>GC</code>中被清理掉。</p>
+<h2 id="混合写屏障机制"><a href="#混合写屏障机制" class="headerlink" title="混合写屏障机制"></a>混合写屏障机制</h2><p><code>Go V1.8</code>之后采用三色标记法+混合写屏障机制。</p>
+<p>这里我们注意， 屏障技术是不在栈上应用的，因为要保证栈的运行效率。</p>
+<p>具体操作：</p>
+<ul>
+<li><code>GC</code>开始将栈上的对象全部扫描并标记为黑色(之后不再进行第二次重复扫描，无需<code>STW</code>)</li>
+<li><code>GC</code>期间，任何在栈上创建的新对象，均为黑色</li>
+<li>被删除的对象标记为灰色</li>
+<li>被添加的对象标记为灰色</li>
+</ul>
+<p>满足：变形的弱三色不变式（结合了插入、删除屏障两者的优点）</p>
+<p>流程：</p>
+<p><code>GC</code>开始优先扫描栈，将栈全部标记为黑。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215141820018.png" alt="image-20201215141820018"></p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215141912391.png" alt="image-20201215141912391"></p>
+<blockquote>
+<p> 场景一：对象被一个堆对象引用，成为栈对象的下游</p>
+</blockquote>
+<p>将对象7之间添加到对象1的下游</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215142707848.png" alt="image-20201215142707848"></p>
+<p>对象4删除对象7的引用关系：由于对象4是堆区，所以触发写屏障，对象7标记为灰色</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215142810138.png" alt="image-20201215142810138"></p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215142914367.png" alt="image-20201215142914367"></p>
+<p>此后进行三色标记操作直到结束。</p>
+<blockquote>
+<p>场景二：对象被一个栈对象删除引用，成为另一个栈对象的下游</p>
+</blockquote>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144153105.png" alt="image-20201215144153105"></p>
+<p>新创建一个对象9在栈区域，将对象9添加下游为对象3。对象2删除对象3的引用。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144309952.png" alt="image-20201215144309952"></p>
+<p>如果对象9不引用对象3，那么对象3会被保护一轮，到下一轮<code>GC</code>回收。</p>
+<blockquote>
+<p>场景3：对象被另一个堆对象引用，成为另一个对象的下游</p>
+</blockquote>
+<p>对象10假设已经扫描标记为黑色（特殊情况）</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144633880-1608017090241.png" alt="image-20201215144633880"></p>
+<p>堆对象10添加下游堆对象7，触发屏障机制，被添加的对象标记为灰色，对象7变成灰色（对象6被保护）。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145008917.png" alt="image-20201215145008917"></p>
+<p>堆对象4删除对对象7的引用，触发屏障机制，被删除的对象标记为灰色，对象7标记为灰色。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144953359.png" alt="image-20201215144953359"></p>
+<p>最终指向三色标记流程直到结束。</p>
+<blockquote>
+<p>对象从一个栈对象删除引用，成为一个堆对象下游</p>
+</blockquote>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145259263.png" alt="image-20201215145259263"></p>
+<p>栈对象1删除对栈对象2的引用(栈空间不触发写屏障)。堆对象4将之前引用对象7的关系，转移至对象2(对象4删除对象7引用关系)。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145343040.png" alt="image-20201215145343040"></p>
+<p>对象4在删除的时候，触发写屏障，标记被删除对象7为灰色。保护对象7及下游节点。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145445433.png" alt="image-20201215145445433"></p>
+<p>此时对象7以及其引用会被保护一轮。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>GoV1.3-</code> 普通标记清除法，整体过程需要启动<code>STW</code>，效率极低。</p>
+<p><code>GoV1.5-</code> 三色标记法， 堆空间启动写屏障，栈空间不启动，全部扫描之后，需要重新扫描一次栈(需要<code>STW</code>)，效率普通</p>
+<p><code>GoV1.8-</code>三色标记法，混合写屏障机制， 栈空间不启动，堆空间启动。整个过程不需要<code>STW</code>，效率较高。</p>
+<p>![Golang GC](<a href="https://gitee.com/IsPromise/picture/raw/master/img/Golang" target="_blank" rel="noopener">https://gitee.com/IsPromise/picture/raw/master/img/Golang</a> GC.jpg)</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/15/GC/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
     <article id="post-计算机网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
