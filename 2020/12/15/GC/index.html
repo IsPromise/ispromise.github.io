@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>GC | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="GC回收[toc] 标记清除(Mark and sweep) 什么是标记-清除  Go V1.3之前所采用的GC回收机制。 STW(stop the word)、自动释放、垃圾回收、内存管理、三色标记法。 可达关系：可以有根节点找到该对象。  由程序可达关系，进行STW操作，同时对可达对象进行标记：  然后，不可达对象被清楚回收，回收完成后STW结束：   标记-清楚方法的缺点   STW：让程序">
+  <meta name="description" content="GC回收">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GC">
 <meta property="og:url" content="http://yoursite.com/2020/12/15/GC/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="GC回收[toc] 标记清除(Mark and sweep) 什么是标记-清除  Go V1.3之前所采用的GC回收机制。 STW(stop the word)、自动释放、垃圾回收、内存管理、三色标记法。 可达关系：可以有根节点找到该对象。  由程序可达关系，进行STW操作，同时对可达对象进行标记：  然后，不可达对象被清楚回收，回收完成后STW结束：   标记-清楚方法的缺点   STW：让程序">
+<meta property="og:description" content="GC回收">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212730631.png">
 <meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212824054.png">
@@ -51,7 +51,7 @@
 <meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145343040.png">
 <meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145445433.png">
 <meta property="article:published_time" content="2020-12-15T07:18:19.807Z">
-<meta property="article:modified_time" content="2020-12-15T07:26:23.654Z">
+<meta property="article:modified_time" content="2020-12-15T07:27:57.405Z">
 <meta property="article:author" content="IsPromise">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212730631.png">
@@ -222,7 +222,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="GC回收"><a href="#GC回收" class="headerlink" title="GC回收"></a><code>GC</code>回收</h1><p>[toc]</p>
+        <h1 id="GC回收"><a href="#GC回收" class="headerlink" title="GC回收"></a><code>GC</code>回收</h1><a id="more"></a>
+
+<p>[toc]</p>
 <h2 id="标记清除-Mark-and-sweep"><a href="#标记清除-Mark-and-sweep" class="headerlink" title="标记清除(Mark and sweep)"></a>标记清除(<code>Mark and sweep</code>)</h2><blockquote>
 <p>什么是标记-清除</p>
 </blockquote>
