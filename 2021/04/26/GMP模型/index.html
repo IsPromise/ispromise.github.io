@@ -6,56 +6,43 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>GC | Hexo</title>
+  <title>GMP模型 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="GC回收">
+  <meta name="description" content="GMP模型">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GC">
-<meta property="og:url" content="http://yoursite.com/2020/12/15/GC/index.html">
+<meta property="og:title" content="GMP模型">
+<meta property="og:url" content="http://yoursite.com/2021/04/26/GMP%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="GC回收">
+<meta property="og:description" content="GMP模型">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212730631.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212824054.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212952637.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214214017732.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214214035182.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215216020.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215419014.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215731735.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215913847.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214220035646.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214221016343.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214221142767.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214222216761.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214222130180.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135014689.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135039152.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135148404.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135212362.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135342913.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215140158791.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215140355838.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215140528336.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215141820018.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215141912391.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215142707848.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215142810138.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215142914367.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144153105.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144309952.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144633880-1608017090241.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145008917.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144953359.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145259263.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145343040.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145445433.png">
-<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/GolangGC.jpg">
-<meta property="article:published_time" content="2020-12-15T07:18:19.807Z">
-<meta property="article:modified_time" content="2021-04-26T09:14:32.239Z">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/20210327152805.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/20210327152915.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/47e396eea8f0e71532356197412d52f1_1294x1106.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/459db145d4e702994548a1757238946f_1248x1064.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/f8d715899f6db333d37f2bf738116bfd_1352x1092.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/cf9a59f9776bf4c9cbbad6103b6c5e5a_1322x1112.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/0037f6c2e12ad82a912990bba3e0085c_1336x1112.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/bdcdc5e6fcb03244a9843333cca62378_1292x860.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/6bdb04101cc63565c17cd8fcaba17321_1068x876.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/ebfe3e28315f12a08fbb4ffaee32e046_1024x768.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/764f7be119026cc16314e87628e4013f_1920x1080.jpg">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/b31027eeb493fa86654b41d46f34a98b_439x872.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/2debce43683adca1acb5ca5210057232_1074x900.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/93658da22081d52ed1caf32f42145e5a_1624x984.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/6415bfab3595fc22090595acc7c1b4b1_1104x1030.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/d12776bfd5cd10f8c1979c61d467499c_1120x1068.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/7a01ac7a3a4fd14493224827409f77f8_1036x1048.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/606acb1e4bf6b85c352b213744771601_1976x1098.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/d646d4d213d7b603f211cd74ba0dd391_1920x1080.jpeg">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/8abf6b47b0871011b6f18f55365c1774_1632x1130.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/10b49d04c42c3d688986ff41005ee63b_1682x1084.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/549aa458fab4c3e7cac5086d9326c1d2_2642x1494.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/246c03cdf1eb8307b70865d0debaa1f0_2678x1466.png">
+<meta property="article:published_time" content="2021-04-26T09:24:44.368Z">
+<meta property="article:modified_time" content="2021-04-26T09:30:09.118Z">
 <meta property="article:author" content="IsPromise">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212730631.png">
+<meta name="twitter:image" content="https://gitee.com/IsPromise/picture/raw/master/img/20210327152805.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -195,20 +182,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-GC" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-GMP模型" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      GC
+      GMP模型
     </h1>
   
 
         
-        <a href="/2020/12/15/GC/" class="archive-article-date">
-  	<time datetime="2020-12-15T07:18:19.807Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-15</time>
+        <a href="/2021/04/26/GMP%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
+  	<time datetime="2021-04-26T09:24:44.368Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-26</time>
 </a>
         
 		
@@ -223,164 +210,242 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="GC回收"><a href="#GC回收" class="headerlink" title="GC回收"></a><code>GC</code>回收</h1><a id="more"></a>
+        <h1 id="GMP模型"><a href="#GMP模型" class="headerlink" title="GMP模型"></a><code>GMP</code>模型</h1><a id="more"></a>
 
-<p>[toc]</p>
-<h2 id="标记清除-Mark-and-sweep"><a href="#标记清除-Mark-and-sweep" class="headerlink" title="标记清除(Mark and sweep)"></a>标记清除(<code>Mark and sweep</code>)</h2><blockquote>
-<p>什么是标记-清除</p>
+<h2 id="Golang调度器由来"><a href="#Golang调度器由来" class="headerlink" title="Golang调度器由来"></a><code>Golang</code>调度器由来</h2><h3 id="线程与协程的产生"><a href="#线程与协程的产生" class="headerlink" title="线程与协程的产生"></a>线程与协程的产生</h3><blockquote>
+<p>单线程时期</p>
 </blockquote>
-<p><code>Go V1.3</code>之前所采用的<code>GC</code>回收机制。</p>
-<p><code>STW(stop the word)</code>、自动释放、垃圾回收、内存管理、三色标记法。</p>
-<p><strong>可达关系</strong>：可以有根节点找到该对象。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212730631.png" alt="image-20201214212730631"></p>
-<p>由程序可达关系，进行<code>STW</code>操作，同时对可达对象进行标记：</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212824054.png" alt="image-20201214212824054"></p>
-<p>然后，不可达对象被清楚回收，回收完成后<code>STW</code>结束：</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214212952637.png" alt="image-20201214212952637"></p>
-<blockquote>
-<p>标记-清楚方法的缺点</p>
-</blockquote>
+<p>早期单进程操作系统只能随着时间顺序执行各个进程。所以就存在两个问题：</p>
 <ul>
-<li><code>STW</code>：让程序暂停，程序出现卡顿（重要问题）</li>
-<li>标记需要扫描整个<code>heap</code>（对象信息）</li>
-<li>清楚数据会产生<code>heap</code>碎片</li>
+<li>单一执行流程、计算机只能一个任务一个任务处理</li>
+<li>进程阻塞所带来的<code>cpu</code>资源浪费</li>
+</ul>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/20210327152805.png" alt="20210327152805"></p>
+<blockquote>
+<p>多线程时期</p>
+</blockquote>
+<p>随后产生了<strong>宏观上</strong>执行多任务的多线程/多进程操作系统。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/20210327152915.png" alt="20210327152915">其</p>
+<p>多进程操作系统解决了阻塞带来的<code>cpu</code>资源浪费，但是又产生了新的问题：</p>
+<ul>
+<li>进程切换之间的切换成本带来的<code>cpu</code>资源浪费</li>
+</ul>
+<p>最终导致了进程/线程的数量越多，切换成本就越大，造成的资源浪费就越多。</p>
+<p>同时随着<strong>同步竞争</strong>（如 锁、竞争资源冲突等）也使得开发越来越复杂。</p>
+<blockquote>
+<p>协程来提高<code>CPU</code>利用率</p>
+</blockquote>
+<p>多进程、多线程已经提高了系统的并发能力。但是高并发下大量创建线程会导致出现：</p>
+<ul>
+<li>高内存占用</li>
+<li>调度的高消耗<code>CPU</code></li>
+</ul>
+<p>由于线程分为”内核态”线程和”用户态”线程。</p>
+<p>一个”用户态线程”必须要绑定一个”内核态线程”，但是<code>CPU</code>并不知道有”用户态线程”的存在，它只知道它运行的是一个”内核态线程”。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/47e396eea8f0e71532356197412d52f1_1294x1106.png" alt="47e396eea8f0e71532356197412d52f1_1294x1106"></p>
+<p>由此细分，内核线程依然叫<strong>线程(<code>thread</code>)</strong>，用户线程叫<strong>协程(<code>co-routine</code>)</strong>。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/459db145d4e702994548a1757238946f_1248x1064.png" alt="459db145d4e702994548a1757238946f_1248x1064"></p>
+<p>而后由此发展，通过协程调度器来调度协程，得到了以下三种协程和线程的映射关系。</p>
+<h3 id="线程与协程的映射关系"><a href="#线程与协程的映射关系" class="headerlink" title="线程与协程的映射关系"></a>线程与协程的映射关系</h3><blockquote>
+<p><code>N：1</code> 关系</p>
+</blockquote>
+<p>N个协程绑定1个线程。</p>
+<p>优点是<strong>协程在用户态线程即完成切换，不会陷入到内核态，这种切换非常的轻量快速</strong>。</p>
+<p>但是一个进程的所有协程都绑定在一个线程上导致了以下缺点：</p>
+<ul>
+<li>某个程序用不了硬件的多核加速能力</li>
+<li>一旦某协程阻塞，造成线程阻塞，本进程的其他协程都无法执行了，根本就没有并发的能力了</li>
+</ul>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/f8d715899f6db333d37f2bf738116bfd_1352x1092.png" alt="f8d715899f6db333d37f2bf738116bfd_1352x1092"></p>
+<blockquote>
+<p><code>1:1</code>关系</p>
+</blockquote>
+<p>1个协程绑定1个线程，这种最容易实现。协程的调度都由CPU完成了，不存在<code>N:1</code>关系的缺点，但是也就造成了：</p>
+<ul>
+<li>协程的创建、删除和切换的代价都由<code>CPU</code>完成，代价昂贵。</li>
+</ul>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/cf9a59f9776bf4c9cbbad6103b6c5e5a_1322x1112.png" alt="cf9a59f9776bf4c9cbbad6103b6c5e5a_1322x1112"></p>
+<blockquote>
+<p><code>M:N</code>关系</p>
+</blockquote>
+<p>M个协程绑定1个线程，是<code>N:1</code>和<code>1:1</code>类型的结合，克服了以上2种模型的缺点，但实现起来最为复杂。瓶颈就在于协程调度器的优化。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/0037f6c2e12ad82a912990bba3e0085c_1336x1112.png" alt="0037f6c2e12ad82a912990bba3e0085c_1336x1112"></p>
+<p>注意：协程跟线程是有区别的，线程由<code>CPU</code>调度是抢占式的，<strong>协程由用户态调度是协作式的</strong>，一个协程让出<code>CPU</code>后，才执行下一个协程。</p>
+<h3 id="Go对于协程的处理"><a href="#Go对于协程的处理" class="headerlink" title="Go对于协程的处理"></a><code>Go</code>对于协程的处理</h3><p><strong><code>Go</code>为了提供更容易使用的并发方法，使用了<code>goroutine</code>和<code>channel</code></strong>。</p>
+<p><code>goroutine</code>来自协程的概念，让一组可复用的函数运行在一组线程之上，即使有协程阻塞，该线程的其他协程也可以被<code>runtime</code>调度，转移到其他可运行的线程上。最关键的是，程序员看不到这些底层的细节，这就降低了编程的难度，提供了更容易的并发。</p>
+<p><code>Go</code>中，协程被称为<code>goroutine</code>，它非常轻量，一个<code>goroutine</code>只占几<code>KB</code>，并且这几<code>KB</code>就足够<code>goroutine</code>运行完，这就能在有限的内存空间内支持大量<code>goroutine</code>，支持了更多的并发。虽然一个<code>goroutine</code>的栈只占几<code>KB</code>，但实际是可伸缩的，如果需要更多内存，<code>runtime</code>会自动为<code>goroutine</code>分配。</p>
+<p><code>Goroutine</code>特点：</p>
+<ul>
+<li>占用内存更小（几<code>kb</code>）</li>
+<li>调度更灵活(<code>runtime</code>调度)</li>
 </ul>
 <blockquote>
-<p>早期的优化方式</p>
+<p>被废弃的<code>goroutine</code>调度器</p>
 </blockquote>
-<p>正常的<code>STW</code>过程：</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214214017732.png" alt="image-20201214214017732"></p>
-<p>优化思路：</p>
-<p>第四步和第三步互换位置：</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214214035182.png" alt="image-20201214214035182"></p>
-<p>通过将清除步骤与应用程序并行来缩短<code>STW</code>的范围。</p>
-<p>虽然缩短了<code>STW</code>的范围，但是整体依然不高效。</p>
-<h2 id="三色标记法"><a href="#三色标记法" class="headerlink" title="三色标记法"></a>三色标记法</h2><p><code>Go V1.5</code> 引入三色标记法</p>
-<blockquote>
-<p>什么是三色标记法</p>
-</blockquote>
-<p>程序起初创建,全部标记为白色，将所有对象放入白色集合中。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215216020.png" alt="image-20201214215216020"></p>
-<p>程序按照跟集合展开：</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215419014.png" alt="image-20201214215419014"></p>
-<p>变量<code>Root Set</code>（非递归形式，只遍历一次），得到灰色节点。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215731735.png" alt="image-20201214215731735"></p>
-<p>遍历灰色标记表，将可达对象从白色标记为灰色。遍历之后的灰色标记为黑色。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214215913847.png" alt="image-20201214215913847"></p>
-<p>灰色结点表示一种临时状态，所以需要重复上一步，直到灰色标记表中无任何对象。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214220035646.png" alt="image-20201214220035646"></p>
-<p>收集所有的白色标记（垃圾）</p>
-<blockquote>
-<p>三色标记表不被<code>STW</code>时出现的问题</p>
-</blockquote>
-<p>如果三色标记不启动<code>STW</code>，会存在一些情况：</p>
-<p>已经标记为灰色的对象2有指针p指向白色对象3，同时在还没有扫描到对象2时，已经标记为黑色的对象4创建指针q指向对象3，与此同时对象2的p指针被移除。按照正常的逻辑运行，此时对象3会被清除而不会被扫描。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214221016343.png" alt="image-20201214221016343"></p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214221142767.png" alt="image-20201214221142767"></p>
-<p>所以三色标记的缺陷：</p>
+<p>假设以G表示<code>goroutine</code>，以M表示线程<code>thread</code>。</p>
+<p>早期的<code>Go</code>协程调度器如下：</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/bdcdc5e6fcb03244a9843333cca62378_1292x860.png" alt="bdcdc5e6fcb03244a9843333cca62378_1292x860"></p>
+<p>M想要执行、放回G都必须访问全局G队列，并且M有多个，即多线程访问同一资源。所以需要<strong>加锁</strong>进行保证<strong>互斥/同步</strong>，所以全局G队列是有互斥锁进行保护的。</p>
+<p>早期调度器存在的几个缺点：</p>
 <ul>
-<li>一个白色对象被黑色对象引用（白色被挂在黑色下）</li>
-<li>灰色对象与它之间的可达关系的白色对象遭到破坏（灰色同时丢了该白色）</li>
+<li>创建、销毁、调度G都需要每个M获取锁，这就形成了<strong>激烈的锁竞争</strong>。</li>
+<li>M转移G会造成<strong>延迟和额外的系统负载</strong>。比如当G中包含创建新协程的时候，M创建了<code>G1</code>，为了继续执行G，需要把<code>G1</code>交给<code>M1</code>执行，也造成了<strong>很差的局部性</strong>，因为<code>G1</code>和G是相关的，最好放在M上执行，而不是其他<code>M1</code>。</li>
+<li>系统调用(<code>CPU</code>在M之间的切换)导致<strong>频繁的线程阻塞和取消阻塞</strong>操作增加了系统开销。</li>
 </ul>
-<p>当两个条件同时被满足，就会出现对象丢失现象。解决此问题的最简单方法就是使用<code>STW</code>机制。但<code>STW</code>会有明显的资源浪费。</p>
-<h3 id="强弱三色不变式"><a href="#强弱三色不变式" class="headerlink" title="强弱三色不变式"></a>强弱三色不变式</h3><p>通过破坏两个条件同时满足的情况来防止出现问题：</p>
+<h2 id="goroutine调度器的GMP模型的设计思想"><a href="#goroutine调度器的GMP模型的设计思想" class="headerlink" title="goroutine调度器的GMP模型的设计思想"></a><code>goroutine</code>调度器的<code>GMP</code>模型的设计思想</h2><p>面对早期调度器的问题，<code>Go</code>设计了新的调度器。</p>
+<h3 id="GMP模型的简介"><a href="#GMP模型的简介" class="headerlink" title="GMP模型的简介"></a><code>GMP</code>模型的简介</h3><p>在新调度器中，出了<code>M(thread)</code>和<code>G(goroutine)</code>，又引进了<code>P(Processor)</code>。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/6bdb04101cc63565c17cd8fcaba17321_1068x876.png" alt="6bdb04101cc63565c17cd8fcaba17321_1068x876"></p>
+<p><strong><code>Processor</code>，它包含了运行<code>goroutine</code>的资源</strong>，如果线程想运行<code>goroutine</code>，必须先获取P，P中还包含了可运行的G队列。</p>
+<blockquote>
+<p><code>GMP</code>模型</p>
+</blockquote>
+<p>在<code>Go</code>中，<strong>线程是运行<code>goroutine</code>的实体，调度器的功能是把可运行的<code>goroutine</code>分配到工作线程上</strong>。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/ebfe3e28315f12a08fbb4ffaee32e046_1024x768.png" alt="ebfe3e28315f12a08fbb4ffaee32e046_1024x768"></p>
 <ul>
-<li>强三色不变式：<ul>
-<li>强制性不允许黑色对象引用白色对象，破坏条件1</li>
-<li><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214222216761.png" alt="image-20201214222216761"></li>
+<li><strong>全局队列</strong>（<code>Global Queue</code>）：<strong>存放等待运行的G</strong>。</li>
+<li><strong>P的本地队列</strong>：同全局队列类似，存放的也是<strong>等待运行的G</strong>，存的数量有限，不超过256个。<strong>新建<code>G1</code>时，<code>G1</code>优先加入到P的本地队列，如果队列满了，则会把本地队列中一半的G移动到全局队列</strong>。</li>
+<li><strong>P列表</strong>：所有的P都在<strong>程序启动时创建</strong>，并保存在数组中，<strong>最多有<code>GOMAXPROCS</code>(可通过环境变量或者在程序中通过<code>runtime.GOMAXPROCS()</code>配置)个</strong>。</li>
+<li><strong>M列表</strong>：当前操作系统分配到当前<code>Go</code>程序的内核线程数。<ul>
+<li>线程想运行任务就得获取P，从P的本地队列获取G，P队列为空时，M也会尝试从全局队列<strong>拿</strong>一批G放到P的本地队列，或从其他P的本地队列<strong>偷</strong>一半放到自己P的本地队列。M运行G，G执行之后，M会从P获取下一个G，不断重复下去。</li>
+<li><code>Go</code>语言本身限定M最大量是10000(可忽略)。也可以通过<code>runtime/debug</code>包中的<code>SetMaxThreads</code>函数设置</li>
+<li>M数量本身是动态的，有一个M阻塞会创建一个M，同时存在空闲时也会对其进行回收。</li>
 </ul>
 </li>
-<li>若三色不变式：<ul>
-<li>黑色对象可以引用白色对象，白色对象存在其他灰色对象对它的引用，或者可达它的链路上游存在灰色对象，破坏条件2</li>
-<li><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201214222130180.png" alt="image-20201214222130180"></li>
 </ul>
+<h3 id="调度器的设计策略"><a href="#调度器的设计策略" class="headerlink" title="调度器的设计策略"></a>调度器的设计策略</h3><blockquote>
+<p>复用线程</p>
+</blockquote>
+<p><strong>复用线程</strong>：避免频繁的创建、销毁线程，而是对线程的复用。</p>
+<ul>
+<li><code>work stealing</code>机制：当本线程无可运行的G时，尝试从其他线程绑定的P偷取G，而不是销毁线程。</li>
+<li><code>hand off</code>机制：当本线程因为G进行系统调用阻塞时，线程释放绑定的P，把P转移给其他空闲的线程执行。</li>
+</ul>
+<blockquote>
+<p>利用并行</p>
+</blockquote>
+<p><code>GOMAXPROCS</code>设置P的数量，最多有<code>GOMAXPROCS</code>个线程分布在多个<code>CPU</code>上同时运行。<code>GOMAXPROCS</code>也限制了并发的程度，比如<code>GOMAXPROCS = 核数/2</code>，则最多利用了一半的<code>CPU</code>核进行并行。</p>
+<p>其他的<code>CPU</code>可以交给其他进程使用。</p>
+<blockquote>
+<p>抢占</p>
+</blockquote>
+<p>在<code>co-routine</code>中要等待一个协程主动让出<code>CPU</code>才执行下一个协程，在<code>Go</code>中，一个<code>goroutine</code>最多占用<code>CPU 10ms</code>，防止其他<code>goroutine</code>被饿死，这就是<code>goroutine</code>不同于<code>co-routine</code>的一个地方（抢占式）。</p>
+<blockquote>
+<p>全局G队列</p>
+</blockquote>
+<p>在新的调度器中依然有全局G队列，但功能已经被弱化了，当M执行<code>work stealing</code>从其他P<strong>偷</strong>不到G时，它可以从全局G队列获取G。</p>
+<h3 id="go-func经历了什么过程"><a href="#go-func经历了什么过程" class="headerlink" title="go func经历了什么过程"></a><code>go func</code>经历了什么过程</h3><p><img src="https://gitee.com/IsPromise/picture/raw/master/img/764f7be119026cc16314e87628e4013f_1920x1080.jpg" alt="764f7be119026cc16314e87628e4013f_1920x1080"></p>
+<ul>
+<li><p><code>go func</code>开始执行，创建一个G</p>
+</li>
+<li><p>将G放入当前执行函数对应的<code>M1</code>、P的局部队列。如果队列已满了，则放入全局队列。</p>
+</li>
+<li><p>而后<code>M1</code>通过P从本地队列中获取G。如果为本地队列为空，则从全局队列中和获取。全局队列也为空，那么会执行 <code>work stealing</code>机制从其他M、P组合中偷取G来执行</p>
+</li>
+<li><p>获取之后，<code>M1</code>调度G，而后执行<code>G.func</code>函数，直到时间片超时返回。并且这一部分是一个大循环直到执行G完成。</p>
+</li>
+<li><p>但是执行的时候可能会遇到问题：当M执行某一个G时候如果发生了<code>systemcall</code>或则其余阻塞操作，M会阻塞，如果当前有一些G在执行，<code>runtime</code>会把这个线程M从P中摘除(<code>detach</code>)，然后再创建一个新的操作系统的线程(如果有空闲的线程可用就复用空闲线程)来服务于这个P。</p>
+</li>
+<li><p>当阻塞的G停止阻塞后，其<code>M1</code>要么被销毁，要么被加入休眠对列。而G会被加入其他M、P的本地队列或者加入全局队列。</p>
+</li>
+<li><p>当M系统调用结束时候，这个G会尝试获取一个空闲的P执行，并放入到这个P的本地队列。如果获取不到P，那么这个线程M变成休眠状态， 加入到空闲线程中，然后这个G会被放入全局队列中。</p>
 </li>
 </ul>
-<p>强弱三色不变色满足其一，就可以保证不丢失对象。</p>
-<h3 id="屏障机制"><a href="#屏障机制" class="headerlink" title="屏障机制"></a>屏障机制</h3><p>屏障：通过添加额外的判断机制不打扰正常流程。</p>
+<h3 id="调度器的生命周期"><a href="#调度器的生命周期" class="headerlink" title="调度器的生命周期"></a>调度器的生命周期</h3><p><img src="https://gitee.com/IsPromise/picture/raw/master/img/b31027eeb493fa86654b41d46f34a98b_439x872.png" alt="b31027eeb493fa86654b41d46f34a98b_439x872"></p>
+<blockquote>
+<p>特殊的<code>M0</code>和<code>G0</code></p>
+</blockquote>
+<p><code>M0</code>：<code>M0</code>是启动程序后的编号为0的主线程，这个M对应的实例会在全局变量<code>runtime.m0</code>中，不需要在<code>heap</code>上分配，<code>M0</code>负责执行初始化操作和启动第一个G在之后<code>M0</code>就和其他的M一样了。</p>
+<p><code>G0</code>：<code>G0</code>是每次启动一个M都会第一个创建的<code>gourtine</code>，<code>G0</code>仅用于负责调度G，<code>G0</code>不指向任何可执行的函数, 每个M都会有一个自己的<code>G0</code>。在调度或系统调用时会使用<code>G0</code>的栈空间, 全局变量的<code>G0</code>是<code>M0</code>的<code>G0</code>。</p>
+<blockquote>
+<p>代码示例</p>
+</blockquote>
+<p>我们来跟踪一段代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"Hello world"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们来针对上面的代码对调度器里面的结构做一个分析。</p>
+<p>也会经历如上图所示的过程：</p>
+<ol>
+<li><code>runtime</code>创建最初的线程<code>m0</code>和<code>goroutine g0</code>，并把2者关联。</li>
+<li>调度器初始化：初始化<code>m0</code>、栈、垃圾回收，以及创建和初始化由<code>GOMAXPROCS</code>个P构成的P列表。</li>
+<li>示例代码中的main函数是<code>main.main</code>，<code>runtime</code>中也有1个main函数——<code>runtime.main</code>，代码经过编译后，<code>runtime.main</code>会调用<code>main.main</code>，程序启动时会为<code>runtime.main</code>创建<code>goroutine</code>，称它为<code>main goroutine</code>吧，然后把<code>main goroutine</code>加入到P的本地队列。</li>
+<li>启动<code>m0</code>，<code>m0</code>已经绑定了P，会从P的本地队列获取G，获取到<code>maingoroutine</code>。</li>
+<li>G拥有栈，M根据G中的栈信息和调度信息设置运行环境</li>
+<li>M运行G</li>
+<li>G退出，再次回到M获取可运行的G，这样重复下去，直到<code>main.main</code>退出，<code>runtime.main</code>执行<code>Defer</code>和<code>Panic</code>处理，或调用<code>runtime.exit</code>退出程序。</li>
+</ol>
+<p>调度器的生命周期几乎占满了一个<code>Go</code>程序的一生，<code>runtime.main</code>的<code>goroutine</code>执行之前都是为调度器做准备工作，<code>runtime.main</code>的<code>goroutine</code>运行，才是调度器的真正开始，直到<code>runtime.main</code>结束而结束。</p>
+<h3 id="可视化的GMP编程"><a href="#可视化的GMP编程" class="headerlink" title="可视化的GMP编程"></a>可视化的<code>GMP</code>编程</h3><blockquote>
+<p>基本的<code>trace</code>编程</p>
+</blockquote>
+<p>通过<code>trace</code>查看程序运行过程的基本信息。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"runtime/trace"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//trace编程的基本过程</span></span><br><span class="line"><span class="comment">//1、创建文件</span></span><br><span class="line"><span class="comment">//2、启动</span></span><br><span class="line"><span class="comment">//3、停止</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 1、创建trace文件</span></span><br><span class="line">	file, err := os.Create(<span class="string">"trace.out"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> file.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2、启动</span></span><br><span class="line">	err = trace.Start(file)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//正常要调试的业务逻辑</span></span><br><span class="line">	fmt.Println(<span class="string">"Hello ,World"</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3、停止</span></span><br><span class="line">	trace.Stop()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行之后得到的<code>trace</code>文件可以通过 <code>go tool trace</code>工具查看信息。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$GoPath</span><span class="variable">$</span> go tool trace trace.out</span><br><span class="line"><span class="number">2021</span>/<span class="number">04</span>/<span class="number">19</span> <span class="number">14</span>:<span class="number">27</span>:<span class="number">39</span> Parsing trace...</span><br><span class="line"><span class="number">2021</span>/<span class="number">04</span>/<span class="number">19</span> <span class="number">14</span>:<span class="number">27</span>:<span class="number">40</span> Splitting trace...</span><br><span class="line"><span class="number">2021</span>/<span class="number">04</span>/<span class="number">19</span> <span class="number">14</span>:<span class="number">27</span>:<span class="number">40</span> Opening browser. Trace viewer is listening on http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">14753</span></span><br></pre></td></tr></table></figure>
+
+<p>而后可以在网页查看相关信息。</p>
+<blockquote>
+<p><code>Debug trace</code>查看<code>GMP</code>信息</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;time&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    for i :&#x3D; 0; i &lt; 5; i++ &#123;</span><br><span class="line">        time.Sleep(time.Second)</span><br><span class="line">        fmt.Println(&quot;Hello World&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> go build trace2.go</span><br></pre></td></tr></table></figure>
+
+<p>通过Debug方式运行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> GODEBUG=schedtrace=<span class="number">1000</span> ./trace2 </span><br><span class="line">SCHED <span class="number">0</span>ms: gomaxprocs=<span class="number">2</span> idleprocs=<span class="number">0</span> threads=<span class="number">4</span> spinningthreads=<span class="number">1</span> idlethreads=<span class="number">1</span> runqueue=<span class="number">0</span> [<span class="number">0</span> <span class="number">0</span>]</span><br><span class="line">Hello World</span><br><span class="line">SCHED <span class="number">1003</span>ms: gomaxprocs=<span class="number">2</span> idleprocs=<span class="number">2</span> threads=<span class="number">4</span> spinningthreads=<span class="number">0</span> idlethreads=<span class="number">2</span> runqueue=<span class="number">0</span> [<span class="number">0</span> <span class="number">0</span>]</span><br><span class="line">Hello World</span><br><span class="line">SCHED <span class="number">2014</span>ms: gomaxprocs=<span class="number">2</span> idleprocs=<span class="number">2</span> threads=<span class="number">4</span> spinningthreads=<span class="number">0</span> idlethreads=<span class="number">2</span> runqueue=<span class="number">0</span> [<span class="number">0</span> <span class="number">0</span>]</span><br><span class="line">Hello World</span><br><span class="line">SCHED <span class="number">3015</span>ms: gomaxprocs=<span class="number">2</span> idleprocs=<span class="number">2</span> threads=<span class="number">4</span> spinningthreads=<span class="number">0</span> idlethreads=<span class="number">2</span> runqueue=<span class="number">0</span> [<span class="number">0</span> <span class="number">0</span>]</span><br><span class="line">Hello World</span><br><span class="line">SCHED <span class="number">4023</span>ms: gomaxprocs=<span class="number">2</span> idleprocs=<span class="number">2</span> threads=<span class="number">4</span> spinningthreads=<span class="number">0</span> idlethreads=<span class="number">2</span> runqueue=<span class="number">0</span> [<span class="number">0</span> <span class="number">0</span>]</span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>插入屏障：对象被引用时触发的机制（不在栈上使用）<ul>
-<li>对象A引用对象B时，B对象被标记为灰色。即将B挂在A下游B必须被标记为灰色。</li>
+<li><code>SCHED</code>：调试信息输出标志字符串，代表本行是<code>goroutine</code>调度器的输出；</li>
+<li><code>0ms</code>：即从程序启动到输出这行日志的时间；</li>
+<li><code>gomaxprocs</code>: P的数量，本例有2个P, 因为默认的P的属性是和<code>cpu</code>核心数量默认一致，当然也可以通过<code>GOMAXPROCS</code>来设置；</li>
+<li><code>idleprocs</code>: 处于<code>idle</code>（闲置）状态的P的数量；通过<code>gomaxprocs</code>和<code>idleprocs</code>的差值，我们就可知道执行go代码的P的数量；</li>
+<li><code>threads: os threads/M</code>的数量，包含<code>scheduler</code>使用的m数量，加上<code>runtime</code>自用的类似<code>sysmon</code>这样的<code>thread</code>的数量；</li>
+<li><code>spinningthreads</code>: 处于自旋状态的<code>os thread</code>数量；</li>
+<li><code>idlethread</code>: 处于<code>idle</code>状态的<code>os thread</code>的数量；</li>
+<li><code>runqueue=0</code>： <code>Scheduler</code>全局队列中G的数量；</li>
+<li><code>[0 0]</code>: 分别为2个P的<code>local queue</code>中的G的数量。</li>
 </ul>
-</li>
-</ul>
-<p>插入写屏障流程：</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135014689.png" alt="image-20201215135014689"></p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135039152.png" alt="image-20201215135039152"></p>
-<p>由于并发特性，此刻外界向对象4添加对象8、对象1添加对象9。对象4在堆区，即将触发插入屏障机制，对象1不触发。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135148404.png" alt="image-20201215135148404"></p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135212362.png" alt="image-20201215135212362"></p>
-<p>在准备回收白色前，重新遍历扫描一次栈空间。此时加<code>STW</code>暂停保护栈，防止外界干扰(有新的白色被黑色添加)。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215135342913.png" alt="image-20201215135342913"></p>
-<p>此后停止<code>STW</code>，清除白色。</p>
-<p>插入写屏障缺陷：结束时需要<code>STW</code>来重新扫描栈。</p>
-<ul>
-<li>删除屏障：对象被删除时触发的机制<ul>
-<li>被删除的对象，如果自身为灰色或者白色，那么被标记为灰色</li>
-</ul>
-</li>
-</ul>
-<p>删除写屏障流程：</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215140158791.png" alt="image-20201215140158791"></p>
-<p>遍历Root Set(非递归形式,只遍历一次).得到灰色节点。当灰色对象1删除对象5，如果不触发删除写屏障，5-2-3路径与主链路断开，最后均会被清除。此时触发删除写屏障，被删除的对象5自身被标记为灰色。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215140355838.png" alt="image-20201215140355838"></p>
-<p>循环上面流程进行三色标记，直到没有灰色结点</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215140528336.png" alt="image-20201215140528336"></p>
-<p>删除写屏障的不足：</p>
-<p>回收精度低，即使一个对象被删除了最后一个指向它的指针也依然要到下一轮<code>GC</code>中被清理掉。</p>
-<h2 id="混合写屏障机制"><a href="#混合写屏障机制" class="headerlink" title="混合写屏障机制"></a>混合写屏障机制</h2><p><code>Go V1.8</code>之后采用三色标记法+混合写屏障机制。</p>
-<p>这里我们注意， 屏障技术是不在栈上应用的，因为要保证栈的运行效率。</p>
-<p>具体操作：</p>
-<ul>
-<li><code>GC</code>开始将栈上的对象全部扫描并标记为黑色(之后不再进行第二次重复扫描，无需<code>STW</code>)</li>
-<li><code>GC</code>期间，任何在栈上创建的新对象，均为黑色</li>
-<li>被删除的对象标记为灰色</li>
-<li>被添加的对象标记为灰色</li>
-</ul>
-<p>满足：变形的弱三色不变式（结合了插入、删除屏障两者的优点）</p>
-<p>流程：</p>
-<p><code>GC</code>开始优先扫描栈，将栈全部标记为黑。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215141820018.png" alt="image-20201215141820018"></p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215141912391.png" alt="image-20201215141912391"></p>
+<h2 id="Go调度器GMP调度场景的全过程分析"><a href="#Go调度器GMP调度场景的全过程分析" class="headerlink" title="Go调度器GMP调度场景的全过程分析"></a><code>Go</code>调度器<code>GMP</code>调度场景的全过程分析</h2><h4 id="场景一：G1创建G2"><a href="#场景一：G1创建G2" class="headerlink" title="场景一：G1创建G2"></a>场景一：<code>G1</code>创建<code>G2</code></h4><p>P拥有<code>G1</code>，<code>M1</code>获取P后开始运行<code>G1</code>，<code>G1</code>使用<code>go func()</code>创建了<code>G2</code>。为了<strong>局部性</strong><code>G2</code>优先加入到<code>P1</code>的本地队列。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/2debce43683adca1acb5ca5210057232_1074x900.png" alt="2debce43683adca1acb5ca5210057232_1074x900"></p>
+<h4 id="场景二：G1执行完毕"><a href="#场景二：G1执行完毕" class="headerlink" title="场景二：G1执行完毕"></a>场景二：<code>G1</code>执行完毕</h4><p><code>G1</code>运行完成后(函数：<code>goexit</code>)，M上运行的<code>goroutine</code>切换为<code>G0</code>，<code>G0</code>负责调度时协程的切换（函数：<code>schedule</code>）。从P的本地队列取<code>G2</code>，从<code>G0</code>切换到<code>G2</code>，并开始运行<code>G2</code>(函数：<code>execute</code>)。实现了线程<code>M1</code>的复用。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/93658da22081d52ed1caf32f42145e5a_1624x984.png" alt="93658da22081d52ed1caf32f42145e5a_1624x984"></p>
+<h4 id="场景三：G2开辟过多的G"><a href="#场景三：G2开辟过多的G" class="headerlink" title="场景三：G2开辟过多的G"></a>场景三：<code>G2</code>开辟过多的G</h4><p>假设每个P的本地队列只能存4个G。<code>G2</code>要创建了6个G，前3个G（<code>G3</code>, <code>G4</code>, <code>G5</code>）已经加入<code>p1</code>的本地队列，<code>p1</code>本地队列满了。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/6415bfab3595fc22090595acc7c1b4b1_1104x1030.png" alt="6415bfab3595fc22090595acc7c1b4b1_1104x1030"></p>
+<h3 id="场景四：G2本地队列满再创建G7"><a href="#场景四：G2本地队列满再创建G7" class="headerlink" title="场景四：G2本地队列满再创建G7"></a>场景四：<code>G2</code>本地队列满再创建<code>G7</code></h3><p><code>G2</code>在创建<code>G7</code>的时候，发现<code>P1</code>的本地队列已满，需要执行<strong>负载均衡</strong>(把<code>P1</code>中本地队列中前一半的G，还有新创建G<strong>转移</strong>到全局队列)</p>
+<p>注意：（实现中并不一定是新的G，如果G是<code>G2</code>之后就执行的，会被保存在本地队列，利用某个老的G替换新G加入全局队列）</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/d12776bfd5cd10f8c1979c61d467499c_1120x1068.png" alt="d12776bfd5cd10f8c1979c61d467499c_1120x1068"></p>
+<p>这些G被转移到全局队列时，会被打乱顺序。所以G3,G4,G7被转移到全局队列。</p>
+<h3 id="场景五：G2本地队列未满创建G8"><a href="#场景五：G2本地队列未满创建G8" class="headerlink" title="场景五：G2本地队列未满创建G8"></a>场景五：<code>G2</code>本地队列未满创建<code>G8</code></h3><p><code>G2</code>创建<code>G8</code>时，<code>P1</code>的本地队列未满，所以<code>G8</code>会被加入到<code>P1</code>的本地队列。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/7a01ac7a3a4fd14493224827409f77f8_1036x1048.png" alt="7a01ac7a3a4fd14493224827409f77f8_1036x1048"></p>
+<p> <code>G8</code>加入到<code>P1</code>点本地队列的原因还是因为<code>P1</code>此时在与<code>M1</code>绑定，而<code>G2</code>此时是<code>M1</code>在执行。所以<code>G2</code>创建的新的G会优先放置到自己的M绑定的P上。</p>
+<h3 id="场景六：唤醒正在休眠的M"><a href="#场景六：唤醒正在休眠的M" class="headerlink" title="场景六：唤醒正在休眠的M"></a>场景六：唤醒正在休眠的M</h3><p>规定：<strong>在创建G时，运行的G会尝试唤醒其他空闲的P和M组合去执行</strong>。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/606acb1e4bf6b85c352b213744771601_1976x1098.png" alt="606acb1e4bf6b85c352b213744771601_1976x1098"></p>
+<p>假定<code>G2</code>唤醒了<code>M2</code>，<code>M2</code>绑定了<code>P2</code>，并运行<code>G0</code>，但<code>P2</code>本地队列没有G，<code>M2</code>此时为<strong>自旋线程（即没有G但为运行状态的线程，不断寻找G）</strong></p>
+<h3 id="场景七：被唤醒的M2从全局队列批量获取G"><a href="#场景七：被唤醒的M2从全局队列批量获取G" class="headerlink" title="场景七：被唤醒的M2从全局队列批量获取G"></a>场景七：被唤醒的<code>M2</code>从全局队列批量获取G</h3><p><code>M2</code>尝试从全局队列(简称“<code>GQ</code>”)取一批G放到<code>P2</code>的本地队列（函数：<code>findrunnable()</code>）。<code>M2</code>从全局队列取的G数量符合下面的公式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n = min(<span class="built_in">len</span>(GQ)/GOMAXPROCS + <span class="number">1</span>, <span class="built_in">len</span>(GQ/<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<p>至少从全局队列取1个G，但每次不要从全局队列移动太多的G到P本地队列，给其他P留点。这是<strong>从全局队列到P本地队列的负载均衡</strong>。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/d646d4d213d7b603f211cd74ba0dd391_1920x1080.jpeg" alt="d646d4d213d7b603f211cd74ba0dd391_1920x1080"></p>
+<p> 假定我们场景中一共有4个P（<code>GOMAXPROCS</code>设置为4，那么我们允许最多就能用4个P来供M使用）。所以<code>M2</code>只从能从全局队列取1个G（即<code>G3</code>）移动<code>P2</code>本地队列，然后完成从<code>G0</code>到<code>G3</code>的切换，运行<code>G3</code>。</p>
+<h3 id="场景八：M2从M1中偷取G"><a href="#场景八：M2从M1中偷取G" class="headerlink" title="场景八：M2从M1中偷取G"></a>场景八：<code>M2</code>从<code>M1</code>中偷取G</h3><p>假设<code>G2</code>一直在<code>M1</code>上运行，经过2轮后，<code>M2</code>已经把<code>G7</code>、<code>G4</code>从全局队列获取到了<code>P2</code>的本地队列并完成运行，全局队列和<code>P2</code>的本地队列都空了,如场景8图的左半部分。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/8abf6b47b0871011b6f18f55365c1774_1632x1130.png" alt="8abf6b47b0871011b6f18f55365c1774_1632x1130"></p>
+<p><strong>全局队列已经没有G，那M就要执行<code>work stealing</code>(偷取)：从其他有G的P哪里偷取一半G过来，放到自己的P本地队列</strong>。<code>P2</code>从<code>P1</code>的本地队列尾部取一半的G，本例中一半则只有1个<code>G8</code>，放到<code>P2</code>的本地队列并执行。</p>
+<h3 id="场景九：自旋线程的最大限制"><a href="#场景九：自旋线程的最大限制" class="headerlink" title="场景九：自旋线程的最大限制"></a>场景九：自旋线程的最大限制</h3><p>注意：自旋线程 + 执行线程 &lt;= <code>GOMAXPROCS</code></p>
+<p><code>G1</code>本地队列<code>G5</code>、<code>G6</code>已经被其他M偷走并运行完成，当前<code>M1</code>和<code>M2</code>分别在运行<code>G2</code>和<code>G8</code>，<code>M3</code>和<code>M4</code>没有<code>goroutine</code>可以运行，<code>M3</code>和<code>M4</code>处于<strong>自旋状态</strong>，它们不断寻找<code>goroutine</code>。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/10b49d04c42c3d688986ff41005ee63b_1682x1084.png" alt="10b49d04c42c3d688986ff41005ee63b_1682x1084"></p>
 <blockquote>
-<p> 场景一：对象被一个堆对象引用，成为栈对象的下游</p>
+<p>为什么要让<code>M3</code>和<code>M4</code>自旋</p>
 </blockquote>
-<p>将对象7之间添加到对象1的下游</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215142707848.png" alt="image-20201215142707848"></p>
-<p>对象4删除对象7的引用关系：由于对象4是堆区，所以触发写屏障，对象7标记为灰色</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215142810138.png" alt="image-20201215142810138"></p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215142914367.png" alt="image-20201215142914367"></p>
-<p>此后进行三色标记操作直到结束。</p>
-<blockquote>
-<p>场景二：对象被一个栈对象删除引用，成为另一个栈对象的下游</p>
-</blockquote>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144153105.png" alt="image-20201215144153105"></p>
-<p>新创建一个对象9在栈区域，将对象9添加下游为对象3。对象2删除对象3的引用。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144309952.png" alt="image-20201215144309952"></p>
-<p>如果对象9不引用对象3，那么对象3会被保护一轮，到下一轮<code>GC</code>回收。</p>
-<blockquote>
-<p>场景3：对象被另一个堆对象引用，成为另一个对象的下游</p>
-</blockquote>
-<p>对象10假设已经扫描标记为黑色（特殊情况）</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144633880-1608017090241.png" alt="image-20201215144633880"></p>
-<p>堆对象10添加下游堆对象7，触发屏障机制，被添加的对象标记为灰色，对象7变成灰色（对象6被保护）。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145008917.png" alt="image-20201215145008917"></p>
-<p>堆对象4删除对对象7的引用，触发屏障机制，被删除的对象标记为灰色，对象7标记为灰色。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215144953359.png" alt="image-20201215144953359"></p>
-<p>最终指向三色标记流程直到结束。</p>
-<blockquote>
-<p>对象从一个栈对象删除引用，成为一个堆对象下游</p>
-</blockquote>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145259263.png" alt="image-20201215145259263"></p>
-<p>栈对象1删除对栈对象2的引用(栈空间不触发写屏障)。堆对象4将之前引用对象7的关系，转移至对象2(对象4删除对象7引用关系)。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145343040.png" alt="image-20201215145343040"></p>
-<p>对象4在删除的时候，触发写屏障，标记被删除对象7为灰色。保护对象7及下游节点。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/image-20201215145445433.png" alt="image-20201215145445433"></p>
-<p>此时对象7以及其引用会被保护一轮。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>GoV1.3-</code> 普通标记清除法，整体过程需要启动<code>STW</code>，效率极低。</p>
-<p><code>GoV1.5-</code> 三色标记法， 堆空间启动写屏障，栈空间不启动，全部扫描之后，需要重新扫描一次栈(需要<code>STW</code>)，效率普通</p>
-<p><code>GoV1.8-</code>三色标记法，混合写屏障机制， 栈空间不启动，堆空间启动。整个过程不需要<code>STW</code>，效率较高。</p>
-<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/GolangGC.jpg" alt="GolangGC"></p>
+<p>自旋本质是在运行，线程在运行却没有执行G，就变成了浪费<code>CPU</code>。不t通过销毁线程，来节约<code>CPU</code>资源是因为创建和销毁<code>CPU</code>也会浪费时间，我们<strong>希望当有新<code>goroutine</code>创建时，立刻能有M运行它</strong>，如果销毁再新建就增加了时延，降低了效率。当然也考虑了过多的自旋线程是浪费<code>CPU</code>，所以系统中最多有<code>GOMAXPROCS</code>个自旋的线程(当前例子中的<code>GOMAXPROCS</code>=4，所以一共4个P)，多余的没事做线程会让他们休眠。</p>
+<h3 id="场景十：G发生系统调用-阻塞"><a href="#场景十：G发生系统调用-阻塞" class="headerlink" title="场景十：G发生系统调用/阻塞"></a>场景十：G发生系统调用/阻塞</h3><p> 假定当前除了<code>M3</code>和<code>M4</code>为自旋线程，还有<code>M5</code>和<code>M6</code>为空闲的线程(没有得到P的绑定，注意我们这里最多就只能够存在4个P，所以P的数量应该永远是<code>M&gt;=P</code>, 大部分都是M在抢占需要运行的P)，<code>G8</code>创建了<code>G9</code>，<code>G8</code>进行了<strong>阻塞的系统调用</strong>，<code>M2</code>和<code>P2</code>立即解绑，<code>P2</code>会执行以下判断：如果<code>P2</code>本地队列有G、全局队列有G或有空闲的M，<code>P2</code>都会立马唤醒1个M和它绑定，否则<code>P2</code>则会加入到空闲P列表，等待M来获取可用的P。</p>
+<p>本场景中，<code>P2</code>本地队列有<code>G9</code>，可以和其他空闲的线程<code>M5</code>绑定。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/549aa458fab4c3e7cac5086d9326c1d2_2642x1494.png" alt="549aa458fab4c3e7cac5086d9326c1d2_2642x1494"></p>
+<p>注意：不会去有限唤醒自旋线程来执行<code>P2</code>，因为自旋线程抢占的是G，而此时阻塞解绑后需要有新的M来与<code>P2</code>绑定去执行本地队列的G。所以是唤醒的休眠的M。</p>
+<h3 id="场景十一：G发生系统调用-非阻塞"><a href="#场景十一：G发生系统调用-非阻塞" class="headerlink" title="场景十一：G发生系统调用/非阻塞"></a>场景十一：G发生系统调用/非阻塞</h3><p><code>G8</code>创建了<code>G9</code>，假如<code>G8</code>进行了<strong>非阻塞系统调用</strong>。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/246c03cdf1eb8307b70865d0debaa1f0_2678x1466.png" alt="246c03cdf1eb8307b70865d0debaa1f0_2678x1466"></p>
+<p><code>M2</code>和<code>P2</code>会解绑，但<code>M2</code>会记住<code>P2</code>，然后<code>G8</code>和<code>M2</code>进入<strong>系统调用</strong>状态。当<code>G8</code>和<code>M2</code>退出系统调用时，会尝试获取<code>P2</code>，如果无法获取，则获取空闲的P，如果依然没有，<code>G8</code>会被记为可运行状态，并加入到全局队列,<code>M2</code>因为没有P的绑定而变成休眠状态(长时间休眠等待<code>GC</code>回收销毁)。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>Go</code>调度器很轻量也很简单，足以撑起<code>goroutine</code>的调度工作，并且让<code>Go</code>具有了原生（强大）并发的能力。<strong><code>Go</code>调度本质是把大量的<code>goroutine</code>分配到少量线程上去执行，并利用多核并行，实现更强大的并发</strong></p>
 
       
 
@@ -475,7 +540,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/15/GC/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/04/26/GMP%E6%A8%A1%E5%9E%8B/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -489,18 +554,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/04/26/GMP%E6%A8%A1%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          GMP模型
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/12/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">计算机网络</div>
+    <a href="/2020/12/15/GC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">GC</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -527,7 +583,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GC回收"><span class="toc-number">1.</span> <span class="toc-text">GC回收</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#标记清除-Mark-and-sweep"><span class="toc-number">1.1.</span> <span class="toc-text">标记清除(Mark and sweep)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三色标记法"><span class="toc-number">1.2.</span> <span class="toc-text">三色标记法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#强弱三色不变式"><span class="toc-number">1.2.1.</span> <span class="toc-text">强弱三色不变式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#屏障机制"><span class="toc-number">1.2.2.</span> <span class="toc-text">屏障机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#混合写屏障机制"><span class="toc-number">1.3.</span> <span class="toc-text">混合写屏障机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GMP模型"><span class="toc-number">1.</span> <span class="toc-text">GMP模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Golang调度器由来"><span class="toc-number">1.1.</span> <span class="toc-text">Golang调度器由来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程与协程的产生"><span class="toc-number">1.1.1.</span> <span class="toc-text">线程与协程的产生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程与协程的映射关系"><span class="toc-number">1.1.2.</span> <span class="toc-text">线程与协程的映射关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Go对于协程的处理"><span class="toc-number">1.1.3.</span> <span class="toc-text">Go对于协程的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goroutine调度器的GMP模型的设计思想"><span class="toc-number">1.2.</span> <span class="toc-text">goroutine调度器的GMP模型的设计思想</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GMP模型的简介"><span class="toc-number">1.2.1.</span> <span class="toc-text">GMP模型的简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调度器的设计策略"><span class="toc-number">1.2.2.</span> <span class="toc-text">调度器的设计策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#go-func经历了什么过程"><span class="toc-number">1.2.3.</span> <span class="toc-text">go func经历了什么过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调度器的生命周期"><span class="toc-number">1.2.4.</span> <span class="toc-text">调度器的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可视化的GMP编程"><span class="toc-number">1.2.5.</span> <span class="toc-text">可视化的GMP编程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Go调度器GMP调度场景的全过程分析"><span class="toc-number">1.3.</span> <span class="toc-text">Go调度器GMP调度场景的全过程分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#场景一：G1创建G2"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">场景一：G1创建G2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#场景二：G1执行完毕"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">场景二：G1执行完毕</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#场景三：G2开辟过多的G"><span class="toc-number">1.3.0.3.</span> <span class="toc-text">场景三：G2开辟过多的G</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#场景四：G2本地队列满再创建G7"><span class="toc-number">1.3.1.</span> <span class="toc-text">场景四：G2本地队列满再创建G7</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#场景五：G2本地队列未满创建G8"><span class="toc-number">1.3.2.</span> <span class="toc-text">场景五：G2本地队列未满创建G8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#场景六：唤醒正在休眠的M"><span class="toc-number">1.3.3.</span> <span class="toc-text">场景六：唤醒正在休眠的M</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#场景七：被唤醒的M2从全局队列批量获取G"><span class="toc-number">1.3.4.</span> <span class="toc-text">场景七：被唤醒的M2从全局队列批量获取G</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#场景八：M2从M1中偷取G"><span class="toc-number">1.3.5.</span> <span class="toc-text">场景八：M2从M1中偷取G</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#场景九：自旋线程的最大限制"><span class="toc-number">1.3.6.</span> <span class="toc-text">场景九：自旋线程的最大限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#场景十：G发生系统调用-阻塞"><span class="toc-number">1.3.7.</span> <span class="toc-text">场景十：G发生系统调用&#x2F;阻塞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#场景十一：G发生系统调用-非阻塞"><span class="toc-number">1.3.8.</span> <span class="toc-text">场景十一：G发生系统调用&#x2F;非阻塞</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
