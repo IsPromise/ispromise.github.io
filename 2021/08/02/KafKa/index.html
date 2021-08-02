@@ -6,15 +6,33 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>KafKa | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KafKa">
+<meta property="og:url" content="http://yoursite.com/2021/08/02/KafKa/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Kafka">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk1.jpg">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk2.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk3.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk4.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk5.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk6.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk7.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk8.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk9.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk11.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk10.jpg">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk12.png">
+<meta property="og:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk13.png">
+<meta property="article:published_time" content="2021-08-02T14:14:31.518Z">
+<meta property="article:modified_time" content="2021-08-02T14:18:45.300Z">
 <meta property="article:author" content="IsPromise">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/IsPromise/picture/raw/master/img/kfk1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -154,16 +172,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-KafKa" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-KafKa" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/02/KafKa/">KafKa</a>
+    <h1 class="article-title" itemprop="name">
+      KafKa
     </h1>
   
 
@@ -174,16 +190,423 @@
         
 		
 		 
+        <span class="archive-article-date">
+            阅读量 <span id="busuanzi_value_page_pv"></span>
+        </span>
+		
 
 		
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2>
-        
+        <h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><a id="more"></a>
+
+<h3 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h3><p>消息队列即<code>Message Queue</code>，也就是我们常说的<code>MQ</code>。含义是消息的传输过程中保存消息的容器。通常作为一个单独的中间件产品存在，独立部署。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk1.jpg" alt="kfk1"></p>
+<p>消息队列的特点：</p>
+<ul>
+<li>应用解耦</li>
+<li>异步处理</li>
+<li>流量削峰（缓冲）</li>
+<li>消息通讯</li>
+</ul>
+<p>市面上主流的消息队列有：<code>ActiveMQ</code>、<code>RabbitMQ</code>、<code>ZeroMQ</code>、<code>Kafka</code>、<code>MetaMQ</code>、<code>RocketMQ</code>等。</p>
+<h4 id="点对点模式"><a href="#点对点模式" class="headerlink" title="点对点模式"></a>点对点模式</h4><p>点对点模式通常是基于拉取或者轮询的消息传送模型，这个模型的特点是发送到队列的消息被一个且只有一个消费者进行处理。生产者将消息放入消息队列后，由消费者主动的去拉取消息进行消费。点对点模型的的优点是消费者拉取消息的频率可以由自己控制。但是消息队列是否有消息需要消费，在消费者端无法感知，所以在消费者端需要额外的线程去监控。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk2.png" alt="kfk2"></p>
+<h4 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h4><p> 发布订阅模式是一个基于消息送的消息传送模型，模型可以有多种不同的订阅者。生产者将消息放入消息队列后，队列会将消息推送给订阅过该类消息的消费者，由于是消费者被动接收推送，所以无需感知消息队列是否有待消费的消息。</p>
+<p>但是由于机器性能不一样，所以处理消息的能力也会不一样，但消息队列却无法感知消费者消费的速度！推送的速度成了发布订阅模模式的一个问题，容易形成资源浪费。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk3.png" alt="kfk3"></p>
+<h3 id="Kafka概述"><a href="#Kafka概述" class="headerlink" title="Kafka概述"></a><code>Kafka</code>概述</h3><p><code>Kafka</code>是最初由<code>Linkedin</code>公司开发，是一个分布式、分区的、多副本的、多订阅者，基于<code>zookeeper</code>协调的分布式日志系统（也可以当做<code>MQ</code>系统），常见可以用于<code>web/nginx</code>日志、访问日志，消息服务等等，<code>Linkedin</code>于2010年贡献给了<code>Apache</code>基金会并成为顶级开源项目。</p>
+<p>​    </p>
+<h3 id="KafKa基础架构"><a href="#KafKa基础架构" class="headerlink" title="KafKa基础架构"></a><code>KafKa</code>基础架构</h3><p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk4.png" alt="kfk4"></p>
+<h4 id="部分名词解释"><a href="#部分名词解释" class="headerlink" title="部分名词解释"></a>部分名词解释</h4><blockquote>
+<p>生产者<code>Producer</code>和消费者<code>Consumer</code></p>
+</blockquote>
+<p><code>Producer</code>：消息生产者，就是向<code>kafka broker</code>发消息的客户端。</p>
+<p><code>Consumer</code>：消息消费者，向<code>kafka</code>取消息的客户端。</p>
+<p><code>Consumer Group(CG)</code>：消费者组，由多个<code>consumer</code>组成。消费者组内每个消费者负责消费不同分区的数据，一个分区只能由一个组内的一个消费者消费，消费者组之间互不影响。所有的消费者都属于某个消费者组，即消费者组是逻辑上的一个订阅者。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk5.png" alt="kfk5"></p>
+<blockquote>
+<p>主题<code>Topic</code>和分区<code>Partition</code> </p>
+</blockquote>
+<p><code>Topic</code>：可以理解为一个队列，生产者和消费者面向的都是一个<code>topic</code>。每一个主题都对应一个 <strong>「消息队列」</strong>，这有点儿类似于数据库中的表。通常一个业务线建一个<code>topic</code>。</p>
+<p><code>Partition</code>：为了实现拓展性，一个非常大的<code>topic</code>可以分布到多个<code>broker</code>（即服务器）上， 一个 <code>topic</code> 可以分为多个 <code>partition</code>，每个 <code>partition</code> 是一个有序的队列；</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk6.png" alt="kfk6"></p>
+<blockquote>
+<p><code>Broker</code> 和集群<code>Cluster</code></p>
+</blockquote>
+<p><code>Broker</code>：一台<code>kafka</code>服务器就是一个<code>Broker</code>，一个集群（<code>Cluster</code>）由多个<code>broker</code>组成。一个<code>broker</code>可以容纳多个<code>topic</code>。<code>Broker</code>其作用有：</p>
+<ul>
+<li>接受生产者信息</li>
+<li>设置偏移量</li>
+<li>持久化消息到磁盘</li>
+<li>为消费者提供服务</li>
+</ul>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk7.png" alt="kfk7"></p>
+<p><code>Replica</code>：副本，为保证集群中的某个节点发生故障时，该节点上的 <code>partition</code> 数据不丢失，且 <code>kafka</code> 仍然能够继续工作，<code>kafka</code> 提供了副本机制，一个 <code>topic</code> 的每个分区都有若干个副本， 一个 <code>leader</code> 和若干个 <code>follower</code>。默认最大数是10，不能大于<code>broker</code>的数量。</p>
+<p><code>leader</code>：每个分区多个副本的“主”，生产者发送数据的对象，以及消费者消费数据的对象都是 <code>leader</code>。</p>
+<p><code>follower</code>：每个分区多个副本中的“从”，实时从 <code>leader</code> 中同步数据，保持和 <code>leader</code> 数据 的同步。<code>leader</code> 发生故障时，某个 <code>follower</code> 会成为新的 <code>follower</code>。</p>
+<blockquote>
+<p>注意</p>
+</blockquote>
+<p><code>Kafka</code>拥有保留消息机制，在一定期限内<code>Kafka</code>会保留消息。消息被消费者消费后，消息任然会进行保留，不像其他<code>MQ</code>一样会进行删除。</p>
+<p>保留机制：每一个主题都可以设置自己的保留策略。</p>
+<ul>
+<li><p>保留一定时间</p>
+</li>
+<li><p>保留一定大小</p>
+<p><code>Kafka</code> 的一个关键性质是日志保留（<code>retention</code>），我们可以配置主题的消息保留策略，譬如只保留一段时间的日志或者只保留特定大小的日志。当超过这些限制时，老的消息会被删除。我们也可以针对某个主题单独设置消息过期策略，这样对于不同应用可以实现个性化。</p>
+</li>
+</ul>
+<h4 id="Kafka工作流程"><a href="#Kafka工作流程" class="headerlink" title="Kafka工作流程"></a><code>Kafka</code>工作流程</h4><p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk8.png" alt="kfk8"></p>
+<p>1、生产者从<code>kafka</code>集群获取分区<code>leader</code>信息</p>
+<p>2、生产者将消息发送给<code>leader</code></p>
+<p>3、<code>leader</code>将消息写入本地磁盘</p>
+<p>4、<code>follower</code>从<code>leader</code>拉去消息数据</p>
+<p>5、<code>follower</code>将消息写入本地磁盘后向<code>leader</code>发送<code>ACK</code></p>
+<p>6、<code>leader</code>收到所有的<code>ACK</code>之后向生产者发送<code>ACK</code>。</p>
+<blockquote>
+<p>选择分区<code>partition</code>的原则</p>
+</blockquote>
+<p>1、<code>partition</code>写入时可以进行指定。</p>
+<p>2、如若没有指定<code>partition</code>但是设置了数据的<code>key</code>，会根据<code>key</code>值<code>hash</code>出一个<code>partition</code>。</p>
+<p>3、如果没有指定<code>partition</code>且没有设置数据的<code>key</code>值，则会采用轮询方式，即每次取一小段时间的数据写入某个<code>partition</code>，下一段时间写入下一个<code>partition</code>。</p>
+<blockquote>
+<p><code>ACK</code>应答机制</p>
+</blockquote>
+<p><code>producer</code>在向<code>kafka</code>写入消息的时候，可以设置参数来确定是否确认<code>kafka</code>接收到数据，这个参数可设置的值为0、1、<code>all</code>。</p>
+<ul>
+<li>0代表<code>producer</code>往集群发送数据不需要等到集群的返回，不确保消息发送成功。安全性最低但是效率最高。</li>
+<li>1代表<code>producer</code>往集群发送数据只要<code>leader</code>应答就可以发送下一条，只确保<code>leader</code>发送成功。</li>
+<li><code>all</code>代表<code>producer</code>往集群发送数据需要所有的<code>follower</code>都完成从<code>leader</code>的同步才会发送下一条，确保<code>leader</code>发送成功和所有的副本都完成备份。安全性最高，但是效率最低。</li>
+</ul>
+<p>最后要注意的是，如果往不存在的<code>topic</code>写数据，<code>kafka</code>会自动创建<code>topic</code>，<code>partition</code>和<code>replication</code>的数量默认配置都是1。</p>
+<h4 id="Topic和数据日志"><a href="#Topic和数据日志" class="headerlink" title="Topic和数据日志"></a><code>Topic</code>和数据日志</h4><p><code>topic</code>是同一类别的消息记录(<code>record</code>)的集合。在<code>Kafka</code>中，一个主题通常有多个订阅者。对于每个主题，<code>Kafka</code>集群维护了一个分区数据日志文件结构如下:</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk9.png" alt="kfk9"></p>
+<p>每个<code>partition</code>都是一个<strong>有序并且不可变</strong>的消息记录集合。当新的数据写入时，就被<strong>追加到<code>partition</code>的末尾</strong>。在每个<code>partition</code>中，每条消息都会被分配一个顺序的唯一标识，这个标识被称为<code>offset</code>，即<strong>偏移量</strong>。注意，<code>Kafka</code><strong>只保证在同一个<code>partition</code>内部消息是有序的</strong>，在不同<code>partition</code>之间，并不能保证消息有序。</p>
+<h4 id="Partition结构"><a href="#Partition结构" class="headerlink" title="Partition结构"></a><code>Partition</code>结构</h4><p><code>Partition</code>分区在服务器上的<strong>表现形式就是一个一个的文件夹</strong>，每个<code>partition</code>的文件夹下面会有多组<code>segment</code>文件，每组<code>segment</code>文件又包含<code>.index</code>文件、<code>.log</code>文件、<code>.timeindex</code>文件三个文件。其中<code>.log</code>文件就是实际存储<code>message</code>的地方，而<code>.index</code>和<code>.timeindex</code>文件为索引文件，用于检索消息。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk11.png" alt="kfk11"></p>
+<blockquote>
+<p>分区的原因和策略</p>
+</blockquote>
+<ul>
+<li><strong>方便在集群中扩展</strong>，每个 <code>Partition</code> 可以通过调整以适应它所在的机器，而一个 <code>topic</code> 又可以有多个 <code>Partition</code> 组成，因此整个集群就可以适应任意大小的数据了</li>
+<li><strong>可以提高并发</strong>，因为可以以 <code>Partition</code> 为单位读写。</li>
+</ul>
+<h3 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a><code>Zookeeper</code></h3><p><code>ZooKeeper</code> 是 <code>Apache</code> 软件基金会的一个软件项目，它为大型分布式计算提供开源的<strong>分布式配置服务、同步服务和命名注册</strong>。</p>
+<p><code>ZooKeeper</code> 的架构通过冗余服务实现高可用性。</p>
+<p><code>Zookeeper</code> 的设计目标是将那些复杂且容易出错的分布式一致性服务封装起来，构成一个高效可靠的原语集，并以一系列简单易用的接口提供给用户使用。</p>
+<p>一个典型的分布式数据一致性的解决方案，分布式应用程序可以基于它实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、<code>Master</code> 选举、<strong>分布式锁</strong>和分布式队列等功能。</p>
+<p><code>Go</code>语言中的替代品是<code>Go ETCD</code>，来实现注册监控。</p>
+<h4 id="zookeeper数据结构"><a href="#zookeeper数据结构" class="headerlink" title="zookeeper数据结构"></a><code>zookeeper</code>数据结构</h4><p><code>zookkeeper</code> 提供的名称空间非常类似于标准文件系统，<code>key-value</code> 的形式存储。名称 <code>key</code> 由斜线 <strong>/</strong> 分割的一系列路径元素，<code>zookeeper</code> 名称空间中的每个节点都是由一个路径标识。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk10.jpg" alt="kfk10"></p>
+<h4 id="zookeeper安装"><a href="#zookeeper安装" class="headerlink" title="zookeeper安装"></a><code>zookeeper</code>安装</h4><p><a href="https://zookeeper.apache.org/releases.html" target="_blank" rel="noopener">zookeeper官网下载</a></p>
+<ol>
+<li>解压。</li>
+<li>将 <code>conf</code> 目录下的 <code>zoo_sample.cfg</code> 文件，复制一份，重命名为 <code>zoo.cfg</code></li>
+<li>在安装目录下面新建一个空的 <code>data</code> 文件夹和 <code>log</code> 文件夹</li>
+<li>修改 <code>zoo.cfg</code> 配置文件，将 <code>dataDir=/tmp/zookeeper</code> 修改成 <code>zookeeper</code> 安装目录所在的 <code>data</code> 文件夹，再添加一条添加数据日志的配置(<code>dataLogDir</code>需要根据自己的安装路径修改)。</li>
+<li>查看启动脚本<code>zkServer.cmd</code>，添加<code>&quot;-Dzookeeper.audit.enable=true&quot;</code></li>
+<li>双击 <code>zkServer.cmd</code> 启动程序</li>
+</ol>
+<h4 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">客户端doc地址：github.com/samuel/go-zookeeper/zk</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">    <span class="string">"time"</span></span><br><span class="line"></span><br><span class="line">    zk <span class="string">"github.com/samuel/go-zookeeper/zk"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取一个zk连接</span></span><br><span class="line"><span class="comment"> * @return &#123;[type]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getConnect</span><span class="params">(zkList []<span class="keyword">string</span>)</span> <span class="params">(conn *zk.Conn)</span></span> &#123;</span><br><span class="line">    conn, _, err := zk.Connect(zkList, <span class="number">10</span>*time.Second)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试连接</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test1</span><span class="params">()</span></span> &#123;</span><br><span class="line">    zkList := []<span class="keyword">string</span>&#123;<span class="string">"localhost:2181"</span>&#125;</span><br><span class="line">    conn := getConnect(zkList)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> conn.Close()</span><br><span class="line">    <span class="keyword">var</span> flags <span class="keyword">int32</span> = <span class="number">0</span></span><br><span class="line">    <span class="comment">//flags有4种取值：</span></span><br><span class="line">    <span class="comment">//0:永久，除非手动删除</span></span><br><span class="line">    <span class="comment">//zk.FlagEphemeral = 1:短暂，session断开则改节点也被删除</span></span><br><span class="line">    <span class="comment">//zk.FlagSequence  = 2:会自动在节点后面添加序号</span></span><br><span class="line">    <span class="comment">//3:Ephemeral和Sequence，即，短暂且自动添加序号</span></span><br><span class="line">    conn.Create(<span class="string">"/go_servers"</span>, <span class="literal">nil</span>, flags, zk.WorldACL(zk.PermAll)) <span class="comment">// zk.WorldACL(zk.PermAll)控制访问权限模式</span></span><br><span class="line"></span><br><span class="line">    time.Sleep(<span class="number">20</span> * time.Second)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">删改与增不同在于其函数中的version参数,其中version是用于 CAS支持</span></span><br><span class="line"><span class="comment">func (c *Conn) Set(path string, data []byte, version int32) (*Stat, error)</span></span><br><span class="line"><span class="comment">func (c *Conn) Delete(path string, version int32) error</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">demo：</span></span><br><span class="line"><span class="comment">if err = conn.Delete(migrateLockPath, -1); err != nil &#123;</span></span><br><span class="line"><span class="comment">    log.Error("conn.Delete(\"%s\") error(%v)", migrateLockPath, err)</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试临时节点</span></span><br><span class="line"><span class="comment"> * @return &#123;[type]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test2</span><span class="params">()</span></span> &#123;</span><br><span class="line">    zkList := []<span class="keyword">string</span>&#123;<span class="string">"localhost:2181"</span>&#125;</span><br><span class="line">    conn := getConnect(zkList)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> conn.Close()</span><br><span class="line">    conn.Create(<span class="string">"/testadaadsasdsaw"</span>, <span class="literal">nil</span>, zk.FlagEphemeral, zk.WorldACL(zk.PermAll))</span><br><span class="line"></span><br><span class="line">    time.Sleep(<span class="number">20</span> * time.Second)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取所有节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test3</span><span class="params">()</span></span> &#123;</span><br><span class="line">    zkList := []<span class="keyword">string</span>&#123;<span class="string">"localhost:2181"</span>&#125;</span><br><span class="line">    conn := getConnect(zkList)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> conn.Close()</span><br><span class="line"></span><br><span class="line">    children, _, err := conn.Children(<span class="string">"/go_servers"</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(err)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">"%v \n"</span>, children)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    test3()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Kafka安装"><a href="#Kafka安装" class="headerlink" title="Kafka安装"></a><code>Kafka</code>安装</h3><p><a href="https://kafka.apache.org/downloads.html" target="_blank" rel="noopener">Apache Kafka</a></p>
+<ol>
+<li>下载解压</li>
+<li>设置<code>config</code>目录下的 <code>server.properties</code>的<code>log.dirs</code>为自己设置的目录。</li>
+<li><code>zookeeper.properties</code>中的<code>dataDir</code>设置为自己新建的路径。</li>
+</ol>
+<p>注意：路径需要使用 “/“。</p>
+<p>管理员下执行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">窗口<span class="number">1</span>执行：bin\windows\zookeeper<span class="literal">-server</span><span class="literal">-start</span>.bat config\zookeeper.properties</span><br><span class="line"></span><br><span class="line">窗口<span class="number">2</span>再执行：bin\windows\kafka<span class="literal">-server</span><span class="literal">-start</span>.bat config\server.properties</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Go操作Kafka"><a href="#Go操作Kafka" class="headerlink" title="Go操作Kafka"></a><code>Go</code>操作<code>Kafka</code></h3><p><code>Go</code>语言中连接<code>kafka</code>使用第三方库: <code>github.com/Shopify/sarama</code>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/Shopify/sarama</span><br></pre></td></tr></table></figure>
+
+<p>注意事项: <code>sarama v1.20</code>之后的版本加入了<code>zstd</code>压缩算法，需要用到<code>cgo</code>，在<code>Windows</code>平台编译时会提示类似如下错误：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">github.com/DataDog/zstd</span><br><span class="line">exec: <span class="string">"gcc"</span>:executable file not found <span class="keyword">in</span> %PATH%</span><br></pre></td></tr></table></figure>
+
+<p>所以在<code>Windows</code>平台请使用<code>v1.19</code>版本的<code>sarama</code>。(如果不会版本控制请查看博客里面的<code>go module</code>章节)</p>
+<p>生产者测试示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"github.com/Shopify/sarama"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		SendMsg()</span><br><span class="line">		time.Sleep(time.Second * <span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// kafka Producer demo</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SendMsg</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1、 初始化生产者配置信息</span></span><br><span class="line">	config := sarama.NewConfig()</span><br><span class="line">	<span class="comment">// 设置确认模式 ACK</span></span><br><span class="line">	<span class="comment">// 0(不需确认) 1(leader确认) all(follower副本确认)</span></span><br><span class="line">	config.Producer.RequiredAcks = sarama.WaitForAll</span><br><span class="line">	<span class="comment">// 设置分区 随机</span></span><br><span class="line">	config.Producer.Partitioner = sarama.NewRandomPartitioner</span><br><span class="line">	<span class="comment">// 设置成功交付的信息</span></span><br><span class="line">	<span class="comment">// 将在success channel 返回</span></span><br><span class="line">	config.Producer.Return.Successes = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//2、 连接kafka</span></span><br><span class="line">	<span class="comment">//	创建实例 string切片表示可以连接多个kafka</span></span><br><span class="line">	client, err := sarama.NewSyncProducer([]<span class="keyword">string</span>&#123;<span class="string">"localhost:9092"</span>&#125;, config)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"producer closed,err:"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> client.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3、 构造一个消息</span></span><br><span class="line">	msg := &amp;sarama.ProducerMessage&#123;&#125;</span><br><span class="line">	<span class="comment">// 设置主题</span></span><br><span class="line">	msg.Topic = <span class="string">"Test_Log"</span></span><br><span class="line">	<span class="comment">// 构造消息</span></span><br><span class="line">	msg.Value = sarama.StringEncoder(fmt.Sprintf(<span class="string">"[%v] this is a test log"</span>,</span><br><span class="line">		time.Now().Format(<span class="string">"2006-1-2 15:04:05"</span>)))</span><br><span class="line"></span><br><span class="line">	<span class="comment">//4、 发送消息</span></span><br><span class="line">	pid, offset, err := client.SendMessage(msg)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"send message failed,err:"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">"partition:%v,offset:%v\n"</span>, pid, offset)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重复执行上面代码可以发现偏移量<code>offset</code>在改变。</p>
+<p>消费者测试实例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"github.com/Shopify/sarama"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用于同步读取消息进程和主进程</span></span><br><span class="line"><span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line"><span class="comment">// kafka Consumer demo</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//1、 创建消费者实例</span></span><br><span class="line">	consumer, err := sarama.NewConsumer([]<span class="keyword">string</span>&#123;<span class="string">"127.0.0.1:9092"</span>&#125;, <span class="literal">nil</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"fail to start comsumer,err %v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> consumer.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1、 通过 topic 获取所有 kafka 分区信息</span></span><br><span class="line">	partitionList, err := consumer.Partitions(<span class="string">"Test_Log"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"get partition failed,err:%v\n"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(partitionList)</span><br><span class="line">	<span class="comment">//2、 遍历所有分区</span></span><br><span class="line">	<span class="keyword">for</span> partition := <span class="keyword">range</span> partitionList &#123;</span><br><span class="line">		<span class="comment">//3、	针对每个分区创建对应的分区消费者</span></span><br><span class="line">		pc, err := consumer.ConsumePartition(<span class="string">"web_log"</span>, <span class="keyword">int32</span>(partition), sarama.OffsetNewest)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">"filed to start consumer for partition %d,err:%v\n"</span>, partition, err)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">defer</span> pc.AsyncClose()</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 注意需要先添加</span></span><br><span class="line">		wg.Add(<span class="number">1</span>)</span><br><span class="line">		<span class="comment">//4、 异步从每个分区消费信息</span></span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(sarama.PartitionConsumer)</span></span> &#123;</span><br><span class="line">			<span class="comment">// 每个进程结束默认 done</span></span><br><span class="line">			<span class="keyword">defer</span> wg.Done()</span><br><span class="line">			<span class="keyword">for</span> msg := <span class="keyword">range</span> pc.Messages() &#123;</span><br><span class="line">				fmt.Printf(<span class="string">"Partition:%d ,Offset: %d ,Key:%v ,Value:%v \n"</span>,</span><br><span class="line">					msg.Partition,</span><br><span class="line">					msg.Offset,</span><br><span class="line">					<span class="keyword">string</span>(msg.Key),</span><br><span class="line">					<span class="keyword">string</span>(msg.Value),</span><br><span class="line">				)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;(pc)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 同步进程</span></span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用<code>tail</code>库读取日志</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tail 包读取日志</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetLogMsg</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//1、 配置信息设置</span></span><br><span class="line">	<span class="comment">// 日志路径</span></span><br><span class="line">	fileName := <span class="string">`./xx.log`</span></span><br><span class="line">	config := tail.Config&#123;</span><br><span class="line">		<span class="comment">// 打开文件从哪开始读数据</span></span><br><span class="line">		Location: &amp;tail.SeekInfo&#123;</span><br><span class="line">			<span class="comment">// 偏移量</span></span><br><span class="line">			Offset: <span class="number">0</span>,</span><br><span class="line">			<span class="comment">// 表示读取方式 os.seek_*</span></span><br><span class="line">			Whence: os.SEEK_END,</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="comment">// reOpen 表示在日志分割时重复打开下个日志</span></span><br><span class="line">		ReOpen: <span class="literal">true</span>,</span><br><span class="line">		<span class="comment">// 如果文件不存在就提前退出</span></span><br><span class="line">		MustExist: <span class="literal">false</span>,</span><br><span class="line">		<span class="comment">// 轮训的方式</span></span><br><span class="line">		Poll:        <span class="literal">false</span>,</span><br><span class="line">		Pipe:        <span class="literal">false</span>,</span><br><span class="line">		RateLimiter: <span class="literal">nil</span>,</span><br><span class="line">		<span class="comment">// 继续寻找新行</span></span><br><span class="line">		Follow:      <span class="literal">true</span>,</span><br><span class="line">		MaxLineSize: <span class="number">0</span>,</span><br><span class="line">		<span class="comment">//日志记录信息设置</span></span><br><span class="line">		Logger: <span class="literal">nil</span>,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2、	打开文件</span></span><br><span class="line">	t, err := tail.TailFile(fileName, config)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"open file:%v failed,err:%v\n"</span>, fileName, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//tail 会将数据一行行发送到 *tail 的 lines 通道中</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 读取</span></span><br><span class="line">	<span class="keyword">var</span> msg *tail.Line</span><br><span class="line">	<span class="keyword">var</span> ok <span class="keyword">bool</span></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="comment">// 从通道中读取数据</span></span><br><span class="line">		msg, ok = &lt;-t.Lines</span><br><span class="line">		<span class="keyword">if</span> !ok &#123;</span><br><span class="line">            <span class="comment">//出错时需要暂停1s</span></span><br><span class="line">			fmt.Printf(<span class="string">"tail file close reopen,fileName:%s\n"</span>, t.Filename)</span><br><span class="line">			time.Sleep(time.Second)</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">       	<span class="comment">//打印读取到的信息 </span></span><br><span class="line">		fmt.Printf(<span class="string">"msg:%s\n"</span>, msg.Text)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h3><h4 id="生产者常用配置"><a href="#生产者常用配置" class="headerlink" title="生产者常用配置"></a>生产者常用配置</h4><blockquote>
+<p><code>ACKS</code></p>
+</blockquote>
+<p>即<code>ACK</code>应答机制。指定了必须要有多少个分区副本收到消息，生产者才会认为写入消息是成功的，这个参 数对消息丢失的可能性有重大影响。</p>
+<p>可为0、1、<code>all</code>。</p>
+<blockquote>
+<p><code>buffer.memory</code></p>
+</blockquote>
+<p> 设置生产者内存缓冲区的大小，生产者用它缓冲要发送到服务器的消息。如果数据产生 速度大于向 <code>broker</code> 发送的速度，导致生产者空间不足，<code>producer</code> 会阻塞或者抛出异常。默认 <code>33554432 (32M)</code></p>
+<blockquote>
+<p><code>max.block.ms</code></p>
+</blockquote>
+<p>指定了在调用 <code>send()</code>方法或者使用 <code>partitionsFor()</code>方法获取元数据时生产者的阻塞时间。 当生产者的发送缓冲区已满，或者没有可用的元数据时，这些方法就会阻塞。在阻塞时间达 到 <code>max.block.ms</code> 时，生产者会抛出超时异常。默认<code>60000ms</code></p>
+<blockquote>
+<p><code>retires</code></p>
+</blockquote>
+<p>发送失败时，指定生产者可以重发消息的次数。默认情况下，生产者在每次重试之间等 待 <code>100ms</code>，可以通过参数 <code>retry.backoff.ms</code> 参数来改变这个时间间隔。默认 0。</p>
+<blockquote>
+<p><code>receive.buffer.bytes</code> 和 <code>send.buffer.bytes</code></p>
+</blockquote>
+<p>指定 <code>TCP socket</code> 接受和发送数据包的缓存区大小。如果它们被设置为-1，则使用操作系 统的默认值。如果生产者或消费者处在不同的数据中心，那么可以适当增大这些值，因为跨 数据中心的网络一般都有比较高的延迟和比较低的带宽。默认102400。</p>
+<blockquote>
+<p><code>batch.size</code></p>
+</blockquote>
+<p>当多个消息被发送同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一 个批次可以使用的内存大小，按照字节数计算。当批次内存被填满后，批次里的所有消息会 被发送出去。但是生产者不一定都会等到批次被填满才发送，半满甚至只包含一个消息的批 次也有可能被发送。默认<code>16384(16k)</code>。</p>
+<blockquote>
+<p><code>linger.ms</code></p>
+</blockquote>
+<p>指定了生产者在发送批次前等待更多消息加入批次的时间。它和 <code>batch.size</code> 以先到者为 先。也就是说，一旦我们获得消息的数量够 <code>batch.size</code> 的数量了，他将会立即发送而不顾这 项设置，然而如果我们获得消息字节数比 <code>batch.size</code> 设置要小的多，我们需要“<code>linger</code>”特定的 时间以获取更多的消息。这个设置默认为 0，即没有延迟。设定 <code>linger.ms=5</code>，例如，将会减 少请求数目，但是同时会增加 5ms 的延迟，但也会提升消息的吞吐量。</p>
+<blockquote>
+<p><code>compression.type</code></p>
+</blockquote>
+<p><code>producer</code> 用于压缩数据的压缩类型。默认是无压缩。正确的选项值是 <code>none</code>、<code>gzip</code>、<code>snappy</code>。 压缩最好用于批量处理，批量处理消息越多，压缩性能越好。<code>snappy</code> 占用 <code>cpu</code> 少，提供较 好的性能和可观的压缩比，如果比较关注性能和网络带宽，用这个。如果带宽紧张，用 <code>gzip</code>， 会占用较多的 <code>cpu</code>，但提供更高的压缩比。</p>
+<blockquote>
+<p><code>client.id</code></p>
+</blockquote>
+<p>当向 <code>server</code> 发出请求时，这个字符串会发送给 <code>server</code>。目的是能够追踪请求源头，以此 来允许 <code>ip/port</code> 许可列表之外的一些应用可以发送信息。这项应用可以设置任意字符串，因 为没有任何功能性的目的，除了记录和跟踪。</p>
+<blockquote>
+<p><code>max.in.flight.requests.per.connection</code></p>
+</blockquote>
+<p>指定了生产者在接收到服务器响应之前可以发送多个消息，值越高，占用的内存越大， 当然也可以提升吞吐量。发生错误时，可能会造成数据的发送顺序改变，默认是 5 (修改）。<br>如果需要保证消息在一个分区上的严格顺序，这个值应该设为 1。不过这样会严重影响 生产者的吞吐量。  </p>
+<blockquote>
+<p><code>request.timeout.ms</code></p>
+</blockquote>
+<p>客户端将等待请求的响应的最大时间,如果在这个时间内没有收到响应，客户端将重发 请求;超过重试次数将抛异常。</p>
+<blockquote>
+<p><code>metadata.fetch.timeout.ms</code></p>
+</blockquote>
+<p>是指我们所获取的一些元数据的第一个时间数据。元数据包含：<code>topic</code>，<code>host</code>，<code>partitions</code>。 此项配置是指当等待元数据 <code>fetch</code> 成功完成所需要的时间，否则会跑出异常给客户端 .</p>
+<blockquote>
+<p><code>timeout.ms</code></p>
+</blockquote>
+<p>此配置选项控制 <code>broker</code> 等待副本确认的最大时间。如果确认的请求数目在此时间内没 有实现，则会返回一个错误。这个超时限制是以 <code>server</code> 端度量的，没有包含请求的网络延迟。 这个参数和 <code>acks</code> 的配置相匹配。  </p>
+<blockquote>
+<p><code>max.request.size</code></p>
+</blockquote>
+<p>控制生产者发送请求最大大小。假设这个值为 <code>1M</code>，如果一个请求里只有一个消息，那 这个消息不能大于 <code>1M</code>，如果一次请求是一个批次，该批次包含了 <code>1000</code> 条消息，那么每个 消息不能大于 <code>1KB</code>。注意：<code>broker</code> 具有自己对消息记录尺寸的覆盖，如果这个尺寸小于生产 者的这个设置，会导致消息被拒绝。   </p>
+<h4 id="保障生产者数据高可用"><a href="#保障生产者数据高可用" class="headerlink" title="保障生产者数据高可用"></a>保障生产者数据高可用</h4><p>保证 <code>producer</code> 发送的数据，能可靠的发送到指定的 <code>topic</code>，<code>topic</code> 的每个 <code>partition</code> 收到 <code>producer</code> 发送的数据后，都需要向 <code>producer</code> 发送 <code>ack</code>（<code>acknowledgement</code> 确认收到），如果 <code>producer</code> 收到 <code>ack</code>，就会进行下一轮的发送，否则重新发送数据。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk12.png" alt="kfk12"></p>
+<blockquote>
+<p>同步策略对比</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">方案</th>
+<th align="center">优点</th>
+<th align="center">缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">半数以上完成同步，就发送<code>ack</code></td>
+<td align="center">延迟低</td>
+<td align="center">选举新的 <code>leader</code> 时，容忍 n 台 节点的故障，需要 2n+1 个副 本</td>
+</tr>
+<tr>
+<td align="center">全部完成同步，才发送 <code>ack</code></td>
+<td align="center">选举新的 <code>leader</code> 时，容忍 n 台 节点的故障，需要 n+1 个副 本</td>
+<td align="center">延迟高</td>
+</tr>
+</tbody></table>
+<p> Kafka 选择了第二种方案，原因如下：</p>
+<ol>
+<li><p>同样为了容忍 n 台节点的故障，第一种方案需要 <code>2n+1</code> 个副本，而第二种方案只需要 <code>n+1</code> 个副本，而 <code>Kafka</code> 的每个分区都有大量的数据，第一种方案会造成大量数据的冗余。</p>
+</li>
+<li><p>虽然第二种方案的网络延迟会比较高，但网络延迟对 <code>Kafka</code> 的影响较小。</p>
+</li>
+</ol>
+<h4 id="ISR策略"><a href="#ISR策略" class="headerlink" title="ISR策略"></a><code>ISR</code>策略</h4><p>采用第二种方案之后，设想以下情景：<code>leader</code> 收到数据，所有 <code>follower</code> 都开始同步数据， 但有一个 <code>follower</code>，因为某种故障，迟迟不能与 <code>leader</code> 进行同步，那 <code>leader</code> 就要一直等下去， 直到它完成同步，才能发送 <code>ack</code>。这个问题怎么解决呢？</p>
+<p>答： <code>Leader</code> 维护了一个动态的 <code>in-sync replica set (ISR)</code>，意为和 <code>leader</code> 保持同步的 <code>follower</code> 集 合。当 <code>ISR</code> 中的 <code>follower</code> 完成数据的同步之后，<code>leader</code> 就会给 <code>follower</code> 发送 <code>ack</code>。如果 <code>follower</code> 长时间 未 向 <code>leader</code> 同 步 数 据 ， 则 该 <code>follower</code> 将 被 踢 出 <code>ISR</code> 。</p>
+<h4 id="故障处理细节"><a href="#故障处理细节" class="headerlink" title="故障处理细节"></a>故障处理细节</h4><blockquote>
+<p><code>log</code>文件中的<code>HW</code>和<code>LEO</code></p>
+</blockquote>
+<p><code>LEO</code>：指的是每个副本最大的 <code>offset</code>。</p>
+<p><code>HW</code>：指的是消费者能见到的最大的 <code>offset</code>，<code>ISR</code> 队列中最小的 <code>LEO</code>。</p>
+<p><img src="https://gitee.com/IsPromise/picture/raw/master/img/kfk13.png" alt="kfk13"></p>
+<ol>
+<li><p><code>follower</code> 故障：<code>follower</code> 发生故障后会被临时踢出 <code>ISR</code>，待该 <code>follower</code> 恢复后，<code>follower</code> 会读取本地磁盘 记录的上次的 <code>HW</code>，并将 <code>log</code> 文件高于 <code>HW</code> 的部分截取掉，从 <code>HW</code> 开始向 <code>leader</code> 进行同步。 等该 <code>follower</code> 的 <code>LEO</code> 大于等于该 <code>Partition</code> 的 <code>HW</code>，即 <code>follower</code> 追上 <code>leader</code> 之后，就可以重 新加入 <code>ISR</code> 了。</p>
+</li>
+<li><p><code>leader</code> 故障： <code>leader</code> 发生故障之后，会从 <code>ISR</code> 中选出一个新的 <code>leader</code>，之后，为保证多个副本之间的 数据一致性，其余的 <code>follower</code> 会先将各自的 <code>log</code> 文件高于 <code>HW</code> 的部分截掉，然后从新的 <code>leader</code> 同步数据。</p>
+</li>
+</ol>
+<p>注意：<strong>这只能保证副本之间的数据一致性，并不能保证数据不丢失或者不重复。</strong></p>
+<h4 id="Exactly-Once语义"><a href="#Exactly-Once语义" class="headerlink" title="Exactly Once语义"></a><code>Exactly Once</code>语义</h4><p>将服务器的 <code>ACK</code> 级别设置为-1，可以保证 <code>Producer</code> 到 <code>Server</code> 之间不会丢失数据，即 <strong><code>At Least Once</code> 语义</strong>。相对的，将服务器 <code>ACK</code> 级别设置为 0，可以保证生产者每条消息只会被 发送一次，即 <strong><code>At Most Once</code> 语义。</strong></p>
+<p><strong><code>At Least Once</code> 可以保证数据不丢失，但是不能保证数据不重复</strong>；相对的，<strong><code>At Most Once</code> 可以保证数据不重复，但是不能保证数据不丢失</strong>。但是，对于一些非常重要的信息，比如说 交易数据，下游数据消费者要求数据既不重复也不丢失，即 <code>Exactly Once</code> 语义。</p>
+<p>在 0.11 版 本以前的 <code>Kafka</code>，对此是无能为力的，只能保证数据不丢失，再在下游消费者对数据做全局 去重。对于多个下游应用的情况，每个都需要单独做全局去重，这就对性能造成了很大影响。 0.11 版本的 <code>Kafka</code>，引入了一项重大特性：<strong>幂等性</strong>。所谓的幂等性就是指 <code>Producer</code> 不论向 <code>Server</code> 发送多少次重复数据，<code>Server</code> 端都只会持久化一条。幂等性结合 <code>At Least Once</code> 语 义，就构成了 <code>Kafka</code> 的 <code>Exactly Once</code> 语义。即：</p>
+<p><strong><code>At Least Once</code> + 幂等性 = <code>Exactly Once</code></strong></p>
+<p>要启用幂等性，只需要将 <code>Producer</code> 的参数中 <code>enable.idompotence</code> 设置为 <code>true</code> 即可。<code>Kafka</code> 的幂等性实现其实就是将原来下游需要做的去重放在了数据上游。开启幂等性的 <code>Producer</code> 在 初始化的时候会被分配一个 <code>PID</code>，发往同一 <code>Partition</code> 的消息会附带 <code>Sequence Number</code>。而 <code>Broker</code> 端会对做缓存，当具有相同主键的消息提交时，<code>Broker</code> 只 会持久化一条。</p>
+<p>但是 <code>PID</code> 重启就会变化，同时不同的 <code>Partition</code> 也具有不同主键，所以<strong>幂等性无法保证跨分区跨会话的 <code>Exactly Once</code></strong>。</p>
+<h3 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h3><p>消费者的含义，同一般消息中间件中消费者的概念。在高并发的情况下，生产者产生消 息的速度是远大于消费者消费的速度，单个消费者很可能会负担不起，此时有必要对消费者 进行横向伸缩，于是我们可以使用多个消费者从同一个主题读取消息，对消息进行分流。</p>
+<p><strong>如果应用需要读取全量消息，那么请为该应用设置一个消费组；如果该应用消费能力不足，那么可以考虑在这个消费组里增加消费者。</strong></p>
+<h4 id="分区再均衡"><a href="#分区再均衡" class="headerlink" title="分区再均衡"></a>分区再均衡</h4><p>当消费者群组里的消费者发生变化，或者主题里的分区发生了变化，都会导致<strong>再均衡</strong>现象的发生。从前面的知识中，我们知道，<code>Kafka</code> 中，存在着消费者对分区所有权的关系， 这样无论是消费者变化，比如增加了消费者，新消费者会读取原本由其他消费者读取的 分区，消费者减少，原本由它负责的分区要由其他消费者来读取，增加了分区，哪个消费者 来读取这个新增的分区，这些行为，都会导致分区所有权的变化，这种变化就被称为再均衡。</p>
+<p> 再均衡对 <code>Kafka</code> 很重要，这是<strong>消费者群组带来高可用性和伸缩性的关键所在</strong>。不过一般 情况下，尽量减少再均衡，因为再均衡期间，消费者是无法读取消息的，会造成整个群组一 小段时间的不可用。 消费者通过向称为群组协调器的 <code>broker</code>（不同的群组有不同的协调器）发送心跳来维持 它和群组的从属关系以及对分区的所有权关系。如果消费者长时间不发送心跳，群组协调器 认为它已经死亡，就会触发一次再均衡。 在 0.10.1 及以后的版本中，心跳由单独的线程负责，相关的控制参数为 <code>max.poll.interval.ms</code>。</p>
+<h4 id="消费者分区分配的过程"><a href="#消费者分区分配的过程" class="headerlink" title="消费者分区分配的过程"></a>消费者分区分配的过程</h4><p>消费者要加入群组时，会向<strong>群组协调器</strong>发送一个 <code>JoinGroup</code> 请求，第一个加入群主的消 费者成为群主，群主会获得群组的成员列表，并负责给每一个消费者分配分区。分配完毕后， 群组把分配情况发送给群组协调器，协调器再把这些信息发送给所有的消费者，每个消费者 只能看到自己的分配信息，只有群主知道群组里所有消费者的分配信息。这个过程在每次再 均衡时都会发生。</p>
+<blockquote>
+<p>小结</p>
+</blockquote>
+<p>消费者订阅某个主题，读取消息。消费者读取消息的时候按照消息生成的顺序依次进行读取。</p>
+<p>Q1:消费者如何判断这条消息是否被读取过呢？</p>
+<p>答：偏移量，消费者通过检查偏移量来判断消息是否进行读取过。偏移量保存到zookeeper上或者Kafka上</p>
+<p>当服务器宕机或者kafka重启后，可以根据上一次的偏移量来继续进行读取</p>
+<p>Q2:多个消费者可以消费同一个消息么？</p>
+<p>答：不可以，同一个群组是不能消费同一个消息。在不同群组内可以消费同一个消息</p>
+<p>注意：</p>
+<ol>
+<li>分区数量决定了消费者的数量，消费者的数量一旦大于分区数量，则有一部分消费者是无法消费消息的</li>
+<li>多个消费者会平均消费分区里面内容，假设有4个分区3个消费者，则其中有一个消费者就会多消费一个分区消息</li>
+<li>分区再均衡由<code>kafka</code>内部实现，一般情况下， 要禁止分区在均衡。在<code>kafka</code>的集群发现要分区再均衡的时候，消费者是不能够读取消息，会在一小段时间内处于不可用状态。</li>
+<li>消费者会定期向<code>Kafka</code>控制器发送心跳，证明还处于活动期。一旦某个消费者挂了以后，则<code>kafka</code>会进行分区再均衡，将原本属于他消费的分区交给别人进行消费</li>
+</ol>
+<h4 id="消费方式"><a href="#消费方式" class="headerlink" title="消费方式"></a>消费方式</h4><p><code>consumer</code> 采用 <code>pull</code>（拉）模式从 <code>broker</code> 中读取数据。</p>
+<p><code>push</code>（推）模式很难适应消费速率不同的消费者，因为消息发送速率是由 <code>broker</code> 决定的。 它的目标是尽可能以最快速度传递消息，但是这样很容易造成 <code>consumer</code> 来不及处理消息， 典型的表现就是<strong>拒绝服务以及网络拥塞</strong>。而 <code>pull</code> 模式则可以根据 <code>consumer</code> 的消费能力以适 当的速率消费消息。</p>
+<p><code>pull</code> 模式不足之处是，如果 <code>kafka</code> 没有数据，消费者可能会陷入循环中，一直返回空数据。针对这一点，<code>Kafka</code> 的消费者在消费数据时会传入一个时长参数 <code>timeout</code>，如果当前没有 数据可供消费，<code>consumer</code> 会等待一段时间之后再返回，这段时长即为 <code>timeout</code>。</p>
+<h4 id="使用Kafka消费者"><a href="#使用Kafka消费者" class="headerlink" title="使用Kafka消费者"></a>使用<code>Kafka</code>消费者</h4><blockquote>
+<p>订阅</p>
+</blockquote>
+<p> 创建消费者后，使用 <code>subscribe()</code> 方法订阅主题，这个方法接受一个主题列表为参数，也可以接受一个正则表达式为参数；正则表达式同样也匹配多个主题。如果新创建了新主题， 并且主题名字和正则表达式匹配，那么会立即触发一次再均衡，消费者就可以读取新添加的 主题。比如，要订阅所有和 <code>test</code> 相关的主题，可以 <code>subscribe(&quot;tets.*&quot;)</code></p>
+<blockquote>
+<p>轮询</p>
+</blockquote>
+<p>为了不断的获取消息，我们要在循环中不断的进行轮询，也就是不停调用 <code>poll</code> 方法</p>
+<p><code>poll</code> 方法的参数为超时时间，控制 <code>poll</code> 方法的阻塞时间，它会让消费者在指定的毫秒数 内一直等待 <code>broker</code> 返回数据。<code>poll</code> 方法将会返回一个记录（消息）列表，每一条记录都包含 了记录所属的主题信息，记录所在分区信息，记录在分区里的偏移量，以及记录的键值对。</p>
+<p><code>poll</code> 方法不仅仅只是获取数据，在新消费者第一次调用时，它会负责查找群组，加入群组，接受分配的分区。如果发生了再均衡，整个过程也是在轮询期间进行的。</p>
+<h4 id="消费者配置"><a href="#消费者配置" class="headerlink" title="消费者配置"></a>消费者配置</h4><blockquote>
+<p><code>fetch.min.bytes</code></p>
+</blockquote>
+<p>每次 <code>fetch</code> 请求时，<code>server</code> 应该返回的最小字节数。如果没有足够的数据返回，请求会 等待，直到足够的数据才会返回。缺省为 1 个字节。多消费者下，可以设大这个值，以降低 <code>broker</code> 的工作负载。</p>
+<blockquote>
+<p><code>fetch.wait.max.ms</code></p>
+</blockquote>
+<p>如果没有足够的数据能够满足 <code>fetch.min.bytes</code>，则此项配置是指在应答 <code>fetch</code> 请求之前， <code>server</code> 会阻塞的最大时间。缺省为 500 个毫秒。和上面的 <code>fetch.min.bytes</code> 结合起来，要么满 足数据的大小，要么满足时间，就看哪个条件先满足</p>
+<blockquote>
+<p><code>max.partition.fetch.bytes</code></p>
+</blockquote>
+<p>指定了服务器从每个分区里返回给消费者的最大字节数，默认 <code>1MB</code>。假设一个主题有 20 个分区和 5 个消费者，那么每个消费者至少要有 <code>4MB</code> 的可用内存来接收记录，而且一旦 有消费者崩溃，这个内存还需更大。注意，这个参数要比服务器的 <code>message.max.bytes</code> 更大， 否则消费者可能无法读取消息。</p>
+<blockquote>
+<p><code>session.timeout.ms</code></p>
+</blockquote>
+<p>如果 <code>consumer</code> 在这段时间内没有发送心跳信息，则它会被认为挂掉了。默认 3 秒。</p>
+<blockquote>
+<p><code>auto.offset.reset</code></p>
+</blockquote>
+<p>消费者在读取一个没有偏移量的分区或者偏移量无效的情况下，如何处理。默认值是 <code>latest</code>，从最新的记录开始读取，另一个值是 <code>earliest</code>，表示消费者从起始位置读取分区的记录。</p>
+<p>注意：默认值是 <code>latest</code>，意思是说，在偏移量无效的情况下，消费者将从最新的记录开始读取数据（在消费者启动之后生成的记录），可以先启动生产者，再启动消费者，观察到这种情况。</p>
+<blockquote>
+<p><code>enable.auto.commit</code></p>
+</blockquote>
+<p>默认值 <code>true</code>，表明消费者是否自动提交偏移。为了尽量避免重复数据和数据丢失，可以 改为 <code>false</code>，自行控制何时提交。</p>
+<blockquote>
+<p><code>partition.assignment.strategy</code></p>
+</blockquote>
+<p>分区分配给消费者的策略。系统提供两种策略。默认为 <code>Range</code>。允许自定义策略。</p>
+<ul>
+<li><code>Range</code>：把主题的连续分区分配给消费者</li>
+<li><code>RoundRobin</code>：把主题的分区循环分配给消费者。</li>
+</ul>
+<blockquote>
+<p>client.id</p>
+</blockquote>
+<p>当向 <code>server</code> 发出请求时，这个字符串会发送给 <code>server</code>。目的是能够追踪请求源头，以此 来允许 <code>ip/port</code> 许可列表之外的一些应用可以发送信息。这项应用可以设置任意字符串，因 为没有任何功能性的目的，除了记录和跟踪。</p>
+<blockquote>
+<p><code>max.poll.records</code></p>
+</blockquote>
+<p>控制每次 <code>poll</code> 方法返回的的记录数量。</p>
+<blockquote>
+<p><code>receive.buffer.bytes</code> 和 <code>send.buffer.bytes</code></p>
+</blockquote>
+<p>指定 <code>TCP socket</code> 接受和发送数据包的缓存区大小。如果它们被设置为-1，则使用操作系 统的默认值。如果生产者或消费者处在不同的数据中心，那么可以适当增大这些值，因为跨 数据中心的网络一般都有比较高的延迟和比较低的带宽。</p>
+<h4 id="分区分配策略"><a href="#分区分配策略" class="headerlink" title="分区分配策略"></a>分区分配策略</h4><p>一个 <code>consumer group</code> 中有多个 <code>consumer</code>，一个 <code>topic</code> 有多个 <code>partition</code>，所以必然会涉及 到 <code>partition</code> 的分配问题，即确定那个 <code>partition</code> 由哪个 <code>consumer</code> 来消费。</p>
+<p><code>Kafka</code> 有两种分配策略，一是 <code>RoundRobin</code>，一是 <code>Range</code>。</p>
+<blockquote>
+<p><code>Round-Robin</code>轮询策略</p>
+</blockquote>
+<p>即顺序分配。</p>
+<p><strong>轮询策略有非常优秀的负载均衡表现，它总是能保证消息最大限度地被平均分配到所有分区上，故默认情况下它是最合理的分区策略，也是我们最常用的分区策略之一</strong>。</p>
+<blockquote>
+<p><code>Randomness</code>随机策略</p>
+</blockquote>
+<p>随意地将消息放置到任意一个分区上。</p>
+<blockquote>
+<p><code>Key-ordering</code> 按消息键保序策略</p>
+</blockquote>
+<p>Kafka 允许为每条消息定义消息键，简称为 <code>Key</code>。一旦消息被定义了 <code>Key</code>，那么你就可以保证同一个 <code>Key</code> 的所有消息都进入到相同的分区里面，由于每个分区下的消息处理都是有顺序的，故这个策略被称为按消息键保序策略。</p>
+<h4 id="保障消费者高可用"><a href="#保障消费者高可用" class="headerlink" title="保障消费者高可用"></a>保障消费者高可用</h4><p>当消息变成已提交状态（也就是写入到所有<code>in-sync</code>副本）后，它才能被消费端读取。这保证了消费者读取到的数据始终是一致的，为了达到高可靠，消费者需要保证在消费消息时不丢失数据。</p>
+<p>在处理分区消息时，消费者一般的处理流程为：拉取批量消息，处理完成后提交位移，然后再拉取下一批消息。提交位移保证了当前消费者发生故障或重启时，其他消费者可以接着上一次的消息位移来进行处理。需要提醒的是，消费端丢失消息的一个主要原因为：消费者拉取消息后还没处理完就提交位移，一旦在消息处理过程中发生故障，新的消费者会从已提交的位移接着处理，导致发生故障时的消息丢失。</p>
+<blockquote>
+<p>重要的可靠性配置</p>
+</blockquote>
+<ol>
+<li><strong>group.id</strong>：如果有多个消费者拥有相同的<code>group.id</code>并且订阅相同的主题，那么每个消费者会负责消费一部分的消息。如果消费组内存在多个消费者，那么一个消费者发生故障那么其他消费者可以接替其工作，保证高可用。</li>
+<li><strong>auto.offset.reset</strong>：当消费者读取消息，<code>Kafka</code>中没有提交的位移（比如消费者所属的消费组第一次启动）或者希望读取的位移不合法（比如消费组曾经长时间下线导致位移落后）时，消费者如何处理？当设置为<code>earliest</code>，消费者会从分区的起始端开始读取，这可能会导致消费者重复处理消息，但也将消息丢失可能性降低到最小；当设置为<code>latest</code>，消费者会从分区末端开始读取，这会导致消息丢失可能性加大，但会降低消息重复处理的概率。</li>
+<li><strong>enable.auto.commit</strong>：你希望消费者定期自动提交位移，还是应用手动提交位移？自动提交位移可以让应用在处理消息时不用实现提交位移的逻辑，并且如果我们是在poll循环中使用相同的线程处理消息，那么自动提交位移可以保证在消息处理完成后才提交位移。如果我们在poll循环中使用另外的线程处理消息，那么自动提交位移可能会导致提交还没完成处理的消息位移。</li>
+<li><strong>auto.commit.interval.ms</strong>：它与第三个属性有关。如果选择了自动提交位移，那么这个属性控制提交位移的时间间隔。默认值是5秒，通常来说降低间隔可以降低消息重复处理的可能性。</li>
+</ol>
+<h3 id="Kafka事务"><a href="#Kafka事务" class="headerlink" title="Kafka事务"></a><code>Kafka</code>事务</h3><p><code>Kafka</code> 从 0.11 版本开始引入了事务支持。事务可以保证 <code>Kafka</code> 在 <code>Exactly Once</code> 语义的基 础上，生产和消费可以跨分区和会话，要么全部成功，要么全部失败。</p>
+<blockquote>
+<p><code>Producer</code>事务</p>
+</blockquote>
+<p>为了实现跨分区跨会话的事务，需要引入一个全局唯一的 <code>Transaction ID</code>，并将 <code>Producer</code> 获得的<code>PID</code> 和<code>Transaction ID</code> 绑定。这样当<code>Producer</code> 重启后就可以通过正在进行的 <code>Transaction ID</code> 获得原来的 <code>PID</code>。 为了管理 <code>Transaction</code>，<code>Kafka</code> 引入了一个新的组件 <code>Transaction Coordinator</code>。<code>Producer</code> 就 是通过和 <code>Transaction Coordinator</code> 交互获得 <code>Transaction ID</code> 对应的任务状态。<code>Transaction Coordinator</code> 还负责将事务所有写入 <code>Kafka</code> 的一个内部 <code>Topic</code>，这样即使整个服务重启，由于 事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。</p>
+<blockquote>
+<p><code>Consumer</code>事务</p>
+</blockquote>
+<p>上述事务机制主要是从 <code>Producer</code> 方面考虑，对于 <code>Consumer</code> 而言，事务的保证就会相对 较弱，尤其时无法保证 <code>Commit</code> 的信息被精确消费。这是由于 <code>Consumer</code> 可以通过 <code>offset</code> 访 问任意信息，而且不同的 <code>Segment File</code> 生命周期不同，同一事务的消息可能会出现重启后被 删除的情况。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Thanks<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+			  
+			<span id="busuanzi_container_page_pv">
+				本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+			</span>  
+			  
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -192,16 +615,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/02/KafKa/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/08/02/KafKa/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2021/06/24/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">编译原理</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -216,631 +698,34 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-编译原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/24/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/24/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" class="archive-article-date">
-  	<time datetime="2021-06-24T07:13:57.651Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-24</time>
-</a>
-        
-		
-		 
-
-		
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="编译原理"><a href="#编译原理" class="headerlink" title="编译原理"></a>编译原理</h1>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/24/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kafka"><span class="toc-number">1.</span> <span class="toc-text">Kafka</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#消息队列"><span class="toc-number">1.1.</span> <span class="toc-text">消息队列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#点对点模式"><span class="toc-number">1.1.1.</span> <span class="toc-text">点对点模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发布订阅模式"><span class="toc-number">1.1.2.</span> <span class="toc-text">发布订阅模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kafka概述"><span class="toc-number">1.2.</span> <span class="toc-text">Kafka概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KafKa基础架构"><span class="toc-number">1.3.</span> <span class="toc-text">KafKa基础架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#部分名词解释"><span class="toc-number">1.3.1.</span> <span class="toc-text">部分名词解释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kafka工作流程"><span class="toc-number">1.3.2.</span> <span class="toc-text">Kafka工作流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Topic和数据日志"><span class="toc-number">1.3.3.</span> <span class="toc-text">Topic和数据日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Partition结构"><span class="toc-number">1.3.4.</span> <span class="toc-text">Partition结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zookeeper"><span class="toc-number">1.4.</span> <span class="toc-text">Zookeeper</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#zookeeper数据结构"><span class="toc-number">1.4.1.</span> <span class="toc-text">zookeeper数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zookeeper安装"><span class="toc-number">1.4.2.</span> <span class="toc-text">zookeeper安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#简单测试"><span class="toc-number">1.4.3.</span> <span class="toc-text">简单测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kafka安装"><span class="toc-number">1.5.</span> <span class="toc-text">Kafka安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Go操作Kafka"><span class="toc-number">1.6.</span> <span class="toc-text">Go操作Kafka</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生产者"><span class="toc-number">1.7.</span> <span class="toc-text">生产者</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#生产者常用配置"><span class="toc-number">1.7.1.</span> <span class="toc-text">生产者常用配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#保障生产者数据高可用"><span class="toc-number">1.7.2.</span> <span class="toc-text">保障生产者数据高可用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ISR策略"><span class="toc-number">1.7.3.</span> <span class="toc-text">ISR策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#故障处理细节"><span class="toc-number">1.7.4.</span> <span class="toc-text">故障处理细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Exactly-Once语义"><span class="toc-number">1.7.5.</span> <span class="toc-text">Exactly Once语义</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消费者"><span class="toc-number">1.8.</span> <span class="toc-text">消费者</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分区再均衡"><span class="toc-number">1.8.1.</span> <span class="toc-text">分区再均衡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消费者分区分配的过程"><span class="toc-number">1.8.2.</span> <span class="toc-text">消费者分区分配的过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消费方式"><span class="toc-number">1.8.3.</span> <span class="toc-text">消费方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用Kafka消费者"><span class="toc-number">1.8.4.</span> <span class="toc-text">使用Kafka消费者</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消费者配置"><span class="toc-number">1.8.5.</span> <span class="toc-text">消费者配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分区分配策略"><span class="toc-number">1.8.6.</span> <span class="toc-text">分区分配策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#保障消费者高可用"><span class="toc-number">1.8.7.</span> <span class="toc-text">保障消费者高可用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kafka事务"><span class="toc-number">1.9.</span> <span class="toc-text">Kafka事务</span></a></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-
-  
-    <article id="post-软件工程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/15/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">软件工程</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/15/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" class="archive-article-date">
-  	<time datetime="2021-06-15T15:13:40.988Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-15</time>
-</a>
-        
-		
-		 
-
-		
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="软件工程-Software-Engineering"><a href="#软件工程-Software-Engineering" class="headerlink" title="软件工程(Software Engineering)"></a>软件工程(<code>Software Engineering</code>)</h1>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/15/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-Go爬虫" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/10/Go%E7%88%AC%E8%99%AB/">Go爬虫</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/10/Go%E7%88%AC%E8%99%AB/" class="archive-article-date">
-  	<time datetime="2021-05-10T03:43:53.182Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-10</time>
-</a>
-        
-		
-		 
-
-		
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Go爬虫"><a href="#Go爬虫" class="headerlink" title="Go爬虫"></a>Go爬虫</h1>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/10/Go%E7%88%AC%E8%99%AB/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-ElasticSearch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/10/ElasticSearch/">ElasticSearch</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/10/ElasticSearch/" class="archive-article-date">
-  	<time datetime="2021-05-10T03:19:37.357Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-10</time>
-</a>
-        
-		
-		 
-
-		
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="ElasticSearch"><a href="#ElasticSearch" class="headerlink" title="ElasticSearch"></a><code>ElasticSearch</code></h1><p>数据库存储  <code>ElasticSearch</code>。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/10/ElasticSearch/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-mysql" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/09/mysql/">mysql</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/09/mysql/" class="archive-article-date">
-  	<time datetime="2021-05-09T01:49:58.444Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-09</time>
-</a>
-        
-		
-		 
-
-		
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a><code>MySQL</code></h1><p><code>MySQL</code> 是一款<strong>安全、跨平台、高效的</strong>数据库系统。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/09/mysql/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-前端开发" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/26/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/">前端开发</a>
-    </h1>
-  
-
-        
-        <a href="/2021/04/26/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" class="archive-article-date">
-  	<time datetime="2021-04-26T10:04:49.939Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-26</time>
-</a>
-        
-		
-		 
-
-		
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前端开发"><a href="#前端开发" class="headerlink" title="前端开发"></a>前端开发</h1><p>[toc]</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/04/26/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-GMP模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/26/GMP%E6%A8%A1%E5%9E%8B/">GMP模型</a>
-    </h1>
-  
-
-        
-        <a href="/2021/04/26/GMP%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2021-04-26T09:24:44.368Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-26</time>
-</a>
-        
-		
-		 
-
-		
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="GMP模型"><a href="#GMP模型" class="headerlink" title="GMP模型"></a><code>GMP</code>模型</h1>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/04/26/GMP%E6%A8%A1%E5%9E%8B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-GC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/15/GC/">GC</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/15/GC/" class="archive-article-date">
-  	<time datetime="2020-12-15T07:18:19.807Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-15</time>
-</a>
-        
-		
-		 
-
-		
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="GC回收"><a href="#GC回收" class="headerlink" title="GC回收"></a><code>GC</code>回收</h1>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/15/GC/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-计算机网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="archive-article-date">
-  	<time datetime="2020-12-02T12:37:08.779Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-02</time>
-</a>
-        
-		
-		 
-
-		
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
   
+
+  
+
+  
+
+  
+
 
 
           </div>
@@ -867,8 +752,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
