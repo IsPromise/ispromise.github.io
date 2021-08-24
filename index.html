@@ -180,8 +180,1176 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2>
-        
+        <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="string"><a href="#string" class="headerlink" title="string"></a><code>string</code></h3><p><strong>字符集</strong>：存储字符时，数字和字符的对照转换表。</p>
+<p>需要注意的是，有了字符集不够，我们还需要划分字符边界，避免字符集中位数不匹配时无法确认如何翻译。解决划分便捷的方式：</p>
+<ul>
+<li><strong>定长编码</strong>：划分按最长字符来，位数不够高位补0。但是十分浪费内存。</li>
+<li><strong>变长编码</strong>：首先划分区间，不同区间对应的编码长度不一样且首位存在固定表示的字符。比如：<code>utf-8</code>。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">编号			编码模板</span><br><span class="line">[0-127]		 0???????</span><br><span class="line">[128-2047]	 110????? 10??????</span><br><span class="line">[2048-65535] 1110???? 10?????? 10???????</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
+
+<p>字符串的底层：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type string struct&#123;</span><br><span class="line">	ptr 首地址指针</span><br><span class="line">	len	字符串字节个数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是：我们可以通过索引获得某个位置的字符，但是<code>Go</code>并<strong>不允许你进行修改</strong>。字符串会被分配到<strong>只读内存段</strong>。</p>
+<p>需要修改时有两种方式：</p>
+<ul>
+<li>整体赋新值</li>
+<li>强制转换成<code>slice</code>，分配新地址。需要指向原内存需要使用<code>unsafe</code>包。但是这样转换类型依然无法修改原地址内容。</li>
+</ul>
+<h3 id="iota常量计数器"><a href="#iota常量计数器" class="headerlink" title="iota常量计数器"></a><code>iota</code>常量计数器</h3><p><code>iota</code>是<code>go</code>语言的常量计算器，<strong>只能在常量表达式中使用</strong>。<code>iota</code>在<code>const</code>关键字出现时将被重置为0。</p>
+<h3 id="fallthough关键字"><a href="#fallthough关键字" class="headerlink" title="fallthough关键字"></a><code>fallthough</code>关键字</h3><p>正常每个<code>case</code>匹配成功后不会自动向下执行，<code>fallthough</code>可以强行执行符合条件的<code>case</code>的下一个<code>case</code>。</p>
+<h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a><code>slice</code></h3><blockquote>
+<p>底层</p>
+</blockquote>
+<p><code>Slice</code>本质上是对底层数组的封装，底层数据结构由底层数组指针<code>data</code>、切片长度<code>len</code>、切片容量<code>cap</code>三部分组成。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> slice <span class="keyword">struct</span> &#123;</span><br><span class="line">	data unsafe.Pointer</span><br><span class="line">	<span class="built_in">len</span>   <span class="keyword">int</span>	<span class="comment">//slice存储元素个数</span></span><br><span class="line">	<span class="built_in">cap</span>   <span class="keyword">int</span>	<span class="comment">//data指向底层数组的位置到底层数组结尾的大小</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以检查<code>slice</code>为空应该使用 <code>len(slice) == 0</code>而不是 <code>slice==nil</code></p>
+<blockquote>
+<p>扩容机制</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">newcap := old.<span class="built_in">cap</span></span><br><span class="line">doublecap := newcap + newcap</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">cap</span> &gt; doublecap &#123;</span><br><span class="line">	newcap = <span class="built_in">cap</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> old.<span class="built_in">len</span> &lt; <span class="number">1024</span> &#123;</span><br><span class="line">		newcap = doublecap</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">// Check 0 &lt; newcap to detect overflow</span></span><br><span class="line">		<span class="comment">// and prevent an infinite loop.</span></span><br><span class="line">		<span class="keyword">for</span> <span class="number">0</span> &lt; newcap &amp;&amp; newcap &lt; <span class="built_in">cap</span> &#123;</span><br><span class="line">			newcap += newcap / <span class="number">4</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// Set newcap to the requested cap when</span></span><br><span class="line">		<span class="comment">// the newcap calculation overflowed.</span></span><br><span class="line">		<span class="keyword">if</span> newcap &lt;= <span class="number">0</span> &#123;</span><br><span class="line">			newcap = <span class="built_in">cap</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新<code>cap</code>大于两倍旧<code>cap</code>，直接为新<code>cap</code></li>
+<li>否则判断：<ul>
+<li>旧<code>len</code>小于1024，<code>cap</code>翻倍</li>
+<li>大于1024：<ul>
+<li>循环扩容，每次为当前cap的四分之一</li>
+<li>出现溢出，为新<code>cap</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>需要注意的是，在分配到新的内存时还需要和<code>Go</code>语言的内存管理模块匹配打合适的内存规格。</p>
+<blockquote>
+<p><code>array</code> 和 <code>slice</code>的区别</p>
+</blockquote>
+<p><code>slice</code>是引用类型，数组是值类型。且数组支持 <code>==</code> 和 !<code>=</code> 运算符，因为内存是被初始化过的。<code>slice</code>需要先通过 <code>new</code>或者<code>make</code>初始化内存才能使用。</p>
+<p><code>slice</code>的<code>cap</code>大于<code>len</code>时，虽然底层数组以及被初始化，但是依然不允许访问超过<code>len</code>的索引，否则引发<code>panic</code>。</p>
+<p>同时底层数组的内容变化会导致<code>slice</code>变化，但是<code>slice</code>的内容指针并不是一定指向底层数组的起始地址。</p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a><code>map</code></h3><p><code>map</code>为引用类型，默认的变量初始值是<code>nil</code>，需要使用<code>make()</code>函数来分配内存。</p>
+<blockquote>
+<p>底层</p>
+</blockquote>
+<p><code>Go map</code>底层是 <code>hmap</code>。<code>hash</code>桶的选择主要有两种：</p>
+<ul>
+<li><p>取模：<code>hash%m</code></p>
+</li>
+<li><p>与运算：<code>hash&amp;(m-1)</code>，要求m必须为2的倍数 </p>
+</li>
+</ul>
+<p><code>Go</code>底层采用<code>HashTable</code>的实现，解决冲突采用的是链地址法。也就是说，使用数组+链表来实现<code>map</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> hmap <span class="keyword">struct</span> &#123;</span><br><span class="line">    count     <span class="keyword">int</span>    <span class="comment">// 元素的个数</span></span><br><span class="line">    flags     <span class="keyword">uint8</span>  <span class="comment">// 状态标志</span></span><br><span class="line">    B         <span class="keyword">uint8</span>  <span class="comment">// 可以最多容纳 loadFactor * 2 ^ B 个元素，6.5为装载因子</span></span><br><span class="line">    noverflow <span class="keyword">uint16</span> <span class="comment">// 溢出的个数</span></span><br><span class="line">    hash0     <span class="keyword">uint32</span> <span class="comment">// 哈希种子</span></span><br><span class="line"></span><br><span class="line">    buckets    unsafe.Pointer <span class="comment">// 桶的地址</span></span><br><span class="line">    oldbuckets unsafe.Pointer <span class="comment">// 旧桶的地址，用于扩容</span></span><br><span class="line">    nevacuate  <span class="keyword">uintptr</span>        <span class="comment">// 搬迁进度，小于nevacuate的已经搬迁</span></span><br><span class="line">    overflow *[<span class="number">2</span>]*[]*bmap <span class="comment">//溢出桶地址，扩容时进行增量搬迁,[0]为当前使用的溢出桶,[1]为发生扩容时保存旧的溢出桶。这个字段的意义是泛指溢出桶被gc</span></span><br><span class="line">    </span><br><span class="line">    extra *mapextra <span class="comment">//可选字段</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> bmap <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// 每个元素hash值的高8位，如果tophash[0] &lt; minTopHash，表示这个桶的搬迁状态</span></span><br><span class="line">    tophash [bucketCnt]<span class="keyword">uint8</span></span><br><span class="line">    <span class="comment">// 接下来是8个key、8个value，但是我们不能直接看到；为了优化对齐，go采用了key放在一起，value放在一起的存储方式，</span></span><br><span class="line">    <span class="comment">// 再接下来是hash冲突发生时，下一个溢出桶的地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>Map</code>进行有序排序</p>
+</blockquote>
+<p>将内容导出到<code>slice</code>中，由slice排序好再装载回<code>map</code>。当遇到不拍排序的键值时，部分情况可以键值对换排序，再替换回去。</p>
+<h3 id="for-range"><a href="#for-range" class="headerlink" title="for-range"></a><code>for-range</code></h3><ul>
+<li><code>slice</code>、<code>array</code>字符串返回索引和值。</li>
+<li><code>map</code>返回键和值</li>
+<li>通道只返回通道内的值</li>
+</ul>
+<h3 id="new和make"><a href="#new和make" class="headerlink" title="new和make"></a><code>new</code>和<code>make</code></h3><p>二者都可以为变量分配内存。但是<code>make</code>只能用于<code>slice</code>、<code>map</code>、<code>channel</code>。</p>
+<p><code>make</code>对<code>slice</code>初始化时，会同时初始化底层数组、<code>cap</code>、<code>len</code>。但是<code>new</code>只对<code>slice</code>变量分配地址，不进行底层数组初始化，需要使用<code>append</code>对<code>slice</code>开辟底层数组。</p>
+<h3 id="defer"><a href="#defer" class="headerlink" title="defer"></a><code>defer</code></h3><p>对后面的语句延迟处理。会在<code>defer</code><strong>归属的函数</strong>返回时，将延迟处理的语句根据<code>defer</code>定义的逆序执行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">A</span><span class="params">()</span></span>&#123;</span><br><span class="line">    deferproc() <span class="comment">// 注册</span></span><br><span class="line">    <span class="comment">//to do something</span></span><br><span class="line">    runtime.deferreturn() <span class="comment">//执行</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每次注册是在当前程序所在<code>goroutine</code>中的持有的<code>defer</code>链表中进行头插。所以执行是逆序的。</p>
+<p>并且<code>defer</code>执行的时机是在函数执行完毕后，在真正的返回值返回之前。</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>指的是与其相关的引用环境组合而成的实体。简单理解为：闭包=函数+引用外部变量。即：是能够读取其他函数内部变量的函数。</p>
+<p>作用：</p>
+<ul>
+<li>可以读取函数内部变量</li>
+<li>让这些变量始终保持在内存中</li>
+</ul>
+<p>但是需要注意，其对应的捕获列表是不同的。</p>
+<blockquote>
+<p>对于函数的理解</p>
+</blockquote>
+<p><code>Go</code>函数可以绑定变量、作为参数、返回值。被称为 <code>Function Value</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Function value 指向---&gt; </span><br><span class="line"><span class="comment">//runtime 包中</span></span><br><span class="line"><span class="keyword">type</span> funcval <span class="keyword">struct</span>&#123;</span><br><span class="line">    fn <span class="keyword">uintptr</span> <span class="comment">//fn才是整个程序的入口地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p><code>panic/recover</code>。</p>
+<p><code>panic</code>：</p>
+<ul>
+<li>报告致命错误的方式</li>
+<li>发生时程序会中断执行</li>
+</ul>
+<p><code>recover</code>：专用于拦截<code>panic</code>的内建函数。可以是程序从<code>panic</code>状态恢复，重新获得流程控制权，并返回<code>panic value</code>。未发生<code>panic</code>时调用会返回<code>nil</code>。</p>
+<p>并且<code>recover</code>必须搭配<code>defer</code>函数使用，且<code>defer</code>需要定义在可能发生<code>panic</code>之前。</p>
+<h3 id="结构体-struct"><a href="#结构体-struct" class="headerlink" title="结构体 struct"></a>结构体 <code>struct</code></h3><blockquote>
+<p>初始化</p>
+</blockquote>
+<p>结构体会占用一块连续的内存。结构体在未进行初始化时，内部的字段值为初始的零值。</p>
+<blockquote>
+<p> 内存对齐</p>
+</blockquote>
+<p>这里需要注意内存对其：<code>CPU</code>是以字长为单位访问内存的，所以一些不足一个字长的数据会占据一个字长的内容便于<code>CPU</code>一次访问读取出来。</p>
+<p>结构体的对齐边界是取最大字段的对齐值。且起始地址是对齐边界的倍数。后序每个字段以起始地址进行对齐的相对寻址，同时要保证首地址为该字段的对齐值的倍数。且最终结构体大小还要为结构体对齐边界的倍数。</p>
+<p>结构体这样处理是为了保证在数组中每个元素都是内存对齐的。</p>
+<p>需要注意的是 <code>struct{}</code>。作为其他<code>struct</code>字段时一般不需要内存对齐，但其作为最后一个字段时需要内存对齐。否则当有指针指向该字段，返回的地址将在结构体之外。如果此指针一致存活们就会有内存泄漏的问题（该内存不因结构体释放而释放）</p>
+<blockquote>
+<p><code>struct</code>能不能比较</p>
+</blockquote>
+<p>因为是强类型语言，所以不同类型的结构不能作比较，但是同一类型的实例值是可以比较的，实例不可以比较，因为是指针类型。</p>
+<blockquote>
+<p>结构体与<code>json</code>转化</p>
+</blockquote>
+<ul>
+<li>序列化：结构体 —–&gt; <code>json</code></li>
+<li>反序列化：<code>json</code> —–&gt; 结构体</li>
+</ul>
+<p>变量首字母<strong>小写</strong>：无论如何不能转，为<code>private</code>，其他包无法访问，获取不到反射信息。</p>
+<p>变量首字母<strong>大写</strong>：为<code>public</code></p>
+<ul>
+<li>不加<code>tag</code>，需要<code>json</code>内字段名和结构体内字段原名一致。</li>
+<li>加了<code>tag</code>，<code>json</code>字段名就是<code>tag</code>字段名，和原字段名无关。</li>
+</ul>
+<h3 id="init-函数"><a href="#init-函数" class="headerlink" title="init()函数"></a><code>init()</code>函数</h3><p>执行导入包时会自动触发<code>init()</code>函数的调用。<code>init()</code>函数没有参数和返回值。只在程序运行时自动调用，不能在其他代码中主动调用。</p>
+<blockquote>
+<p>执行顺序</p>
+</blockquote>
+<p>包的执行顺序：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">全局声明 --&gt; init() --&gt; main()</span><br></pre></td></tr></table></figure>
+
+<p>多个包存在执行时：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">调用：</span><br><span class="line">main --&gt; <span class="keyword">import</span> A --&gt; <span class="keyword">import</span> B --&gt; <span class="keyword">import</span> C</span><br><span class="line"></span><br><span class="line">执行：</span><br><span class="line">C.init() --&gt; B.init() --&gt; A.init --&gt; main.init()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="reflect反射"><a href="#reflect反射" class="headerlink" title="reflect反射"></a><code>reflect</code>反射</h3><p>反射是指程序运行期间对程序本身进行访问和修改的能力。</p>
+<p><code>Go</code>语言的反射机制中，任何接口都是由<strong>一个具体类型</strong>和<strong>具体类型的值</strong>两部分组成的。主要方法是 <code>TypeOf()</code> 和 <code>ValueOf()</code>。</p>
+<p>其中类型划分为 <code>Type(类型)</code> 和 <code>Kind(种类，指底层类型)</code>。<code>Kind</code>可用于区分指针结构体等。</p>
+<blockquote>
+<p>注意</p>
+</blockquote>
+<ul>
+<li>反射的代码很脆弱，很容易引发<code>panic</code></li>
+<li>大量使用反射会导致代码难以理解</li>
+<li>反射的性能低下</li>
+</ul>
+<h3 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h3><p><strong>并发</strong>：同一时间段内执行多个任务，宏观上是同时执行的，微观上是某一时刻只执行一个任务。</p>
+<p><strong>并行</strong>：同一时刻执行多个任务。</p>
+<h3 id="协程、线程、进程"><a href="#协程、线程、进程" class="headerlink" title="协程、线程、进程"></a>协程、线程、进程</h3><p>协程(<code>Coroutine</code>)：是一种<strong>用户态</strong>的轻量级线程，其调度完全由用户控制。拥有自己的寄存器上下文和栈。调度是协作式的，一个协程让出<code>cpu</code>后才执行下一个协程。</p>
+<p>线程(<code>Thread</code>)：线程是独立运行和独立调度的基本单位。<code>CPU</code>真正运行的是线程。调度是抢占式的。</p>
+<p>进程：进程是<code>CPU</code>资源分配的基本单位。一个进程包含若干线程，多个线程共享同一进程内的资源。</p>
+<blockquote>
+<p>协程优缺点</p>
+</blockquote>
+<p>优点：</p>
+<ul>
+<li>上下文切换的开销小</li>
+<li>不需要原子操作锁定和同步的开销</li>
+<li>方便切换控制流，简化编程模型</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>阻塞操作时会阻塞整个程序。</li>
+</ul>
+<blockquote>
+<p>线程协程映射关系</p>
+</blockquote>
+<ul>
+<li><code>N:1</code>：切换轻量快速、但是无法使用硬件多核加速能力、一旦阻塞即丧失并发能力。</li>
+<li><code>1:1</code>：实现简单，但是创建、切换、删除代价昂贵</li>
+<li><code>M:N</code>：实现复杂、瓶颈来自于协程调度器的优化</li>
+</ul>
+<h3 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h3><blockquote>
+<p>为什么需要进程通信</p>
+</blockquote>
+<ul>
+<li>资源共享</li>
+<li>数据传输</li>
+<li>进程控制</li>
+<li>通知事件</li>
+</ul>
+<blockquote>
+<p>通信方式</p>
+</blockquote>
+<ul>
+<li>管道通信：是一种半双工通信方式，只能在具有亲缘关系的进程间使用。</li>
+<li>信号量：信号量是一个计数器，常作为一种锁机制，可以用来控制多个进程对共享资源的访问。</li>
+<li>消息队列：消息队列是由消息的链表，存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少、管道只能承载无格式字节流以及缓冲区大小受限等缺点。</li>
+<li>共享内存：共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。</li>
+<li>信号：信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生。</li>
+<li>套接字：它可用于不同设备及其间的进程通信。</li>
+</ul>
+<h3 id="channel"><a href="#channel" class="headerlink" title="channel"></a><code>channel</code></h3><p><code>channel</code>是一种引用类型。是<code>goroutine</code>之间通信的一种方式，类比<code>Unix</code>中的管道通信。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// channel 类型定义</span></span><br><span class="line"><span class="keyword">type</span> hchan <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// channel 中的元素数量, len</span></span><br><span class="line">    qcount   <span class="keyword">uint</span></span><br><span class="line">    <span class="comment">// channel 的大小, cap</span></span><br><span class="line">    dataqsiz <span class="keyword">uint</span>              </span><br><span class="line">    <span class="comment">// channel 的缓冲区，环形数组实现</span></span><br><span class="line">    buf      unsafe.Pointer</span><br><span class="line">    <span class="comment">// 单个元素的大小</span></span><br><span class="line">    elemsize <span class="keyword">uint16</span></span><br><span class="line">    <span class="comment">// closed 标志位</span></span><br><span class="line">    closed   <span class="keyword">uint32</span></span><br><span class="line">    <span class="comment">// 元素的类型</span></span><br><span class="line">    elemtype *_type <span class="comment">// element type  </span></span><br><span class="line">    <span class="comment">// send 和 recieve 的索引，用于实现环形数组队列</span></span><br><span class="line">    sendx    <span class="keyword">uint</span></span><br><span class="line">    recvx    <span class="keyword">uint</span></span><br><span class="line">    <span class="comment">// recv goroutine 等待队列</span></span><br><span class="line">    recvq    waitq </span><br><span class="line">    <span class="comment">// send goroutine 等待队列</span></span><br><span class="line">    sendq    waitq</span><br><span class="line">    <span class="comment">// 互斥锁</span></span><br><span class="line">    lock mutex</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等待队列的链表实现</span></span><br><span class="line"><span class="keyword">type</span> waitq <span class="keyword">struct</span> &#123;    </span><br><span class="line">    first *sudog       </span><br><span class="line">    last  *sudog       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>channel</code>的主要组成为：<code>len</code>、<code>cap</code>、一个环形数组实现的队列，用于存储消息元素、两个链表实现的等待队列，由于存储阻塞在发送和回收操作上的<code>goroutine</code>、一个互斥锁，用于各个属性变动的同步。</p>
+<p>同时在创建过程中，当元素不含指针时会整个<code>hchan</code>分配一个连续的空间。</p>
+<h3 id="context上下文"><a href="#context上下文" class="headerlink" title="context上下文"></a><code>context</code>上下文</h3><p>作用是在<code>goroutine</code>之间传递上下文信息，包括：截止时间、取消信号、键值对信息。</p>
+<blockquote>
+<p>一个接口</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Context <span class="keyword">interface</span> &#123;</span><br><span class="line">	<span class="comment">//返回当前 Context 被取消的时间，也就是完成工作的截止时间</span></span><br><span class="line">    Deadline() (deadline time.Time, ok <span class="keyword">bool</span>)</span><br><span class="line">    <span class="comment">//返回一个 Channel，这个 Channel 会在当前工作完成或者上下文被取消之后关闭，多次调用 Done 方法会返回同一个Channel</span></span><br><span class="line">    Done() &lt;-<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line">    <span class="comment">//返回当前 Context 结束的原因，它只会在 Done 返回的 Channel 被关闭时才会返回非空的值</span></span><br><span class="line">    <span class="comment">//如果当前 Context 被取消就会返回 Canceled 错误</span></span><br><span class="line">    <span class="comment">//如果当前 Context 超时就会返回 DeadlineExceeded 错误</span></span><br><span class="line">    Err() error</span><br><span class="line">    <span class="comment">//从 Context 中返回键对应的值，对于同一个上下文来说，</span></span><br><span class="line">    <span class="comment">//多次调用 Value 并传入相同的 Key 会返回相同的结果，</span></span><br><span class="line">    <span class="comment">//该方法仅用于传递跨 API 和进程间跟请求域的数据</span></span><br><span class="line">    Value(key <span class="keyword">interface</span>&#123;&#125;) <span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>四种实现</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// emptyCtx 本质上是个整型，会在调用Background和ToDo时被创建</span></span><br><span class="line"><span class="keyword">type</span> emptyCtx <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// cancelCtx 本质上是一种可取消的 Ctx 继承 Context</span></span><br><span class="line"><span class="keyword">type</span> cancelCtx <span class="keyword">struct</span> &#123;</span><br><span class="line">	Context</span><br><span class="line">    <span class="comment">// 保护锁，以保证 cancelCtx 线程安全</span></span><br><span class="line">	mu       sync.Mutex </span><br><span class="line">    <span class="comment">// done 用于获取该 Ctx 的取消通知</span></span><br><span class="line">	done     <span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;  </span><br><span class="line">    <span class="comment">// 用于存储以当前节点为根节点的所有可取消的 Ctx</span></span><br><span class="line">    <span class="comment">// 以便根节点取消时可以一并取消</span></span><br><span class="line">	children <span class="keyword">map</span>[canceler]<span class="keyword">struct</span>&#123;&#125; </span><br><span class="line">    <span class="comment">// 取消时指定的错误信息</span></span><br><span class="line">	err      error                 </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// cancelCtx 基础上封装了一个定时器和一个截止时间</span></span><br><span class="line"><span class="comment">// 这样既可以主动取消、也可以到达deadline时通过timer来触发取消动作</span></span><br><span class="line"><span class="comment">// 注意：这个 Ctx 也会由 cancelCtx.mu 保护，保证线程安全</span></span><br><span class="line"><span class="keyword">type</span> timerCtx <span class="keyword">struct</span> &#123;</span><br><span class="line">	cancelCtx</span><br><span class="line">	timer *time.Timer </span><br><span class="line">	deadline time.Time</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用来支持键值对打包</span></span><br><span class="line"><span class="keyword">type</span> valueCtx <span class="keyword">struct</span> &#123;</span><br><span class="line">	Context</span><br><span class="line">	key, val <span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由几个具体实现的<code>Ctx</code>可得知，每个<code>Ctx</code>可以创建0个或多个<code>Ctx</code>子节点而形成一颗<code>Ctx</code>树。这时，<code>Ctx</code>就会将子节点注册到<code>children</code>字段(<code>map</code>)中，这样在父节点取消时，就可以通过<code>map</code>中的记录，<code>cancel</code>所有的可取消的<code>Ctx</code>。</p>
+<blockquote>
+<p>六个函数</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	background = <span class="built_in">new</span>(emptyCtx)</span><br><span class="line">	todo       = <span class="built_in">new</span>(emptyCtx)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Background</span><span class="params">()</span> <span class="title">Context</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> background</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//建议在本来应该使用外层传递的 Ctx 但是没有传递的地方使用</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ToDo</span><span class="params">()</span> <span class="title">Context</span></span>&#123;</span><br><span class="line"> 	<span class="keyword">return</span> todo  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用于将一个 Ctx 包装为 cancelCtx 并提供一个取消函数</span></span><br><span class="line"><span class="comment">// 调用取消函数可以取消对应的 Ctx</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">WithCancel</span><span class="params">(parent Context)</span> <span class="params">(ctx Context, cancel CancelFunc)</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 需要指定一个时间点、创建一个 timerCtx</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">WithDeadline</span><span class="params">(parent Context, d time.Time)</span> <span class="params">(Context, CancelFunc)</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受一个时间段、创建一个 timerCtx</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">WithTimeout</span><span class="params">(parent Context, timeout time.Duration)</span> <span class="params">(Context, CancelFunc)</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 给 Ctx 附加一个 键值对信息</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">WithValue</span><span class="params">(parent Context, key, val <span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">Context</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意</p>
+</blockquote>
+<p>使用<code>Context</code>需要注意：</p>
+<ul>
+<li>不要把 <code>Context</code> 放在结构体中，要以参数的方式显示传递；</li>
+<li>以 <code>Context</code> 作为参数的函数方法，应该把 <code>Context</code> 作为第一个参数；</li>
+<li>给一个函数方法传递 <code>Context</code> 的时候，不要传递 <code>nil</code>，如果不知道传递什么，就使用 <code>context.TODO</code>；</li>
+<li><code>Context</code> 的 <code>Value</code> 相关方法应该传递请求域的必要数据，不应该用于传递可选参数；</li>
+<li><code>Context</code> 是线程安全的，可以放心的在多个 <code>Goroutine</code> 中传递。</li>
+</ul>
+<h2 id="GMP模型"><a href="#GMP模型" class="headerlink" title="GMP模型"></a><code>GMP</code>模型</h2><p><a href="https://ispromise.github.io/2021/04/26/GMP模型/" target="_blank" rel="noopener">GMP模型 | Hexo (ispromise.github.io)</a></p>
+<h2 id="GC"><a href="#GC" class="headerlink" title="GC"></a><code>GC</code></h2><p><a href="https://ispromise.github.io/2020/12/15/GC/" target="_blank" rel="noopener">GC | Hexo (ispromise.github.io)</a></p>
+<h2 id="gin框架"><a href="#gin框架" class="headerlink" title="gin框架"></a><code>gin</code>框架</h2><p><code>Gin</code> 是一个用 <code>Go</code>  编写的 HTTP web 框架。<code>Gin</code>是一个<code>golang</code>的微框架，封装比较优雅，<code>API</code>友好，源码注释比较明确，具有快速灵活，容错方便等特点 。</p>
+<p><code>gin</code> 框架中采用的路由库是基于<code>httprouter</code>做的。</p>
+<h4 id="RESTful-API"><a href="#RESTful-API" class="headerlink" title="RESTful API"></a><code>RESTful API</code></h4><p><code>REST</code>：表述性状态转换，描述了一个<strong>架构</strong>样式的网络系统，比如<code>web</code>应用。</p>
+<p>它是一种软件架构风格、设计风格，而不是标准，只是提供了一组设计原则和约束条件，它主要用于<strong>客户端和服务端</strong>交互类的软件。基于这个风格设计的软件可以更简介，更有层次，更易于实现缓存等机制。满足这些约束条件和原则的应用程序或设计就是<code>RESTful</code></p>
+<blockquote>
+<p><code>RESTful</code>特性</p>
+</blockquote>
+<ul>
+<li><strong>资源(<code>Resources</code>)</strong>：网络上的一个实体，或者说是网络上的一个具体信息。</li>
+<li><strong>表现层(<code>Representation</code>)</strong>：把资源具体呈现出来的形式。</li>
+<li><strong>状态转换(<code>State Transfer</code>)</strong>：每发出一个请求，就代表了客户端和服务器的一次交互过程。<code>HTTP</code>协议，是一个无状态协议，即所有的状态都保存在服务器端。所以<code>HTTP</code>协议里面，四个表示操作方式的动词：<strong>GET、POST、PUT、DELETE</strong>。他们分别对应四种基本操作：<code>GET</code>用来获取资源，<code>POST</code>用来新建资源，<code>PUT</code>用来更新资源，<code>DELETE</code>用来删除资源。</li>
+</ul>
+<blockquote>
+<p>内容协商的方式</p>
+</blockquote>
+<ul>
+<li><strong>扩展名</strong>：<code>.json</code>、<code>.xml</code></li>
+<li><strong>请求参数</strong>：默认是”<code>format</code>“</li>
+<li><strong>请求头设置<code>Accept</code>参数</strong>：比如设置<code>Accept</code>为<code>application/json</code>表示要<code>JSON</code>格式数据</li>
+</ul>
+<h4 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h4><p><code>gin</code>的路由默认使用了两个中间件：<code>Logger()</code>和<code>Recovery()</code>。</p>
+<p>在路由的底层<code>httprouter</code>会将所有的规则构造出一颗前缀树。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">比如：root、and、as、at、cn、com</span><br><span class="line"></span><br><span class="line"><span class="comment">//第一级			root</span></span><br><span class="line"><span class="comment">//第二级		a			c</span></span><br><span class="line"><span class="comment">//第三级	n	s	t		h	o</span></span><br><span class="line"><span class="comment">//第四级	d					m</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="同步异步"><a href="#同步异步" class="headerlink" title="同步异步"></a>同步异步</h4><p><code>goroutine</code>机制可以很方便实现异步处理。但是在需要启动启动新的<code>goroutine</code>时，不应该使用原始的上下文，必须使用它的<strong>只读副本</strong>。</p>
+<h3 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h3><ul>
+<li><code>Gin</code>可以构建中间件，但他只对注册过的路由起作用。</li>
+<li>对于分组路由，嵌套使用中间件，可以限定中间件的作用范围。</li>
+<li>中间件分为全局中间件，单个路由中间件和群组中间件。</li>
+<li><strong><code>Gin</code>中间件必须是一个<code>gin.HandlerFunc</code>类型。</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">浏览器 --&gt; 请求 --&gt; 全局中间价 --&gt; 根据url执行对应函数 --&gt; 执行相关逻辑</span><br><span class="line">--&gt; 返回结果集 --&gt; 渲染 --&gt; 响应</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="会话控制"><a href="#会话控制" class="headerlink" title="会话控制"></a>会话控制</h3><p>HTTP是无状态协议，服务器不能记录浏览器的访问状态，也就是说服务器不能区分两次请求是否由同一个客户端发出。</p>
+<blockquote>
+<p><code>Cookie</code></p>
+</blockquote>
+<p><code>Cookie</code>实际上就是服务器保存在浏览器上的一段信息。浏览器有了<code>Cookie</code>之后，每次向服务器发送请求时都会同时将该信息发送给服务器，服务器收到请求后，就可以根据该信息处理请求。</p>
+<p><code>Cookie</code>由服务器创建，并发送给浏览器，最终由浏览器保存。</p>
+<p>缺点：</p>
+<ul>
+<li>不安全，明文</li>
+<li>增加带宽消耗</li>
+<li>可以被禁用</li>
+<li>cookie有上限</li>
+</ul>
+<blockquote>
+<p><code>Session</code></p>
+</blockquote>
+<p><code>session</code>机制是一种服务器端的机制，具有唯一标识，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。</p>
+<blockquote>
+<p><code>JWT(json web token)</code>‘</p>
+</blockquote>
+<p><strong><code>JWT</code>的解决方案是，将认证信息返回个客户端，储存在客户端，下次访问其他页面，需要从客户端传递认证信息回服务器端。</strong></p>
+<p>主要应用：</p>
+<ul>
+<li>授权</li>
+<li>信息交换</li>
+</ul>
+<p><code>JWT</code>分为三个部分，<code>header</code>（头部） <code>payload</code> （负载） <code>signature</code> （签名）</p>
+<ul>
+<li>头部：一个<code>json</code>对象，描述<code>jwt</code>元数据</li>
+<li>负载：一个<code>json</code>对象，存放实际需要传递的数据</li>
+<li>签名：对前两部分数据签名，防止数据篡改</li>
+</ul>
+<p>实现步骤：</p>
+<ol>
+<li>从<code>request</code>获取<code>tokenstring</code></li>
+<li>将<code>tokenstring</code>转化为<code>未解密的token对象</code></li>
+<li>将<code>未解密的token对象</code>解密得到<code>解密后的token对象</code></li>
+<li>从<code>解密后的token对象</code>里取参数</li>
+</ol>
+<h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p>面试主要集中<code>TCP/IP</code>。</p>
+<h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><h4 id="网络层提供的两种服务"><a href="#网络层提供的两种服务" class="headerlink" title="网络层提供的两种服务"></a>网络层提供的两种服务</h4><ul>
+<li><strong>数据报服务</strong>：向上只提供<strong>简单灵活、无连接、尽最大努力交付</strong>的数据报服务。</li>
+<li><strong>虚电路服务</strong>：建立一条逻辑上的连接，所有分组沿着这条逻辑连接传送。</li>
+</ul>
+<blockquote>
+<p> <code>IP</code>协议</p>
+</blockquote>
+<p><code>IP(Internet Protocol)</code>协议。为计算机网络相互连接进行通信而设计的协议。比如<code>IPv4</code>、<code>IPv6</code>。一个<code>ip</code>地址包含网络号和主机号。</p>
+<ul>
+<li><p>A类网络：网络号8位，首位为0，主机号24位。</p>
+</li>
+<li><p>B类网络：网络号16位，10开头，主机号16位。</p>
+</li>
+<li><p>C类网络：网络号24位，110开头，主机号8位。</p>
+</li>
+<li><p>D类网络：组播</p>
+</li>
+<li><p>E类网络：研究</p>
+</li>
+</ul>
+<blockquote>
+<p>子网掩码</p>
+</blockquote>
+<p>帮助路由器判断对应主机是否在同一个网段中。与<code>ip</code>地址与运算，最后主机位归0网络位不变。</p>
+<p>主机部分全1为广播地址、全0为网络地址。</p>
+<h4 id="ARP和RARP协议"><a href="#ARP和RARP协议" class="headerlink" title="ARP和RARP协议"></a><code>ARP</code>和<code>RARP</code>协议</h4><p><strong>地址解析协议</strong>。</p>
+<p><code>ARP</code>协议就是<code>ip</code>地址转换为物理地址。</p>
+<p><code>RARP</code>协议是将物理地址转换<code>ip</code>地址。</p>
+<blockquote>
+<p><code>ARP</code>欺骗</p>
+</blockquote>
+<p>主机发送信息时将包含目标<code>IP</code>地址的<code>ARP</code>请求广播到局域网络上的所有主机，并接收返回消息，以此确定目标的物理地址;收到返回消息后将该<code>IP</code>地址和物理地址存入本机<code>ARP</code>缓存中并保留一定时间，下次请求时直接查询<code>ARP</code>缓存以节约资源。</p>
+<p>地址解析协议是建立在网络中各个主机互相信任的基础上的，局域网络上的主机可以自主发送<code>ARP</code>应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机<code>ARP</code>缓存;由此攻击者就可以向某一主机发送伪<code>ARP</code>应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个<code>ARP</code>欺骗。</p>
+<blockquote>
+<p><code>IP</code>数据报</p>
+</blockquote>
+<p>包括首部和数据部分。</p>
+<h4 id="网络负载均衡"><a href="#网络负载均衡" class="headerlink" title="网络负载均衡"></a>网络负载均衡</h4><p>由多台服务器以对称的方式组成一个服务器集合，每台服务器都具有等价的地位，都可以单独对外提供服务而无须其他服务器的辅助。通过某种负载分担技术，将外部发送来的请求均匀分配到对称结构中的某一台服务器上，而接收到请求的服务器独立地回应客户的请求。</p>
+<h4 id="ICMP协议"><a href="#ICMP协议" class="headerlink" title="ICMP协议"></a><code>ICMP</code>协议</h4><p>为了提高<code>IP</code>数据报交付成功的机会。在网际层使用了网际控制报文协议<code>ICMP</code> (<code>Internet Control Message Protocol</code>)。</p>
+<p><code>ICMP</code>允许主机或路由器报告差错情况和提供有关异常情况的报告。<code>ICMP</code>不是高层协议。而是<code>IP</code>层的协议。</p>
+<p><code>ICMP</code>报文作为<code>IP</code>层数据报的数据，加上数据报的首部，组成IР数据报发送出去。</p>
+<p><code>ICMP</code>报文的前4个字节是统一的格式。共有三个字段:即<strong>类型、代码和检验和</strong>。</p>
+<p>报文种类：</p>
+<ul>
+<li>差错报告报文</li>
+<li>询问报文</li>
+</ul>
+<p>差错报告报文有五种：终点不可达，源点抑制(<code>Source quench</code>) ，请求超时（时间超过），参数问题，改变路由(重定向)<code>Redirect</code>)</p>
+<p>询问报文有两种:回送请求和回答报文、时间戳请求和回答报文。</p>
+<h4 id="路由选择协议"><a href="#路由选择协议" class="headerlink" title="路由选择协议"></a>路由选择协议</h4><blockquote>
+<p>动态路由协议<code>RIP</code></p>
+</blockquote>
+<p>周期性广播（30s）通过跳数来判断最佳路径，同时超过16跳时被认为不可到达。整个过程需要周期性更新，并且未考虑路由器之间带宽不一样的问题。</p>
+<blockquote>
+<p>内部网关协议<code>OSPF</code></p>
+</blockquote>
+<p>向<strong>本自治系统</strong>所有路由发送信息，使用<strong>洪泛法</strong>。</p>
+<p><strong>洪泛法</strong>（<code>Flooding</code>）是一种简单的路由算法，将收到的封包，往所有的可能连结路径上递送，直到封包到达为止。</p>
+<p>发送的信息就是与本路由器相邻的所有路由器的链路状态，但这只是路由器所知道的部分信息。</p>
+<p>只有当链路状态发生变化时，路由器才用洪泛法向所有路由器发送此信息。</p>
+<p><code>OSPF</code>五种分组类型：</p>
+<ul>
+<li>问候</li>
+<li>数据库描述</li>
+<li>链路状态请求</li>
+<li>链路状态更新</li>
+<li>链路状态确认</li>
+</ul>
+<p><code>OSPF</code>中每个路由器维护三部分</p>
+<ul>
+<li>邻居状态</li>
+<li>链路状态数据库（<code>link-state-database</code>）</li>
+<li>路由表</li>
+</ul>
+<blockquote>
+<p>外部网关协议<code>BGP</code></p>
+</blockquote>
+<p>也叫<strong>边界网关协议</strong>。<code>BGP</code>是不同自治系统的路由器之间交换路由信息的协议。</p>
+<p><code>BGP</code>协议的特点：</p>
+<ul>
+<li><code>BGP</code>协议交换路由信息数量不是很多</li>
+<li><code>BGP</code>发言人数目不多，路由选择相对简单</li>
+<li><code>BGP</code>协议支持<code>CIDR</code>。</li>
+<li><code>BGP</code>建立时。交换整个路由表但之后只交换变化部分。</li>
+</ul>
+<h4 id="隧道技术"><a href="#隧道技术" class="headerlink" title="隧道技术"></a>隧道技术</h4><p>隧道技术（<code>Tunneling</code>）是一种通过使用互联网络的基础设施在网络之间建立一条虚拟链路以传递数据的方式。</p>
+<blockquote>
+<p>虚拟专用网<code>VPN</code></p>
+</blockquote>
+<p>先通过与<code>VPN</code>服务器建立连接，得到内网地址。然后将两个内网地址作为数据部分，通过公网将数据发送给<code>VPN</code>服务器。<code>VPN</code>服务器再将通过数据段的内网地址与内网连接进行数据传输。</p>
+<blockquote>
+<p>网络地址转换<code>NAT</code></p>
+</blockquote>
+<p>内部主机<code>X</code>用本地地址<code>IPx</code>和因特网上主机Y通信所发送的数据报必须经过<code>NAT</code>路由器。</p>
+<p><code>NAT</code>路由器将数据报的源地址<code>IPx</code>转换成全球地址<code>IPe</code>。但目的地址<code>IPy</code>保持不变。然后发送到因特网。</p>
+<p><code>NAT</code>路由器收到主机<code>Y</code>发回的数据报时，知道数据报中的源地址是<code>IPy</code>而目的地址是<code>lPe</code>。</p>
+<h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p><code>TCP</code>则提供面向连接的服务。<code>TCP</code>不提供广播或多播服务。由于<code>TCP</code>要提供可靠的、面向连接的运输服务。</p>
+<p><code>UDP</code>在传送数据之前不需要先建立连接。对方的运输层在收到<code>UDP</code>报文后，不需要给出任何确认。</p>
+<h4 id="传输控制协议TCP"><a href="#传输控制协议TCP" class="headerlink" title="传输控制协议TCP"></a>传输控制协议<code>TCP</code></h4><p><code>TCP</code>传送的协议数据单元是<code>TCP</code>报文段(<code>segment</code>)。</p>
+<blockquote>
+<p>特点</p>
+</blockquote>
+<ul>
+<li>是面向连接的传输层协议（三次握手）</li>
+<li>只能由两个端点（<strong>套接字</strong>）进行点对点的连接（一对一通信）</li>
+<li>提供可靠交付服务（确保不丢包）</li>
+<li>提供全双工通信（需要接收端反馈，例如流量控制）</li>
+<li>面向字节流</li>
+</ul>
+<p>套接字(<code>socket</code>)：<code>IP</code>地址:端口号</p>
+<blockquote>
+<p><code>TCP</code>如何实现可靠传输</p>
+</blockquote>
+<p>可靠传输的工作原理是：停止等待协议。</p>
+<p>接收方每次接受到数据包后需要返回一个确认。发送方收到确认后才接着发送后面的数据包。</p>
+<p>接收方收到有差错的报文会丢弃，不返回确认。在发送方超时未收到确认会对数据包进行<strong>超时重传</strong>。</p>
+<p>确认丢失会导致发送方重发，接收方收到会丢弃重复的数据包然后重新发送确认。或者由于网络问题确认迟到，发送方收到迟到的确认什么也不做。</p>
+<p>这种可靠传输协议常称为<strong>自动重传请求<code>ARQ</code></strong>(<code>Automatic Repeat reQuest</code>)。</p>
+<blockquote>
+<p>以字节为单位的滑动窗口技术</p>
+</blockquote>
+<p><code>TCP</code>如何实现可靠传输的具体实现：以字节为单位的滑动窗口技术。</p>
+<p>先建立会话连接：</p>
+<p>其中<code>A</code>的发送窗口大小由B的接收串口决定，不能超过<code>B</code>接收窗口的大小。</p>
+<p>发送过程以流水线的形式发送：</p>
+<p>但是在<code>B</code>确认接收以前，<code>A</code>发送窗口的数据包不能删除。如果<code>A</code>发送窗口的缓存数据全部发出<code>B</code>仍未回应确认，则停止发送直到超时重传或者收到<code>B</code>确认为止。</p>
+<p>发送过程每个数据包大小可以不一样。</p>
+<p>当<code>B</code>收到后数据包后使用<strong>累计确认</strong>，返回<code>A</code>确认数据包，<strong>确认号(<code>ack</code>[小写])为下一个需要发送的数据包的第一个字节在整个数据包的第几个字节</strong>。</p>
+<p><code>A</code>收到确认后窗口开始移动，删除已经确认收到的数据包。同时新进入缓存区的数据包开始传输。</p>
+<p>同时<code>B</code>发送确认后，应用程序开始读取已经确认的数据包，并且<code>B</code>的接收窗口也开始后移。部分缓存区释放后可以重复使用，直到整个整个文件发送完毕，会话结束。</p>
+<p>整个发送过程中某个数据包丢失，返回的确认号是丢失的数据包的首个字节在整个文件中的第几个字节，同时在可选字段中的<strong>选择性确认(<code>SACK</code>)</strong>告诉<code>A</code>丢失的数据包的末尾位置。此后<code>A</code>计算机就只发丢失的数据段，丢失数据段后的已经接收的数据包就不再发送，而是接着发送后续未发送的数据段。</p>
+<blockquote>
+<p>流量控制</p>
+</blockquote>
+<p><code>TCP</code>流量控制是利用滑动窗口机制实现的，接收方在返回的数据中会包含自己的接收窗口的大小，以控制发送方的数据发送。</p>
+<p>为了解决通信两端处理时间不一样的问题。通过实时调整滑窗尺寸的大小(尺寸甚至可以是0)来实现流量控制。</p>
+<blockquote>
+<p>避免网络拥塞</p>
+</blockquote>
+<p><strong>慢开始和拥塞避免：</strong></p>
+<p>发送方维持<strong>拥塞窗口</strong><code>cwnd</code> (<code>congestion window</code>)拥塞窗口的大小取决于网络的拥塞程度，并且在动态变化。<strong>发送方让自己的发送窗口等于拥塞窗口</strong>。</p>
+<p>发送方控制拥塞窗口的原则是：</p>
+<ul>
+<li>只要网络没有出现拥塞，拥塞窗口就再增大一些，以便把更多的分组发送出去。</li>
+<li>只要网络出现拥塞，拥塞窗口就减小一些，以减少注入到网络中的分组数。</li>
+</ul>
+<p>判断网络拥塞的依据：出现超时。</p>
+<p>慢开始算法原理：由小到大逐渐增大拥塞窗口数值（即由小到大逐渐增大发送窗口）</p>
+<p>一开始的<strong>慢开始算法</strong>的指数增长是很恐怖的，所以为了防止拥塞窗口增长过快需要设置一个<strong>慢开始门限</strong><code>ssthresh</code>。</p>
+<p>超过<strong>慢开始门限</strong>后采用<strong>拥塞避免算法</strong>逐个增加拥塞窗口大小。</p>
+<p>无论在慢开始阶段还是在拥塞避免阶段，只要发送方没有收到确认（出现超时），就认为这时候拥塞了。此时：</p>
+<ul>
+<li><p>就要把慢开始门限设置为此时窗口值的一半</p>
+</li>
+<li><p>然后把拥塞窗口重新设置为1，执行慢开始算法。</p>
+</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li><p>当下一次的慢开始算法指数超过<strong>慢开始门限</strong><code>ssthresh</code>，则下一次最大只能增加到慢开始门限值。</p>
+</li>
+<li><p>拥塞避免并非指完全能够避免拥塞。利用以上的措施要完全避免网络拥塞还是不可能的。</p>
+</li>
+<li><p>拥塞避免是说在拥塞避免阶段吧拥塞避免窗口控制为按线性规律增长，使网络比较不容易出现拥塞。</p>
+</li>
+</ul>
+<p><strong>快重传和快恢复</strong>：</p>
+<p>快重传要求接收方在收到一个<strong>失序的</strong>报文段后就立即发出<strong>重复确认</strong>。</p>
+<p>快重传的机制还是比较好理解的，如图所示，接收方发现<code>M3</code>丢失，则立即发送对<code>M2</code>的重复确认。一旦发送方一连收到三个<code>M2</code>的重复确认就应当立即重传<code>M3</code>，也就是发送方收到第四个对<code>M2</code>的确认时。</p>
+<p>当发送端收到连续三个重复的确认时，就执行“乘法减少”算法，即把慢开始门限<code>ssthresh</code>减半，但拥塞窗口<code>cwnd</code>现在不设置为1，而是设置为慢开始门限<code>ssthresh</code>减半后的数值，然后开始执行拥塞避免算法(“加法增大”)，使拥塞窗口缓慢地线性增大。</p>
+<blockquote>
+<p>三次握手</p>
+</blockquote>
+<p><strong>过程：</strong></p>
+<p>(1) 第一次握手：建立连接时，客户端A发送<code>SYN</code>包(<code>SYN=j</code>)到服务器B，并进入<code>SYN_SEND</code>状态，等待服务器B确认。<br>(2) 第二次握手：服务器B收到<code>SYN</code>包，必须确认客户A的<code>SYN(ACK=j+1)</code>，同时自己也发送一个<code>SYN</code>包<code>(SYN=k)</code>，即<code>SYN+ACK</code>包，此时服务器B进入<code>SYN_RECV</code>状态。</p>
+<p> (3) 第三次握手：客户端A收到服务器B的<code>SYN＋ACK</code>包，向服务器B发送确认包<code>ACK(ACK=k+1)</code>，此包发送完毕，客户端A和服务器B进入<code>ESTABLISHED</code>状态，完成三次握手。</p>
+<p>完成三次握手，客户端与服务器开始传送数据。</p>
+<p><strong>为什么是三次：</strong></p>
+<p>第三次握手原因：假如把三次握手改成仅需要两次握手，死锁是可能发生的。作为例子，考虑计算机<code>A</code>和<code>B</code>之间的通信，假定<code>A</code>给<code>B</code>发送一个连接请求分组，<code>B</code>收到了这个分组，并发送了确认应答分组。按照两次握手的协定，<code>B</code>认为连接已经成功地建立了，可以开始发送数据分组。可是，<code>B</code>的应答分组在传输中被丢失的情况下，<code>A</code>将不知道<code>B</code>是否已准备好，<code>A</code>认为连接还未建立成功，将忽略<code>B</code>发来的任何数据分组，这样就形成了死锁。</p>
+<blockquote>
+<p>四次挥手</p>
+</blockquote>
+<p><strong>过程：</strong></p>
+<p>（1） TCP客户端发送一个FIN，用来关闭客户到服务器的数据传送。<br>（2） 服务器收到这个FIN，它发回一个<code>ACK</code>，确认序号为收到的序号加1。和<code>SYN</code>一样，一个<code>FIN</code>将占用一个序号。<br>（3） 服务器关闭客户端的连接，发送一个FIN给客户端。<br>（4） 客户端发回<code>ACK</code>报文确认，并将确认序号设置为收到序号加1</p>
+<p><strong>为什么是四次：</strong></p>
+<p>由于<code>TCP</code>连接时全双工的，因此每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个<code>FIN</code>来终止这一方向的连接，收到一个<code>FIN</code>只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个<code>TCP</code>连接上仍然能够发送数据，直到这一方向也发送了<code>FIN</code>。</p>
+<p><strong>为什么<code>TCP</code>连接必须经过<code>2MSL</code>后才真正释放掉？</strong></p>
+<ul>
+<li><p>为了保证A发送的最有一个<code>ACK</code>报文段能够到达B。这个<code>ACK</code>报文段有可能丢失，因而使处在<code>LAST-ACK</code>状态的B收不到对已发送的<code>FIN</code>和<code>ACK</code> 报文段的确认。B会超时重传这个<code>FIN</code>和<code>ACK</code>报文段，而A就能在<code>2MSL</code>时间内收到这个重传的<code>ACK+FIN</code>报文段。接着A重传一次确认。</p>
+</li>
+<li><p>A在发送完最有一个<code>ACK</code>报文段后，再经过<code>2MSL</code>，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失。</p>
+</li>
+</ul>
+<h4 id="用户数据报协议UDP"><a href="#用户数据报协议UDP" class="headerlink" title="用户数据报协议UDP"></a>用户数据报协议<code>UDP</code></h4><p><code>UDP</code>传送的协议数据单元是<code>UDP</code>报文或用户数据报。</p>
+<p><code>UDP</code>只在<code>IP</code>的数据服务上增加了很少的一点功能，即端口的功能和差错检测的功能。</p>
+<p>虽然<code>UDP</code>用户数据报只能提供不可靠的交付服务，但<code>UDP</code>在某些方面有其特殊的优点。</p>
+<blockquote>
+<p>特点</p>
+</blockquote>
+<ul>
+<li>是无连接的协议，发送数据之前不需要建立连接</li>
+<li>尽最大努力交付，不保证可靠交付</li>
+<li>面向报文的，不使用拥塞控制</li>
+<li>支持一对一、多对对、多对一的交互通信</li>
+<li><code>UDP</code>首部开销小，只有8字节</li>
+</ul>
+<h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>主要就是问<code>http</code>、<code>https</code></p>
+<h4 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a><code>HTTP</code></h4><p>超文本传输协议。<strong>HTTP 是在「两点」之间「传输」文字、图片、音频、视频等「超文本」数据的「约定和规范」。</strong></p>
+<blockquote>
+<p>常见状态码</p>
+</blockquote>
+<p><code>1XX</code>：提示信息，表示目前是协议的中间状态，还需要后序操作。</p>
+<p><code>2XX</code>：成功，报文以及收到并被正确处理。</p>
+<ul>
+<li><code>200 OK</code>：一切正常</li>
+<li><code>204 No Content</code>：与200基本相同，但是响应头没有<code>body</code>数据。</li>
+<li><code>206 Partial Content</code>：和200基本相同，表示返回的<code>body</code>数据式只是全部资源的一部分。</li>
+</ul>
+<p><code>3XX</code>：资源位置发生变动，需要重定向。</p>
+<ul>
+<li><code>301 Moved Permanently</code>：永久重定向，说明请求资源已经不存在了</li>
+<li><code>302 Moved Permanently</code>：表示临时重定向，说明请求的资源还在，但暂时需要用另一个 <code>URL</code> 来访问。</li>
+</ul>
+<p>301 和 302 都会在响应头里使用字段 <code>Location</code>，指明后续要跳转的 <code>URL</code>，浏览器会自动重定向新的 <code>URL</code>。</p>
+<ul>
+<li><code>304 Not Modified</code> 不具有跳转的含义，表示资源未修改，重定向已存在的缓冲文件，也称缓存重定向，用于缓存控制。</li>
+</ul>
+<p><code>4XX</code>：表示客户端发送的报文有误，服务器无法处理，也就是错误码的含义。</p>
+<ul>
+<li><code>400 Bad Request</code>：表示客户端请求的报文有错误，但只是个笼统的错误</li>
+<li><code>403 Forbidden</code>：表示服务器禁止访问资源，并不是客户端的请求出错。</li>
+<li><code>404 Not Found</code>：表示请求的资源在服务器上不存在或未找到，所以无法提供给客户端。</li>
+</ul>
+<p><code>5XX</code>：表示客户端请求报文正确，但是服务器处理时内部发生了错误，属于服务器端的错误码。</p>
+<ul>
+<li><code>500 Internal Server Error</code>：与 400 类型，是个笼统通用的错误码，服务器发生了什么错误，我们并不知道。</li>
+<li><code>501 Not Implemented</code>：表示客户端请求的功能还不支持。</li>
+<li><code>502 Bad Gateway</code>：通常是服务器作为网关或代理时返回的错误码，表示服务器自身工作正常，访问后端服务器发生了错误。</li>
+<li><code>503 Service Unavailable</code>：表示服务器当前很忙，暂时无法响应服务器</li>
+</ul>
+<blockquote>
+<p><code>GET</code>和<code>POST</code></p>
+</blockquote>
+<p><code>GET</code>：<strong>GET 方法就是安全且幂等的</strong>，因为它是「只读」操作，无论操作多少次，服务器上的数据都是安全的，且每次的结果都是相同的。</p>
+<p><code>POST</code>：是「新增或提交数据」的操作，会修改服务器上的资源，所以是不安全的，且多次提交数据就会创建多个资源，所以<strong>不是幂等的</strong>。</p>
+<blockquote>
+<p><code>HTTP</code>特性</p>
+</blockquote>
+<p><code>HTTP1.1</code>优点：<strong>「简单、灵活和易于扩展、应用广泛和跨平台」</strong></p>
+<ul>
+<li>简单：<code>HTTP</code> 基本的报文格式就是 <code>header + body</code>，头部信息也是 <code>key-value</code> 简单文本的形式，易于理解，降低了学习和使用的门槛。</li>
+<li>灵活和易于扩展：<code>HTTP</code>协议里的各类请求方法、<code>URI/URL</code>、状态码、头字段等每个组成要求都没有被固定死，都允许开发人员自定义和扩充。</li>
+<li>应用广泛和跨平台</li>
+</ul>
+<blockquote>
+<p><code>HTTP</code>和<code>HTTPS</code>区别</p>
+</blockquote>
+<ul>
+<li><code>HTTP</code>信息是明文传输，存在安全风险的问题。<code>HTTPS</code> 则解决 <code>HTTP</code> 不安全的缺陷，在 <code>TCP</code> 和 <code>HTTP</code> 网络层之间加入了 <code>SSL/TLS</code> 安全协议，使得报文能够加密传输。</li>
+<li><code>HTTP</code> 连接建立相对简单， <code>TCP</code> 三次握手之后便可进行 HTTP 的报文传输。而 <code>HTTPS</code> 在 <code>TCP</code> 三次握手之后，还需进行 <code>SSL/TLS</code> 的握手过程，才可进入加密报文传输。</li>
+<li><code>HTTP</code> 的端口号是 80，<code>HTTPS</code> 的端口号是 443。</li>
+<li><code>HTTPS</code> 协议需要向 <code>CA</code>（证书权威机构）申请数字证书，来保证服务器的身份是可信的。</li>
+</ul>
+<blockquote>
+<p><code>HTTPS</code>解决<code>HTTP</code>哪些问题</p>
+</blockquote>
+<p>HTTP风险：对应解决方式：</p>
+<ul>
+<li>窃听风险：信息加密</li>
+<li>篡改风险：校验机制</li>
+<li>冒充风险：身份证书</li>
+</ul>
+<p>如果问加密过程：不会= =。</p>
+<blockquote>
+<p><code>HTTP/1.0</code>、<code>HTTP/1.1</code>、<code>HTTP/2</code></p>
+</blockquote>
+<p><code>HTTP/1.1</code> 相比于<code>HTTP/1.0</code>：</p>
+<ul>
+<li>使用 <code>TCP</code> 长连接的方式改善了 <code>HTTP/1.0</code> 短连接造成的性能开销</li>
+<li>支持 管道（<code>pipeline</code>）网络传输，只要第一个请求发出去了，不必等其回来，就可以发第二个请求出去，可以减少整体的响应时间</li>
+</ul>
+<p><code>HTTP/1.1</code>相比于<code>HTTP/2</code>：</p>
+<p><code>HTTP/2</code>改善了<code>HTTP/1.1</code>的性能瓶颈：</p>
+<ul>
+<li><strong>头部压缩</strong>：如果你同时发出多个请求，他们的头是一样的或是相似的，那么，协议会帮你消除重复的分。</li>
+<li><strong>二进制格式</strong>：全面采用了二进制格式。头信息和数据体都是二进制，并且统称为帧（<code>frame</code>）：头信息帧和数据帧。</li>
+<li><strong>数据流</strong>：<code>HTTP/2</code> 的数据包不是按顺序发送的，同一个连接里面连续的数据包，可能属于不同的回应。因此，必须要对数据包做标记，指出它属于哪个回应。<br> 每个请求或回应的所有数据包，称为一个数据流（<code>Stream</code>）。<br> 每个数据流都标记着一个独一无二的编号，其中规定客户端发出的数据流编号为奇数， 服务器发出的数据流编号为偶数。<br> 客户端还可以指定数据流的优先级。优先级高的请求，服务器就先响应该请求。</li>
+<li><strong>多路复用</strong>：可以在一个连接中并发多个请求或回应，而不用按照顺序一一对应。移除了 HTTP/1.1 中的串行请求，不需要排队等待，也就不会再出现「队头阻塞」问题，降低了延迟，大幅度提高了连接的利用率。</li>
+</ul>
+<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a><code>MySQL</code></h2><p><a href="https://ispromise.github.io/2021/05/09/mysql/" target="_blank" rel="noopener">MySQL</a></p>
+<p>重点是事务、隔离级别、存储引擎、索引、锁等。</p>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><strong>事务</strong>：事务由单独单元的一个或多个<code>SQL</code>语句组成﹐在这个单元中﹐每个<code>MySQL</code>语句是相互侬赖的。而整个单独单元作为一个不可分割的整体，如果单元中某条<code>SQL</code>语句一且执行失败或产生错误﹐整个单元将会回滚。所有受到影响的数据将返回到事物开始以前的状态﹔如果单元中的所有<code>SQL</code>语句均执行成功﹐则事物被顺利执行。</p>
+<blockquote>
+<p>事务的属性</p>
+</blockquote>
+<ul>
+<li>原子性：原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。</li>
+<li>一致性：事务必须使数据库从一个一致性状态变换到另外一个一致性状态。</li>
+<li>隔离性：事务的隔离性是指一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。</li>
+<li>持久性：持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来的其他操作和数据库故障不应该对其有任何影响。</li>
+</ul>
+<blockquote>
+<p>事务并发引起的问题</p>
+</blockquote>
+<ul>
+<li>脏读：一个事务读取了另一个事务更新但是未提交的字段。若另一个事务回滚，则独处数据无效</li>
+<li>不可重复读：一个事务读取一个字段后，改字段被另一个事务更新，而后再次被读取，值被改变</li>
+<li>幻读：一个事务独处一个字段，而后另一个事务在表中插入新行，再次读同一个表会多出几行</li>
+</ul>
+<blockquote>
+<p>隔离级别</p>
+</blockquote>
+<ul>
+<li><code>READ UNCOMMITTED</code>(读未提交数据)：都会出现</li>
+<li><code>READ COMMITED</code>(读已提交数据)：避免脏读</li>
+<li><code>REPEATABLE READ</code>(可重复读)：避免脏读、不可重复读（<code>mysql</code>默认）</li>
+<li><code>SERIALIZABLE</code>(串行化)：性能低下，但是问题都可以避免</li>
+</ul>
+<h3 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h3><p>存储引擎：在<code>mysql</code>中的数据用各种不同的技术存储在文件（或内存）中。</p>
+<ul>
+<li><code>InnoDB</code>：<code>mysql</code>默认，支持外键、事务、行锁、缓存索引和真实数据</li>
+<li><code>MyISAM</code>：不支持外键、事务，只支持表锁，只缓存索引</li>
+<li><code>Archive</code></li>
+<li><code>CSV</code>等…</li>
+</ul>
+<h3 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h3><blockquote>
+<p><code>sql</code>性能下降的原因</p>
+</blockquote>
+<ul>
+<li>数据过多：分库、分表</li>
+<li>关联太多的表：<code>sql</code>优化</li>
+<li>没有充分利用索引：索引建立</li>
+<li>服务器调优</li>
+</ul>
+<p><strong>索引(<code>Index</code>）是帮助<code>MySQL</code>高效获取数据的数据结构</strong>。可以得到索引的本质：索引是数据结构。你可以简单理解为”<strong>排好序的方便快速查找的数据结构</strong>“。</p>
+<p>优点：</p>
+<ul>
+<li>提高数据检索的效率，降低数据库的<code>IO</code>成本</li>
+<li>通过索引列对数据库进行排序，降低数据排序的成本，降低了<code>CPU</code>的消耗</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>由于修改表需要同时对索引操作，所以会降低更新表的速度。</li>
+<li>索引本质上也是一张表，保存了主键和索引字段并指向实体记录，索引索引也需要占据存储空间</li>
+</ul>
+<p>分类：</p>
+<ul>
+<li>单值索引</li>
+<li>唯一索引</li>
+<li>复合索引</li>
+<li>主键索引</li>
+</ul>
+<h3 id="索引结构"><a href="#索引结构" class="headerlink" title="索引结构"></a>索引结构</h3><p><code>BTree</code>：</p>
+<p>B树是一种专用的M阶树，可广泛用于磁盘访问。  使用B树的主要原因之一是它能够在单个节点中存储大量键，并且通过保持树的高度相对较小来存储大键值。</p>
+<p>排序M的B树包含M阶树的所有属性。 此外，它还包含以下属性。</p>
+<ul>
+<li>B树中的每个节点最多包含<code>m</code>个子节点。</li>
+<li>除根节点和叶节点外，B树中的每个节点至少包含<code>m/2</code>个子节点。</li>
+<li>根节点必须至少有<code>2</code>个节点。</li>
+<li>所有叶节点必须处于同一级别。</li>
+</ul>
+<p>每个节点包含两个数据域和三个指针域，三个指针域指向两个数据域数据构成的三个区间。</p>
+<p><code>B+Tree</code>：</p>
+<p>B+树是应文件系统所需而产生的B树的变形树。</p>
+<p>其每个节点也保存了数据和向下的指针，但是只在叶子节点保存了执行数据的指针。非叶子结点仅具有索引作用，跟记录有关的信息均存放在叶结点中。</p>
+<p>中间节点会保存其各个子节点中最大的数据信息。方便检索定位。</p>
+<p>为什么采用<code>B+Tree</code>：</p>
+<p><code>MySQL</code>采用的<code>B+Tree</code>。理由是<code>B+Tree</code>中间节点不保存<code>data</code>数据，存储占据空间更小，一次性读入内存内容更多，这样在查找时更不容易发生缺页导致需要加载<code>io</code>操作。</p>
+<blockquote>
+<p>聚簇索引和非聚簇索引</p>
+</blockquote>
+<ul>
+<li>聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据。由于聚簇索引是将数据跟索引结构放到一块，因此一个表仅有一个聚簇索引（即一张表中只有主键可以是聚簇索引）</li>
+<li>非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，<code>myisam</code>通过<code>key_buffer</code>把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在<code>key_buffer</code>命中时，速度慢的原因</li>
+</ul>
+<h3 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h3><blockquote>
+<p>索引失效和索引匹配原则</p>
+</blockquote>
+<p><strong>匹配原则</strong>：最佳左前缀法则，查询从索引的最左列开始并且不跳过中间的列，跳过则跳过列之后的部分无法命中组合索引。</p>
+<p>失效情况：</p>
+<ul>
+<li>索引未命中，即匹配组合索引时最左法则</li>
+<li>不在索引列上做任何操作（计算、函数、（自动或手动）类型转化），会导致索引失效而转向全表扫描</li>
+<li>范围查询后面的字段索引失效，即存储引擎不能使用索引范围条件右边的列</li>
+<li>!=、&lt;&gt;、IS NOT NULL 索引失效，IS NULL 可以使用索引</li>
+<li>字符串不加单引号 和 like 以通配符开头索引失效</li>
+</ul>
+<blockquote>
+<p>关联查询优化</p>
+</blockquote>
+<p>两表关联查询是有顺序的，先查询的表称之为驱动表，被关联查询的表称为被驱动表。由于驱动表无法避免全表扫描，所以<strong>给驱动表建立索引是没有效果的，只能给被驱动表关联字段建立索引</strong>。</p>
+<p>但是<code>inner join</code>谁作为驱动表是由<code>mysql</code>自己选择的，会选择能使用索引的表作为被驱动表。</p>
+<p>虚拟表是无法建立索引的，所以虚拟表尽量不作为被驱动表。</p>
+<p>总结：</p>
+<ul>
+<li>保证被驱动表的<code>join</code>字段已经被索引</li>
+<li><code>left join</code>时，选择小表作为驱动表，大表作为被驱动表</li>
+<li><code>inner join</code>时，<code>mysql</code>会自己帮你把小结果集的表作为驱动表</li>
+<li>子查询尽量不要放在被驱动表，有可能使用不到索引</li>
+<li>能够直接多表关联的尽量直接连接关联，不用子查询。</li>
+</ul>
+<blockquote>
+<p>子查询优化</p>
+</blockquote>
+<p>对于子查询的优化，一般是转换成关联查询来实现同样的效果。</p>
+<p>避免使用 <code>not in</code>和 <code>not exists</code>。</p>
+<blockquote>
+<p>排序分组优化</p>
+</blockquote>
+<p><strong>无过滤不索引</strong>：即<code>order by</code>想要用上索引条件必须要添加过滤条件（包括分页），否则无法使用索引，会一直是<code>Using filesort</code>。</p>
+<p><strong>顺序错必排序</strong>：<code>order by</code>排序后，使用的复合索引必须与<code>order by</code>的字段顺序一致，虽然优化器会在不改变查询结果的情况下调整顺序，但是<code>order by</code>条件下，优化之后会导致<code>order by</code>的结果不一样，所以优化器无法进行优化，最终会导致 <code>using filesort</code>。</p>
+<p><strong>方向反必排序</strong>：即查询结果字段必须都使用升序或者都使用降序，一升一降就会出现手动排序。</p>
+<p>注意：多个索引可用时，<code>mysql</code>会优先选择其认为最优的。即使无法避免<code>using filesort</code>。</p>
+<p>如果不在索引列上，<code>filesort</code>有两种算法：双路排序和单路排序。</p>
+<ul>
+<li>双路排序（又叫<strong>回表排序模式</strong>）：先根据相应的条件取出相应的排序字段和可以直接定位行 数据的行 <code>ID</code>，然后在 <code>sort buffer</code> 中进行排序，排序完后需要再次取回其它需要的字段</li>
+<li>单路排序：是一次性取出满足条件行的所有字段，然后在<code>sort buffer</code>中进行排序</li>
+</ul>
+<p>单路排序比双路排序更快，但是会占用更多的空间。</p>
+<p><code>group by</code>使用索引的原则几乎和<code>order by</code>一致，唯一区别是<code>group by</code>即使没有过滤条件用到索引也可以直接使用索引。</p>
+<blockquote>
+<p>覆盖索引</p>
+</blockquote>
+<p>  覆盖索引简单来说就是：<code>select</code>到<code>from</code>之间查询的列小于或等于使用的索引列加主键。</p>
+<p>即尽量避免<code>select *</code>。</p>
+<h3 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h3><blockquote>
+<p>读写锁</p>
+</blockquote>
+<ul>
+<li>排它锁，X锁，又称写锁。</li>
+<li>共享锁，S锁，又称读锁。</li>
+</ul>
+<p>有读可加读，有写只他写。</p>
+<blockquote>
+<p>意向锁</p>
+</blockquote>
+<p>防止在某个事务相加表X锁，需要先检测其他事务是否对表或某个表行加锁。会导致需要检测整个表，十分耗时。</p>
+<p>所以引入了<code>IX/IS</code>意向锁。</p>
+<ul>
+<li>一个事务在获得某个数据行对象的 S 锁之前，必须先获得表的 IS 锁或者更强的锁；</li>
+<li>一个事务在获得某个数据行对象的 X 锁之前，必须先获得表的 IX 锁。</li>
+</ul>
+<p>但是需要注意：</p>
+<ul>
+<li>任意 IS/IX 锁之间都是兼容的，因为它们只是表示想要对表加锁，而不是真正加锁；</li>
+<li>S 锁只与 S 锁和 IS 锁兼容，也就是说事务 T 想要对数据行加 S 锁，其它事务可以已经获得对表或者表中的行的 S 锁。</li>
+</ul>
+<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p>主要涉及三个线程：<code>binlog</code> 线程、<code>I/O</code> 线程和 <code>SQL</code> 线程。</p>
+<ul>
+<li><strong><code>binlog</code> 线程</strong> ：负责将主服务器上的数据更改写入二进制日志（<code>Binary log</code>）中。</li>
+<li><strong><code>I/O</code> 线程</strong> ：负责从主服务器上读取二进制日志，并写入从服务器的中继日志（<code>Relay log</code>）。</li>
+<li><strong><code>SQL</code> 线程</strong> ：负责读取中继日志，解析出主服务器已经执行的数据更改并在从服务器中重放（<code>Replay</code>）。</li>
+</ul>
+<blockquote>
+<p>复制的基本原则</p>
+</blockquote>
+<ul>
+<li>每个<code>slave</code>只有一个<code>master</code></li>
+<li>每个<code>slave</code>只有一个唯一的服务器<code>ID</code></li>
+<li>每个<code>master</code>可以有多个<code>slave</code></li>
+</ul>
+<p>注意：主从复制存在的最大问题就是：<strong>延时</strong></p>
+<blockquote>
+<p>主从复制的三种模式</p>
+</blockquote>
+<ul>
+<li><code>STATEMENT</code>模式（<code>SBR</code>）：记录每一条<code>SQL</code>修改。每一条会修改数据的<code>sql</code>语句会记录到<code>binlog</code>中。减少日志量，节约<code>IO</code>、提高性能。 </li>
+<li><code>ROW</code>模式（<code>RBR</code>） ：仅记录修改的内容，不记录具体的<code>SQL</code>。不记录每条<code>sql</code>语句的上下文信息，仅需记录哪条数据被修改了，修改成什么样</li>
+<li><code>MIXED</code>模式（<code>MBR</code>）：以上两种模式的混合使用，一般的复制使用<code>STATEMENT</code>模式保存<code>binlog</code>，对于<code>STATEMENT</code>模式无法复制的操作使用<code>ROW</code>模式保存<code>binlog</code>，<code>MySQL</code>会根据执行的<code>SQL</code>语句选择日志保存方式。</li>
+</ul>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a><code>Redis</code></h2><p><code>Redis</code>是一种高性能的<code>Key-Value</code>数据库。</p>
+<p>特点：</p>
+<ul>
+<li><code>Redis</code>支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li>
+<li><code>Redis</code>不仅仅支持简单的<code>key-value</code>类型的数据，同时还提供<code>string</code>、<code>list</code>（列表）、<code>set</code>（集合）、<code>hash</code>表等数据结构的存储。</li>
+<li><code>Redis</code>支持数据的备份，即<code>master-slave</code>模式的数据备份。</li>
+</ul>
+<p>优势：</p>
+<ul>
+<li>性能极高，读写很快，通常适合做缓存。</li>
+<li>丰富的数据类型</li>
+<li><code>redis</code>所有操作都是原子的。多操作支持事务。</li>
+</ul>
+<p>应用场景：</p>
+<ul>
+<li>缓存系统</li>
+<li>技术场景</li>
+<li>消息队列</li>
+<li>会话缓存</li>
+<li>分布式锁</li>
+</ul>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><table>
+<thead>
+<tr>
+<th align="center">数据类型</th>
+<th align="center">可以存储的值</th>
+<th align="center">操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>STRING</code></td>
+<td align="center">字符串、整数或者浮点数</td>
+<td align="center">对整个字符串或者字符串的其中一部分执行操作</br> 对整数和浮点数执行自增或者自减操作</td>
+</tr>
+<tr>
+<td align="center"><code>LIST</code></td>
+<td align="center">列表</td>
+<td align="center">从两端压入或者弹出元素 </br> 对单个或者多个元素进行修剪，</br> 只保留一个范围内的元素</td>
+</tr>
+<tr>
+<td align="center"><code>SET</code></td>
+<td align="center">无序集合</td>
+<td align="center">添加、获取、移除单个元素</br> 检查一个元素是否存在于集合中</br> 计算交集、并集、差集</br> 从集合里面随机获取元素</td>
+</tr>
+<tr>
+<td align="center"><code>HASH</code></td>
+<td align="center">包含键值对的无序散列表</td>
+<td align="center">添加、获取、移除单个键值对</br> 获取所有键值对</br> 检查某个键是否存在</td>
+</tr>
+<tr>
+<td align="center"><code>ZSET</code></td>
+<td align="center">有序集合</td>
+<td align="center">添加、获取、删除元素</br> 根据分值范围或者成员来获取元素</br> 计算一个键的排名</td>
+</tr>
+</tbody></table>
+<h3 id="数据淘汰策略"><a href="#数据淘汰策略" class="headerlink" title="数据淘汰策略"></a>数据淘汰策略</h3><table>
+<thead>
+<tr>
+<th align="center">策略</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>volatile-lru</code></td>
+<td align="center">从已设置过期时间的数据集中挑选最近最少使用的数据淘汰</td>
+</tr>
+<tr>
+<td align="center"><code>volatile-ttl</code></td>
+<td align="center">从已设置过期时间的数据集中挑选将要过期的数据淘汰</td>
+</tr>
+<tr>
+<td align="center"><code>volatile-random</code></td>
+<td align="center">从已设置过期时间的数据集中任意选择数据淘汰</td>
+</tr>
+<tr>
+<td align="center"><code>allkeys-lru</code></td>
+<td align="center">从所有数据集中挑选最近最少使用的数据淘汰</td>
+</tr>
+<tr>
+<td align="center"><code>allkeys-random</code></td>
+<td align="center">从所有数据集中任意选择数据进行淘汰</td>
+</tr>
+<tr>
+<td align="center"><code>noeviction</code></td>
+<td align="center">禁止驱逐数据</td>
+</tr>
+</tbody></table>
+<h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><p><code>Redis</code> 是内存型数据库，为了保证数据在断电后不会丢失，需要将内存中的数据持久化到硬盘上。</p>
+<blockquote>
+<p><code>RDB</code>持久化</p>
+</blockquote>
+<p>将某个时间点的所有数据都存放到硬盘上。</p>
+<p>可以将快照复制到其它服务器从而创建具有相同数据的服务器副本。</p>
+<p>如果系统发生故障，将会丢失最后一次创建快照之后的数据。</p>
+<p>如果数据量很大，保存快照的时间会很长。</p>
+<blockquote>
+<p><code>AOF</code></p>
+</blockquote>
+<p>将写命令添加到 <code>AOF</code> 文件（<code>Append Only File</code>）的末尾。</p>
+<p>使用 <code>AOF</code> 持久化需要设置同步选项，从而确保写命令同步到磁盘文件上的时机。这是因为对文件进行写入并不会马上将内容同步到磁盘上，而是先存储到缓冲区，然后由操作系统决定什么时候同步到磁盘。</p>
+<table>
+<thead>
+<tr>
+<th align="center">选项</th>
+<th align="center">同步频率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>always</code></td>
+<td align="center">每个写命令都同步</td>
+</tr>
+<tr>
+<td align="center"><code>everysec</code></td>
+<td align="center">每秒同步一次</td>
+</tr>
+<tr>
+<td align="center"><code>no</code></td>
+<td align="center">让操作系统来决定何时同步</td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>always</code> 选项会严重减低服务器的性能；</li>
+<li><code>everysec</code> 选项比较合适，可以保证系统崩溃时只会丢失一秒左右的数据，并且 <code>Redis</code> 每秒执行一次同步对服务器性能几乎没有任何影响；</li>
+<li><code>no</code> 选项并不能给服务器性能带来多大的提升，而且也会增加系统崩溃时数据丢失的数量。</li>
+</ul>
+<p>随着服务器写请求的增多，<code>AOF</code> 文件会越来越大。<code>Redis</code> 提供了一种将 <code>AOF</code> 重写的特性，能够去除 <code>AOF</code> 文件中的冗余写命令。</p>
+<h3 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h3><p><code>Sentinel</code>（哨兵）可以监听集群中的服务器，并在主服务器进入下线状态时，自动从从服务器中选举出新的主服务器。</p>
+<h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><p><code>Redis</code> 服务器是一个事件驱动程序。</p>
+<blockquote>
+<p>文件事件</p>
+</blockquote>
+<p>服务器通过套接字与客户端或者其它服务器进行通信，文件事件就是对套接字操作的抽象。</p>
+<p><code>Redis</code> 基于 <code>Reactor</code> 模式开发了自己的网络事件处理器，使用 <code>I/O</code> 多路复用程序来同时监听多个套接字，并将到达的事件传送给文件事件分派器，分派器会根据套接字产生的事件类型调用相应的事件处理器。</p>
+<blockquote>
+<p>时间事件</p>
+</blockquote>
+<p>服务器有一些操作需要在给定的时间点执行，时间事件是对这类定时操作的抽象。</p>
+<p>时间事件又分为：</p>
+<ul>
+<li>定时事件：是让一段程序在指定的时间之内执行一次；</li>
+<li>周期性事件：是让一段程序每隔指定时间就执行一次。</li>
+</ul>
+<p><code>Redis</code> 将所有时间事件都放在一个无序链表中，通过遍历整个链表查找出已到达的时间事件，并调用相应的事件处理器。</p>
+<h3 id="主从复制-1"><a href="#主从复制-1" class="headerlink" title="主从复制"></a>主从复制</h3><p>连接过程：</p>
+<ol>
+<li>主服务器创建快照文件，发送给从服务器，并在发送期间使用缓冲区记录执行的写命令。快照文件发送完毕之后，开始向从服务器发送存储在缓冲区中的写命令；</li>
+<li>从服务器丢弃所有旧数据，载入主服务器发来的快照文件，之后从服务器开始接受主服务器发来的写命令；</li>
+<li>主服务器每执行一次写命令，就向从服务器发送相同的写命令。</li>
+</ol>
+<blockquote>
+<p>主从链</p>
+</blockquote>
+<p>随着负载不断上升，主服务器可能无法很快地更新所有从服务器，或者重新连接和重新同步从服务器将导致系统超载。为了解决这个问题，可以创建一个中间层来分担主服务器的复制工作。中间层的服务器是最上层服务器的从服务器，又是最下层服务器的主服务器。</p>
+<h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a><code>Kafka</code></h2><h3 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h3><p>消息队列即<code>Message Queue</code>，也就是我们常说的<code>MQ</code>。含义是消息的传输过程中保存消息的容器。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system A --写消息--&gt; MQ --读消息--&gt;system B</span><br></pre></td></tr></table></figure>
+
+<p>应用：</p>
+<ul>
+<li>应用解耦</li>
+<li>异步处理</li>
+<li>流量削峰（缓冲）</li>
+<li>消息通讯</li>
+</ul>
+<blockquote>
+<p>点对点模式</p>
+</blockquote>
+<p>点对点模式通常是基于拉取或者轮询的消息传送模型，这个模型的特点是发送到队列的消息被一个且只有一个消费者进行处理。生产者将消息放入消息队列后，由消费者主动的去拉取消息进行消费。点对点模型的的优点是消费者拉取消息的频率可以由自己控制。但是消息队列是否有消息需要消费，在消费者端无法感知，所以在消费者端需要额外的线程去监控。</p>
+<blockquote>
+<p>发布订阅模式</p>
+</blockquote>
+<p> 发布订阅模式是一个基于消息送的消息传送模型，模型可以有多种不同的订阅者。生产者将消息放入消息队列后，队列会将消息推送给订阅过该类消息的消费者，由于是消费者被动接收推送，所以无需感知消息队列是否有待消费的消息。</p>
+<p>但是由于机器性能不一样，所以处理消息的能力也会不一样，但消息队列却无法感知消费者消费的速度！推送的速度成了发布订阅模模式的一个问题，容易形成资源浪费。</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><code>Producer</code>：消息生产者，就是向<code>kafka broker</code>发消息的客户端。</p>
+<p><code>Consumer</code>：消息消费者，向<code>kafka</code>取消息的客户端。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">生产者 ----&gt; kafka cluster ----&gt; 消费者</span><br></pre></td></tr></table></figure>
+
+<p><code>Topic</code>：可以理解为一个队列，生产者和消费者面向的都是一个<code>topic</code>。每一个主题都对应一个 <strong>「消息队列」</strong>，这有点儿类似于数据库中的表。通常一个业务线建一个<code>topic</code>。</p>
+<p><code>Partition</code>：为了实现拓展性，一个非常大的<code>topic</code>可以分布到多个<code>broker</code>（即服务器）上， 一个 <code>topic</code> 可以分为多个 <code>partition</code>，每个<code>partition</code>都是一个<strong>有序并且不可变</strong>的消息记录集合。当新的数据写入时，就被<strong>追加到<code>partition</code>的末尾</strong>。在每个<code>partition</code>中，每条消息都会被分配一个顺序的唯一标识，这个标识被称为<code>offset</code>，即<strong>偏移量</strong>。注意，<code>Kafka</code><strong>只保证在同一个<code>partition</code>内部消息是有序的</strong>，在不同<code>partition</code>之间，并不能保证消息有序。</p>
+<p><code>Broker</code>：一台<code>kafka</code>服务器就是一个<code>Broker</code>，一个集群（<code>Cluster</code>）由多个<code>broker</code>组成。一个<code>broker</code>可以容纳多个<code>topic</code>。<code>Broker</code>其作用有：</p>
+<ul>
+<li>接受生产者信息</li>
+<li>设置偏移量</li>
+<li>持久化消息到磁盘</li>
+<li>为消费者提供服务</li>
+</ul>
+<p><code>Replica</code>：副本，为保证集群中的某个节点发生故障时，该节点上的 <code>partition</code> 数据不丢失，且 <code>kafka</code> 仍然能够继续工作，<code>kafka</code> 提供了副本机制，一个 <code>topic</code> 的每个分区都有若干个副本， 一个 <code>leader</code> 和若干个 <code>follower</code>。默认最大数是10，不能大于<code>broker</code>的数量。</p>
+<p><code>leader</code>：每个分区多个副本的“主”，生产者发送数据的对象，以及消费者消费数据的对象都是 <code>leader</code>。</p>
+<p><code>follower</code>：每个分区多个副本中的“从”，实时从 <code>leader</code> 中同步数据，保持和 <code>leader</code> 数据 的同步。<code>leader</code> 发生故障时，某个 <code>follower</code> 会成为新的 <code>follower</code>。</p>
+<blockquote>
+<p>注意</p>
+</blockquote>
+<p><code>Kafka</code>拥有保留消息机制，在一定期限内<code>Kafka</code>会保留消息。消息被消费者消费后，消息任然会进行保留，不像其他<code>MQ</code>一样会进行删除。</p>
+<p>保留机制：每一个主题都可以设置自己的保留策略。</p>
+<ul>
+<li><p>保留一定时间</p>
+</li>
+<li><p>保留一定大小</p>
+<p><code>Kafka</code> 的一个关键性质是日志保留（<code>retention</code>），我们可以配置主题的消息保留策略，譬如只保留一段时间的日志或者只保留特定大小的日志。当超过这些限制时，老的消息会被删除。我们也可以针对某个主题单独设置消息过期策略，这样对于不同应用可以实现个性化。</p>
+</li>
+</ul>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p>1、生产者从<code>kafka</code>集群获取分区<code>leader</code>信息</p>
+<p>2、生产者将消息发送给<code>leader</code></p>
+<p>3、<code>leader</code>将消息写入本地磁盘</p>
+<p>4、<code>follower</code>从<code>leader</code>拉去消息数据</p>
+<p>5、<code>follower</code>将消息写入本地磁盘后向<code>leader</code>发送<code>ACK</code></p>
+<p>6、<code>leader</code>收到所有的<code>ACK</code>之后向生产者发送<code>ACK</code>。</p>
+<blockquote>
+<p>选择分区的原则</p>
+</blockquote>
+<p>1、<code>partition</code>写入时可以进行指定。</p>
+<p>2、如若没有指定<code>partition</code>但是设置了数据的<code>key</code>，会根据<code>key</code>值<code>hash</code>出一个<code>partition</code>。</p>
+<p>3、如果没有指定<code>partition</code>且没有设置数据的<code>key</code>值，则会采用轮询方式，即每次取一小段时间的数据写入某个<code>partition</code>，下一段时间写入下一个<code>partition</code>。</p>
+<blockquote>
+<p><code>ACK</code>应答机制</p>
+</blockquote>
+<p><code>producer</code>在向<code>kafka</code>写入消息的时候，可以设置参数来确定是否确认<code>kafka</code>接收到数据，这个参数可设置的值为0、1、<code>all</code>。</p>
+<ul>
+<li>0代表<code>producer</code>往集群发送数据不需要等到集群的返回，不确保消息发送成功。安全性最低但是效率最高。</li>
+<li>1代表<code>producer</code>往集群发送数据只要<code>leader</code>应答就可以发送下一条，只确保<code>leader</code>发送成功。</li>
+<li><code>all</code>代表<code>producer</code>往集群发送数据需要所有的<code>follower</code>都完成从<code>leader</code>的同步才会发送下一条，确保<code>leader</code>发送成功和所有的副本都完成备份。安全性最高，但是效率最低。</li>
+</ul>
+<p>最后要注意的是，如果往不存在的<code>topic</code>写数据，<code>kafka</code>会自动创建<code>topic</code>，<code>partition</code>和<code>replication</code>的数量默认配置都是1。</p>
+<p>如果后序问深入展示就先不会吧。</p>
+<h3 id="ElasticSearch"><a href="#ElasticSearch" class="headerlink" title="ElasticSearch"></a><code>ElasticSearch</code></h3><p><strong><code>Elasticsearch</code>是一个实时分布式搜索和分析引擎，它用于全文搜索、结构化搜索、分析。</strong></p>
+<h3 id="全文检索和倒排索引"><a href="#全文检索和倒排索引" class="headerlink" title="全文检索和倒排索引"></a>全文检索和倒排索引</h3><p>全文检索是指计算机索引程序通过扫描文章中的每个词，对每个词建立一个索引，指明该词在文章中出现的次数和位置，当用户查询时，检索程序就根据事先建立的索引进行查找，并将查找到的结果反馈给用户的检索方式。</p>
+<p>即：将非结构化数据中的一部分信息提取出来，重新组织，使其变得有一定结构，然后对此有一定结构的数据进行搜索从而达到搜索相对较快的目的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据 ---&gt; 切词 ---&gt; 倒排索引排序</span><br></pre></td></tr></table></figure>
+
+<p>切割后的关键词到原理文档<code>ID</code>的映射。就是倒排索引。</p>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>集群（<code>Cluster</code>）：集群包含多个节点，每个节点属于那个集群是通过配置（集群名称默认是<code>Elasticsearch</code>）来决定的，中小型应用刚开始一般一个集群就是一个节点，也可以是多个。</p>
+<p>节点（<code>Node</code>）：集群中的一个节点，节点也有一个名称（默认是随机分配的），默认节点会去加入一个名称为<code>elasticsearch</code>的集群，如果直接启动一堆节点，它们会自动组成一个<code>elasticsearch</code>集群。  </p>
+<p>索引（<code>Index</code>）：索引包含了一堆有相似结构的文档数据。</p>
+<p>类型（<code>Type</code>）：每个索引里面可以有一个或者多个<code>type</code>，<code>type</code>是<code>index</code>中的一个逻辑数据分类，一个<code>type</code>下的<code>document</code>都有相同的<code>field</code>。</p>
+<p>文档（<code>Document</code>）：文档是<code>es</code>中的最小数据单元，通常用<code>JSON</code>数据结构表示，每个<code>index</code>的<code>type</code>中，都可以存储多个<code>document</code>。</p>
+<p>字段（<code>Field</code>）：<code>field</code>是<code>elasticsearch</code>的最小单位，一个document里面有多个<code>field</code>，每个<code>field</code>就是一个数据字段。</p>
+<p>映射（<code>mapping</code>）：数据如何存放到索引对象上，需要有一个映射配置，包括数据类型、是否存储、是否分词等。</p>
+<p><code>type</code>不用单独创建，在创建<code>mapping</code>时指定就可以。<code>mapping</code>可以定义<code>document</code>中的每个字段的类型，即使用的<code>analyzer</code>、是否索引等属性。</p>
+<h3 id="ETCD"><a href="#ETCD" class="headerlink" title="ETCD"></a><code>ETCD</code></h3><p><code>etcd</code>是使用<code>Go</code>语言开发的一个开源的、高可用的分布式<code>key-value</code>存储系统，可以用于配置共享和服务的注册和发现。</p>
+<p>特点：</p>
+<ul>
+<li>完全复制：集群中的每个节点都可以使用完整的存档</li>
+<li>高可用性：<code>etcd</code>可用于避免硬件单点故障或网络问题（支持集群）</li>
+<li>一致性：每次读取都会返回跨多主机的最新写入</li>
+<li>简单：包括一个定义良好、面向用户的<code>API</code>(<code>gRPC</code>)</li>
+<li>安全：实现了到右可选客户端证书身份验证的自动化<code>TLS</code></li>
+<li>快速：每秒10000次写入的基准速度</li>
+<li>可靠：使用<code>Raft</code>算法实现了强一致、高可用的服务存储目录</li>
+</ul>
+<blockquote>
+<p>应用场景</p>
+</blockquote>
+<ul>
+<li><p>连接</p>
+</li>
+<li><p><strong>配置中心</strong>：通过<code>etcd</code>对一些配置信息集中管理。通常流程为：应用在启动时主动从<code>etcd</code>获取一次配置信息，同时在<code>etcd</code>上注册一个<code>watcher</code>等待，以后每次配置有更新的时候，<code>etcd</code>都会实时通知订阅者，以此达到获取最新配置信息的目的。</p>
+</li>
+<li><p><strong>分布式锁</strong>：因为<code>etcd</code>使用<code>Raft</code>算法保持了数据的强一致性，某次操作存储到集群中的值必然是全局一致的，所以很容易实现分布式锁。锁服务有两种使用方式，<strong>一是保持独占，二是控制时序</strong>。</p>
+<ul>
+<li><strong>保持独占，即所有获取锁的用户最终只有一个可以得到</strong>。<code>etcd</code>为此提供了一套实现分布式锁原子操作<code>CAS ( CompareAndSwap)</code>的<code>APl</code>。通过设置<code>prevExist</code>值，可以保证在多个节点同时去创建某个目录时，只有一个成功。而创建成功的用户就可以认为是获得了锁。</li>
+<li><strong>控制时序，即所有想要获得锁的用户都会被安排执行，但是获得锁的顺序也是全局唯一的，同时决定了执行顺序</strong>。<code>etcd</code>为此也提供了一套<code>API</code>(自动创建有序键)，对一个目录建值时指定为<code>POST</code>动作，这样<code>etcd</code> 会自动在目录下生成一个当前最大的值为键，存储这个新的值（客户端编号）。同时还可以使用<code>API</code>按顺序列出所有当前目录下的键值。此时这些键的值就是客户端的时序，而这些键中存储的值可以是代表客户端的编号。</li>
+</ul>
+</li>
+</ul>
+<h3 id="架构-1"><a href="#架构-1" class="headerlink" title="架构"></a>架构</h3><p><code>etcd</code>架构主要分为四个部分：</p>
+<ul>
+<li><code>HTTP Server</code>：用于处理用户发送的<code>API</code>请求以及其它<code>etcd</code>节点的同步与心跳信息请求。</li>
+<li><code>Store</code>：用于处理<code>etcd</code>支持的各类功能的事务，包括数据索引、节点状态变更、监控与反馈、事件处理与执行等等，是<code>etcd</code>对用户提供的大多数<code>API</code>功能的具体实现。</li>
+<li><code>Raft</code>：<code>Raft</code>强一致性算法的具体实现，是<code>etcd</code>的核心。</li>
+<li><code>WAL</code>：<code>Write Ahead Log</code>（预写式日志），是<code>etcd</code>的数据存储方式。处理在内存中存有所有数据的状态以及节点的索引以外，<code>etcd</code>通过<code>WAL</code>进行持久化存储。<code>WAL</code>中，所有的数据提交前都会事先记录日志。<code>Snapshot</code>是为了防止数据过多而进行的状态快照；Entry表示存储的具体日志内容。</li>
+</ul>
+<h3 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h3><p><code>etcd</code>作为一个高可用键值存储系统，天生就是为集群化而设计的。由于<code>Raft</code>算法在做决策时需要多数节点的投票，所以<code>etcd</code>一般部署集群推荐奇数个节点，推荐的数量为3、5或者7个节点构成一个集群。</p>
+<p>1、tcp、ip三次握手 四次挥手</p>
+<p>2、为什么是 2msl</p>
+<p>3、http和https</p>
+<p>4、redis了解多少</p>
+<p>5、分布式锁的实现</p>
+<p>6、cookie和session</p>
+<p>7、数据库：主要是索引、隔离界别</p>
+<p>8、RESTful</p>
+<p>9、切片和数组、扩容机制</p>
+<p>10、go通信实现</p>
+<p>11、channel底层</p>
+<p>12、map实现</p>
+<p>13、哈希过程</p>
+<p>14、GC</p>
+<p>15、GMP</p>
+<p>16、GET、POST区别</p>
+<p>17、红黑树、B+树、B树</p>
+<p>18、图：有哪些、操作、是否有环</p>
+<p>19、进程、线程：区别</p>
+<p>20、Redis持久化</p>
+<p>21、gin框架如何保证并发请求消息不出错（context控制中间件之间的变量传递）</p>
+<p>1.首先是语言部分:<br> go和java的区别<br> 协程与线程的区别<br> java的hashmap的原理<br> java的接口与抽象类的区别。什么时候用抽象类，什么时候用接口<br> 2.计算机网络部分<br> tcp与udp的区别<br> tcp如何保证可靠有序<br> tcp的拥塞控制<br> 服务端给<a href="">客户端</a>发送123个报文，收到了3的ack，下一步发哪一个报文<br> http每个版本的区别<br> http 1.1 中流水线阻塞的原理，http2中多路复用的原理，为什么不阻塞了（这个是真的不会。。）<br> https秘钥交换过程<br> 对称秘钥被黑客截取了咋办（感觉问的有问题，我就回答说对称秘钥不可能被黑客截取，因为对称秘钥是使用服务端公钥加密过的，只能使用服务端的私钥解密）<br> https的公钥被劫持的咋办（ca证书）<br> 3.操作系统部分<br> 几种io模型<br> 说了同步阻塞，同步非阻塞，异步非阻塞<br> 同步非阻塞与io多路复用的区别？（不知道，求大佬们解答）<br> io多路复用复用的什么部分（猜了一个发射端缓存，也就是buffer，网络编程这部分真的没咋看，得加强一下。。）<br> \4. 数据库部分<br> mysql索引优化（最左原则…..）<br> 聚簇索引与非聚簇索引<br> 非聚簇索引怎么查的（回表）<br> 索引失效<br> <a href="">redis</a>（不会<a href="">redis</a>，问的问题忘了，面试官问了一道发现我不会，也就没问）<br> \5. 数据结构部分<br> 给定一个数据流，流里面是一些单词，要求使用一个数据结构统计单词的个数（hashmap或者字典树）<br> 给定一个单向有序<a href="">链表</a>，要求使用一个数据结构能快速查出给定节点值（跳表，我觉得在<a href="">链表</a>上建b+树也可以）</p>
+<p>tcp、http、udp</p>
+<p>time_wait状态</p>
+<p>tcp拥塞控制、如何保证可靠性、三次握手</p>
+<p>http1.1、2.0</p>
+<p>数据库事务</p>
+<p>原子性实现、隔离性的底层（MVCC、间隙锁等）</p>
+<p>数据库索引底层</p>
+<p>为什么要用自增主键</p>
+<p>Redis数据结构底层</p>
+<p><a href="">redis</a>实现一个排行榜</p>
+<p>go切片、数组的去比</p>
+<p>go协程和Java线程</p>
+<p>学Java的过程中对go有没有什么帮助</p>
+<p>怼<a href="">项目</a></p>
+<p><a href="">算法</a>：<a href="">二叉树</a>之字形遍历</p>
+<p>一面<br> 0、自我介绍<br> 1、你才工作一年为什么就想找机会了（为什么想跳）【甩锅给公司，反正不是我的问题】<br> 2、对比Go语言和Java语言<br> 3、介绍Go的协程（讲了协程与线程的区别）<br> 4、介绍一下通道<br> 5、介绍一下Go的context（这个没答好）<br> 6、介绍一下Go的GC（垃圾回收）<br> 7、MySQL建表和索引的经验<br> 8、Innodb事务的隔离级别<br> 9、串行化相对于可重复读级别主要解决了什么问题<br> 10、Redis常用的数据类型<br> 11、Redis的IO模型（IO多路复用）<br> 12、消息队列的使用场景和解决了什么问题<br> 13、写<a href="">算法</a>LeetCode47题 实现一个全排列。（给一个地址编写代码不用真正运行出来，但是基本上写出来了）大致写对了有个小问题面试官也没有发现嘻嘻<br> 14、兴趣爱好是什么？<br> 15、评价你自己，你的优点是什么？<br> 16、那你觉得你的缺点是什么？<br> 17、你有什么想问我的吗？ </p>
+<p> 0、自我介绍<br> 1、问<a href="">项目</a>，讨论你的<a href="">项目</a>是怎么实现的<br> 2、Go语言数组和切片有什么区别<br> 3、Go语言切片的内存结构和扩容<br> 4、Go语言内存分配，什么分配在堆上，什么分配在栈上。【我顺便提了一下内存逃逸，应该算加分了嘻嘻】<br> 5、sync.map与map的区别，怎么实现的【答了个大概，这个没答好】<br> 6、Go语言的调度器 </p>
+<p>  1.自我介绍 </p>
+<p>  2.go的执行顺序 </p>
+<p>  3.管道关闭是否能读写 </p>
+<p>  4.管道是否能二次关闭 </p>
+<p>  5.数组和切片的区别 </p>
+<p>  6.遍历map的结果是顺序的吗（不是） </p>
+<p>  7.不是的话怎么使它变得有序 </p>
+<p>  8.看过go语言的底层<a href="">源码</a>吗 </p>
+<p>  9.gmp模型 </p>
+<p>  10.gmp模型中一定要有p吗 </p>
+<p>  11.了解gmp模型的全局队列和本地队列吗 </p>
+<p>  12.TCP三次握手和四次挥手 </p>
+<p>  13.进程的通信方式 </p>
+<p>  14.进程和线程的区别 </p>
+<p>  15.<a href="">项目</a>介绍及技术选型 </p>
+<p>  16.<a href="">redis</a>的五种数据结构及使用场景 </p>
+<p>  17.<a href="">redis</a>为什么快 </p>
+<p>  20.给了一个网址做题，两道问答（go数据结构相关），一道编程 </p>
+<p>  （1）删除<a href="">链表</a>的倒数第m和第n个节点 </p>
+<p>  7.29 二面 70min </p>
+<p>  1.自我介绍 </p>
+<p>  2.给网址做题，两道编程 </p>
+<p>  （1）<a href="">反转链表</a> </p>
+<p>  （2）交换数字中两个数字的位置使数字最大(LC670) </p>
+<p>  3.没有实习过吗（没） </p>
+<p>  4.<a href="">项目</a>除了这个还做了什么<a href="">项目</a>（还有校内的科研<a href="">项目</a>） </p>
+<p>  5.说说你了解的管道 </p>
+<p>  6.看过管道的底层<a href="">源码</a>吗 </p>
+<p>  7.操作系统为什么要有内核态 </p>
+<p>  8.HTTPS的加密过程 </p>
+<p>  9.<a href="">项目</a>架构及技术选型（细节问的很多，耗时比较久） </p>
+<p>  10.<a href="">项目</a>中数据不一致问题如何解决 </p>
+<p>  11.如何解决mysql高并发问题 </p>
+<p>  12.InnoDB和MyISAM的区别 </p>
+<p>  13.索引底层是什么，为什么不用B树或者HASH做索引 </p>
+<p>  14.InnoDB的锁结构 </p>
+<p>  15.Redis的淘汰策略 </p>
+<p>  16.了解消息队列吗 </p>
+<p>  （还有很多问题忘记了）</p>
+<ul>
+<li>看你<a href="">项目</a>有图片上传，第三方服务还是存在本地了，<strong>大图片问题怎么做的，ios压缩图片会导致图片比较模糊</strong>，是怎么处理的 </li>
+<li><a href="">项目</a>用到了<strong>OAuth2.0</strong>，简单讲一下授权流程 </li>
+<li><a href="">项目</a>怎么来保证安全性呢（JWT，应对分布式，替代cookie+session） </li>
+<li>一般有什么方法来做限流，<strong>令牌桶和漏斗桶有啥区别</strong> </li>
+<li>golang怎么协调并发协程的调度（channel/waitgroup/全局变量） </li>
+<li>golang的gc流程，会stw吗，三色不变和混合写屏障 </li>
+<li>mysql数据表设计会考虑哪些因素（主键业务不相关/联合索引设计/utf8mb4编码/主从部署），<strong>varchar和char有什么区别</strong>，了解过底层吗 </li>
+<li>什么是聚簇索引和非聚簇索引 </li>
+<li>mysql<strong>多事务操作会有哪些问题，具体解释一下，</strong>对应的有哪些事务隔离级别，怎么实现的（MVCC，版本链+undo log+read view） </li>
+<li>如果<a href="">项目</a>里api耗时过久，你会怎么去排查（pprof查看各部分占比，代码开启并发，瓶颈在mysql考虑优化索引和查询方式以及扩容，<a href="">redis</a>考虑主从+集群） </li>
+<li><a href="">算法</a>，判断一颗<a href="">二叉树</a>是否是AVT </li>
+<li>面试官介绍他们团队总部在上海，北京也有一部分，主要做智能屏幕，针对 k12的儿童学前教育，上海主要是商业化相关，有手表、服务端开发、<a href="">游戏</a>开发之类的岗位 </li>
+</ul>
+<p>7.16二面 </p>
+<ul>
+<li>之前实习主要做了些啥，突出的工作讲一讲（讲了下基于oauth2.0的周报机器人，回溯数据遇到的offset问题，任务系统重构如何用<a href="">redis</a>实现分布式锁的） </li>
+<li><a href="">redis</a>的分布式存储了解过吗（槽分散），<strong>虚拟槽了解吗</strong>，一致性哈希能讲一下吗，某个节点或者虚拟节点挂掉会怎么样 </li>
+<li><a href="">redis</a>的zset底层结构了解过吗，讲一下（ziplist-&gt;dict+skiplist） </li>
+<li>mysql为什么采用b+树 </li>
+<li>golang开发用什么框架，<a href="">源码</a>看过吗（没有） </li>
+<li>设计一个扫码登录的系统，重点讲下数据结构设计以及技术交互部分（pc端生成uuid，短连接轮训服务器，扫码确认后服务器将cookie传递给pc端，同时服务端可以用<a href="">redis</a>记一下过期时间，到期通知pc端更新二维码） </li>
+<li><a href="">算法</a>，字符串的最长不重复子串长度（滑动窗口） </li>
+<li>面试官评价，<a href="">算法</a>和系统设计能力需要继续加强 </li>
+</ul>
+<p> 7.16三面 </p>
+<ul>
+<li>你觉得自己有哪些优势和不足 </li>
+<li>http2有哪些改动，tls了解过吗，讲一下流程 </li>
+<li>你的勋章权益系统是怎么设计的，勋章和权益表怎么关联 </li>
+<li>设计一个发文/私信系统，可以一对一，也可以一对多，如果大V有很多很多人的群聊，发消息很慢，怎么解决？（离线在线异步mq处理）如果一个用户有很多群聊，消息拉的很慢怎么办？（分页加载群聊新消息）如果前几页全是不活跃群聊，用户翻到下面还是没更新，怎么解决？ </li>
+<li>​     面试官是leader，说部门工作节奏995，21年1月份刚从<a href="">百度</a>独立出来，后面可能会上市，薪资福利都和<a href="">百度</a>对齐，主要做小度音箱系列，还有一些AIOT产品</li>
+</ul>
+<p>面试官：挺好讲的一个大哥<br>关键内容来了。。。。<br>1.自我介绍<br>2.编程语言<br>python\go语言特点<br>元组和列表的区别<br>4.计算机网络：<br>tcp与udp的区别；各自应用到的协议<br>tcp三次握手、为什么需要三次而不是两次<br>5.Mysql：<br>为什么索引不适用哈系表<br>写2道mysql sql语句题<br>6.linux<br>linux常用指令，查找网络端口对应的进程id<br>7.<a href="">项目</a><br>挑一个<a href="">项目</a>来讲，然后讲<a href="">项目</a>最难的地方<br>8.反问<br>面试有几面<br>贵公司服务端开发技术栈是she</p>
+<p>父进程杀掉，子进程会怎么样</p>
+<p><a href="https://www.jianshu.com/p/7620f5a49794" target="_blank" rel="noopener">考察父进程被终止后，子进程的不同状态 - 简书 (jianshu.com)</a></p>
+
       
 
       
