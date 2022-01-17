@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020/5 | Hexo</title>
+  <title>python | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2020/05/index.html">
+  <meta name="description" content="Python Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python">
+<meta property="og:url" content="http://yoursite.com/2022/01/17/python/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Python Notes">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-17T13:28:19.067Z">
+<meta property="article:modified_time" content="2022-01-17T08:20:18.879Z">
 <meta property="article:author" content="IsPromise">
 <meta name="twitter:card" content="summary">
   
@@ -154,76 +158,334 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-python" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/25/Gin%E6%A1%86%E6%9E%B6/" class="archive-article-date">
-  	<time datetime="2020-05-25T12:00:01.434Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/25/Gin%E6%A1%86%E6%9E%B6/">Gin框架</a>
+    <h1 class="article-title" itemprop="name">
+      python
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/05/GoRedis/" class="archive-article-date">
-  	<time datetime="2020-05-05T07:38:51.523Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
+        
+        <a href="/2022/01/17/python/" class="archive-article-date">
+  	<time datetime="2022-01-17T13:28:19.067Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-17</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/05/GoRedis/">GoRedis</a>
-    </h1>
-  
+        
+		
+		 
+        <span class="archive-article-date">
+            阅读量 <span id="busuanzi_value_page_pv"></span>
+        </span>
+		
 
-        <div class="article-info info-on-right">
-          
-          
+		
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Python-Notes"><a href="#Python-Notes" class="headerlink" title="Python Notes"></a>Python Notes</h1><a id="more"></a>
 
+<p><code>python3</code>笔记。<code>python3</code>对比<code>python2</code>发生很多改变，不适用本笔记。</p>
+<p>完成编译环境配置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"hello world"</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><h3 id="字符和编码"><a href="#字符和编码" class="headerlink" title="字符和编码"></a>字符和编码</h3><blockquote>
+<p>字符 (<code>Character</code>)</p>
+</blockquote>
+<p>字符是一个信息单位，是各种符号(标点、数字、图形)的总称。</p>
+<blockquote>
+<p>字符集 (<code>Character Set</code>)</p>
+</blockquote>
+<p>字符的集合。存储字符时，数字和字符的对照转换表。常见的：</p>
+<ul>
+<li><code>ASCII</code> </li>
+<li><code>GBK</code></li>
+<li><code>Unicode</code></li>
+<li><code>UTF-8</code> </li>
+</ul>
+<blockquote>
+<p>字符编码 (<code>Character encoding</code>)</p>
+</blockquote>
+<p>有了字符集不够，我们还需要划分字符边界，避免字符集中位数不匹配时无法确认如何翻译。解决划分便捷的方式：</p>
+<ul>
+<li><strong>定长编码</strong>：划分按最长字符来，位数不够高位补0。但是十分浪费内存。</li>
+<li><strong>变长编码</strong>：首先划分区间，不同区间对应的编码长度不一样且首位存在固定表示的字符。比如：<code>utf-8</code>。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">编号			编码模板100</span><br><span class="line">[0-127]		 0???????</span><br><span class="line">[128-2047]	 110????? 10??????</span><br><span class="line">[2048-65535] 1110???? 10?????? 10???????</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
+
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p>标识某个实体的一个符号。</p>
+<ul>
+<li>第一个字符必须是字母或者下划线 <code>_</code>。</li>
+<li>标识符其他部分由字母、数字和下划线组成。</li>
+<li>表示符大小写敏感。</li>
+</ul>
+<p>在 Python 3 中，可以用中文作为变量名，非 ASCII 标识符也是允许的，但不推荐。</p>
+<h3 id="变量与常量"><a href="#变量与常量" class="headerlink" title="变量与常量"></a>变量与常量</h3><h3 id="保留字-关键字"><a href="#保留字-关键字" class="headerlink" title="保留字(关键字)"></a>保留字(关键字)</h3><p><code>python</code>语法中具有特殊含义的标识符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>keyword.kwlist</span><br><span class="line">[<span class="string">'False'</span>, <span class="string">'None'</span>, <span class="string">'True'</span>, <span class="string">'and'</span>, <span class="string">'as'</span>, <span class="string">'assert'</span>, <span class="string">'async'</span>, <span class="string">'await'</span>, <span class="string">'break'</span>, <span class="string">'class'</span>, <span class="string">'continue'</span>, <span class="string">'def'</span>, <span class="string">'del'</span>, <span class="string">'elif'</span>, <span class="string">'else'</span>, <span class="string">'except'</span>, <span class="string">'finally'</span>, <span class="string">'for'</span>, <span class="string">'from'</span>, <span class="string">'global'</span>, <span class="string">'if'</span>, <span class="string">'import'</span>, <span class="string">'in'</span>, <span class="string">'is'</span>, <span class="string">'lambda'</span>, <span class="string">'nonlocal'</span>, <span class="string">'not'</span>, <span class="string">'or'</span>, <span class="string">'pass'</span>, <span class="string">'raise'</span>, <span class="string">'return'</span>, <span class="string">'try'</span>, <span class="string">'while'</span>, <span class="string">'with'</span>, <span class="string">'yield'</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><blockquote>
+<p>单行注释</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单行注释</span></span><br><span class="line">print(<span class="number">123</span>) <span class="comment">#单行注释</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>多行注释</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一行注释 </span></span><br><span class="line"><span class="comment"># 第二行注释</span></span><br><span class="line"></span><br><span class="line"><span class="string">""""</span></span><br><span class="line"><span class="string">第三行注释</span></span><br><span class="line"><span class="string">第四行注释</span></span><br><span class="line"><span class="string">第五行注释</span></span><br><span class="line"><span class="string">"""</span><span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">''' </span></span><br><span class="line"><span class="string">第六行注释</span></span><br><span class="line"><span class="string">第七行注释</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">print(123)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h3><p><code>python</code>最具特色的就是使用缩进来表示代码块，不需要使用大括号 <strong>{}</strong> 。</p>
+<p>缩进的空格数是可变的，但是同一个代码块的语句必须包含相同的缩进空格数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"True"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"False"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>缩进不一致可能会抛出<code>IndentationError</code>。</p>
+<h3 id="多行语句"><a href="#多行语句" class="headerlink" title="多行语句"></a>多行语句</h3><p><code>Python</code> 通常是一行写完一条语句，但如果语句很长，我们可以使用反斜杠 <code>\</code>来实现多行语句，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total = item_one + \</span><br><span class="line">        item_two + \</span><br><span class="line">        item_three</span><br></pre></td></tr></table></figure>
+
+<p>在 [], {}, 或 () 中的多行语句，不需要使用反斜杠 <code>\</code>，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">total = [<span class="string">'item_one'</span>, <span class="string">'item_two'</span>, <span class="string">'item_three'</span>,</span><br><span class="line">        <span class="string">'item_four'</span>, <span class="string">'item_five'</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="数字-Number"><a href="#数字-Number" class="headerlink" title="数字(Number)"></a>数字(<code>Number</code>)</h3><ul>
+<li>整数 <code>int</code><ul>
+<li>布尔 <code>bool</code></li>
+</ul>
+</li>
+<li>浮点数 <code>float</code></li>
+<li>复数 <code>complex</code><ul>
+<li><code>a+bj</code>或者<code>complex(a,b)</code></li>
+<li>复数的实部<code>a</code>和虚部<code>b</code>都是浮点型</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; 判断类型</span><br><span class="line"></span><br><span class="line">* `type()`</span><br><span class="line">* `isinstance()`</span><br><span class="line"></span><br><span class="line">````python</span><br></pre></td></tr></table></figure>
+
+<p>区别：</p>
+<ul>
+<li><code>type()</code>不会认为子类是一种父类类型。</li>
+<li><code>isinstance()</code>会认为子类是一种父类类型。</li>
+</ul>
+<blockquote>
+<p>数值运算</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 减</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 乘</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 除 得到浮点数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 除 得到整数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取余</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 乘方</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li><code>Python</code>可以同时为多个变量赋值，如<code>a, b = 1, 2</code>。</li>
+<li>一个变量可以通过赋值指向不同类型的对象(动态类型)。</li>
+<li>数值的除法包含两个运算符：<code>/</code> 返回一个浮点数，<code>//</code>返回一个整数。</li>
+<li>在混合计算时，<code>Python</code>会把整型转换成为浮点数。</li>
+</ul>
+<h3 id="字符串-String"><a href="#字符串-String" class="headerlink" title="字符串(String)"></a>字符串(<code>String</code>)</h3><p><code>Python</code>中的字符串用单引号 <code>&#39;&#39;</code> 或双引号<code>&quot;&quot;</code>括起来(二者无任何区别)。</p>
+<p><code>Python</code>的字符串是一种不可变序列(字符串创建以后无法修改它的内容)，它包含的字符存在从左到右的位置顺序。</p>
+<blockquote>
+<p>索引和分片</p>
+</blockquote>
+<p>索引值以 0 为开始值，-1 为从末尾的开始位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 索引</span></span><br><span class="line">变量[index]</span><br><span class="line"><span class="meta">#</span><span class="bash"> 分片</span></span><br><span class="line">变量[start:end]</span><br><span class="line">变量[start:end:step]</span><br></pre></td></tr></table></figure>
+
+<p>加号<code>+</code> 是字符串的连接符， 星号 <code>*</code> 表示复制当前字符串，与之结合的数字为复制的次数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">````</span><br><span class="line"></span><br><span class="line">&gt; 转义特殊字符</span><br><span class="line"></span><br><span class="line">使用反斜杠 `\`  转义特殊字符。</span><br><span class="line"></span><br><span class="line">`raw` 字符串是一种特殊的字符串。当`r`出现在字符串起始引号之前时，为 raw 字符串。这种字符串会关闭转义机制。</span><br><span class="line"></span><br><span class="line">````python</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>字符串操作</p>
+</blockquote>
+<ul>
+<li>加：两个字符串相加，返回一个新的字符串</li>
+<li>乘：字符串与整数<code>N</code>相乘，返回一个新的字符串，该字符串是原字符串重复<code>N</code>次</li>
+<li><code>len()</code>：返回字符串长度</li>
+<li>迭代：字符串对象是一个可迭代对象</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意</p>
+</blockquote>
+<ul>
+<li>反斜杠可以用来转义，使用r可以让反斜杠不发生转义，但<code>raw</code>字符串不能以<code>\</code>结尾。</li>
+<li>字符串可以用+运算符连接在一起，用*运算符重复。</li>
+<li><code>Python</code>中的字符串有两种索引方式，从左往右以0开始，从右往左以-1开始。</li>
+<li><code>Python</code>中的字符串不能改变。</li>
+</ul>
+<h3 id="动态类型"><a href="#动态类型" class="headerlink" title="动态类型"></a>动态类型</h3><h3 id="集合Set"><a href="#集合Set" class="headerlink" title="集合Set"></a>集合<code>Set</code></h3><h3 id="列表List"><a href="#列表List" class="headerlink" title="列表List"></a>列表<code>List</code></h3><h3 id="元组-tuple"><a href="#元组-tuple" class="headerlink" title="元组 tuple"></a>元组 <code>tuple</code></h3><h3 id="字典-Dictionary"><a href="#字典-Dictionary" class="headerlink" title="字典 Dictionary"></a>字典 <code>Dictionary</code></h3><h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><h3 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h3><h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><h3 id="迭代器和生成器"><a href="#迭代器和生成器" class="headerlink" title="迭代器和生成器"></a>迭代器和生成器</h3><h2 id="函数-function"><a href="#函数-function" class="headerlink" title="函数 (function)"></a>函数 (<code>function</code>)</h2><h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><h3 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h3><h2 id="输入和输出"><a href="#输入和输出" class="headerlink" title="输入和输出"></a>输入和输出</h2><h3 id="输出-output"><a href="#输出-output" class="headerlink" title="输出 (output)"></a>输出 (<code>output</code>)</h3><p><code>python3</code>的<code>print</code>相比于<code>python2</code>，由语句(<code>statement</code>)变为了函数(<code>function</code>)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python2</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"hello world"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>hello world</span><br><span class="line">print(<span class="string">"hello world"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>hello world</span><br><span class="line"><span class="comment"># python3</span></span><br><span class="line">print(<span class="string">"hello world"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>hello world</span><br></pre></td></tr></table></figure>
+
+<p><code>python2</code> 中的<code>print</code>可以加括号也可以不加括号。<code>python3</code>的<code>print</code>作为函数存在必须加括号。否则会抛出<code>SyntaxError</code>。</p>
+<blockquote>
+<p>格式化输出</p>
+</blockquote>
+<p>有时需要对输出的内容进行格式化(<code>format</code>)，比如限制小数精度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>pi = <span class="number">3.1415926</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(pi)</span><br><span class="line"><span class="number">3.1415926</span>	<span class="comment"># 直接输出</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %f"</span> %pi)</span><br><span class="line">pi = <span class="number">3.141593</span>		<span class="comment"># 格式化输出</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %.2f"</span> %pi)</span><br><span class="line">pi = <span class="number">3.14</span>			<span class="comment"># 精度为2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %3.2f"</span> %pi)</span><br><span class="line">pi = <span class="number">3.14</span>			</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %10.2f"</span> %pi)</span><br><span class="line">pi =       <span class="number">3.14</span>		<span class="comment"># 字段宽度为10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi= %010.2f"</span> %pi)</span><br><span class="line">pi= <span class="number">0000003.14</span>		<span class="comment"># 用0填充空白</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %110.2f"</span> %pi)</span><br><span class="line">pi =                                                                                                           <span class="number">3.14</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %+f"</span> %pi)</span><br><span class="line">pi = +<span class="number">3.141593</span>		<span class="comment"># 显示正负号</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %-f"</span> %pi)</span><br><span class="line">pi = <span class="number">3.141593</span></span><br></pre></td></tr></table></figure>
+
+<p>必要的时候需要进行换行输出。<code>print()</code>是默认换行的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#96;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="输入-input"><a href="#输入-input" class="headerlink" title="输入 (input)"></a>输入 (<code>input</code>)</h3><h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><h2 id="模块与类"><a href="#模块与类" class="headerlink" title="模块与类"></a>模块与类</h2><h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Thanks<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+			  
+			<span id="busuanzi_container_page_pv">
+				本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+			</span>  
+			  
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2022/01/17/python/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2021/09/21/LeetCode%E5%86%99%E9%A2%98%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LeetCode写题笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-Notes"><span class="toc-number">1.</span> <span class="toc-text">Python Notes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础语法"><span class="toc-number">1.1.</span> <span class="toc-text">基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符和编码"><span class="toc-number">1.1.1.</span> <span class="toc-text">字符和编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标识符"><span class="toc-number">1.1.2.</span> <span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量与常量"><span class="toc-number">1.1.3.</span> <span class="toc-text">变量与常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保留字-关键字"><span class="toc-number">1.1.4.</span> <span class="toc-text">保留字(关键字)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">1.1.5.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缩进"><span class="toc-number">1.1.6.</span> <span class="toc-text">缩进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多行语句"><span class="toc-number">1.1.7.</span> <span class="toc-text">多行语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-number">1.2.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数字-Number"><span class="toc-number">1.2.1.</span> <span class="toc-text">数字(Number)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串-String"><span class="toc-number">1.2.2.</span> <span class="toc-text">字符串(String)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态类型"><span class="toc-number">1.2.3.</span> <span class="toc-text">动态类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集合Set"><span class="toc-number">1.2.4.</span> <span class="toc-text">集合Set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表List"><span class="toc-number">1.2.5.</span> <span class="toc-text">列表List</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元组-tuple"><span class="toc-number">1.2.6.</span> <span class="toc-text">元组 tuple</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字典-Dictionary"><span class="toc-number">1.2.7.</span> <span class="toc-text">字典 Dictionary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程控制"><span class="toc-number">1.3.</span> <span class="toc-text">流程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断"><span class="toc-number">1.3.1.</span> <span class="toc-text">判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环"><span class="toc-number">1.3.2.</span> <span class="toc-text">循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代器和生成器"><span class="toc-number">1.3.3.</span> <span class="toc-text">迭代器和生成器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数-function"><span class="toc-number">1.4.</span> <span class="toc-text">函数 (function)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域"><span class="toc-number">1.4.1.</span> <span class="toc-text">作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数"><span class="toc-number">1.4.2.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高级特性"><span class="toc-number">1.4.3.</span> <span class="toc-text">高级特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输入和输出"><span class="toc-number">1.5.</span> <span class="toc-text">输入和输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#输出-output"><span class="toc-number">1.5.1.</span> <span class="toc-text">输出 (output)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输入-input"><span class="toc-number">1.5.2.</span> <span class="toc-text">输入 (input)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件"><span class="toc-number">1.6.</span> <span class="toc-text">文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块与类"><span class="toc-number">1.7.</span> <span class="toc-text">模块与类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常"><span class="toc-number">1.8.</span> <span class="toc-text">异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试"><span class="toc-number">1.9.</span> <span class="toc-text">单元测试</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+
 
 
           </div>
@@ -251,8 +513,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
