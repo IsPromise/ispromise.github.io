@@ -16,7 +16,7 @@
 <meta property="og:description" content="Python Notes">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-17T13:28:19.067Z">
-<meta property="article:modified_time" content="2022-01-17T08:20:18.879Z">
+<meta property="article:modified_time" content="2022-01-25T14:24:30.696Z">
 <meta property="article:author" content="IsPromise">
 <meta name="twitter:card" content="summary">
   
@@ -192,6 +192,7 @@
 <p>完成编译环境配置。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"hello world"</span>)</span><br></pre></td></tr></table></figure>
 
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>[toc]</p>
 <h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><h3 id="字符和编码"><a href="#字符和编码" class="headerlink" title="字符和编码"></a>字符和编码</h3><blockquote>
 <p>字符 (<code>Character</code>)</p>
 </blockquote>
@@ -223,7 +224,7 @@
 <li>表示符大小写敏感。</li>
 </ul>
 <p>在 Python 3 中，可以用中文作为变量名，非 ASCII 标识符也是允许的，但不推荐。</p>
-<h3 id="变量与常量"><a href="#变量与常量" class="headerlink" title="变量与常量"></a>变量与常量</h3><h3 id="保留字-关键字"><a href="#保留字-关键字" class="headerlink" title="保留字(关键字)"></a>保留字(关键字)</h3><p><code>python</code>语法中具有特殊含义的标识符。</p>
+<h3 id="保留字-关键字"><a href="#保留字-关键字" class="headerlink" title="保留字(关键字)"></a>保留字(关键字)</h3><p><code>python</code>语法中具有特殊含义的标识符。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>keyword.kwlist</span><br><span class="line">[<span class="string">'False'</span>, <span class="string">'None'</span>, <span class="string">'True'</span>, <span class="string">'and'</span>, <span class="string">'as'</span>, <span class="string">'assert'</span>, <span class="string">'async'</span>, <span class="string">'await'</span>, <span class="string">'break'</span>, <span class="string">'class'</span>, <span class="string">'continue'</span>, <span class="string">'def'</span>, <span class="string">'del'</span>, <span class="string">'elif'</span>, <span class="string">'else'</span>, <span class="string">'except'</span>, <span class="string">'finally'</span>, <span class="string">'for'</span>, <span class="string">'from'</span>, <span class="string">'global'</span>, <span class="string">'if'</span>, <span class="string">'import'</span>, <span class="string">'in'</span>, <span class="string">'is'</span>, <span class="string">'lambda'</span>, <span class="string">'nonlocal'</span>, <span class="string">'not'</span>, <span class="string">'or'</span>, <span class="string">'pass'</span>, <span class="string">'raise'</span>, <span class="string">'return'</span>, <span class="string">'try'</span>, <span class="string">'while'</span>, <span class="string">'with'</span>, <span class="string">'yield'</span>]</span><br></pre></td></tr></table></figure>
 
 
@@ -263,7 +264,18 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; 判断类型</span><br><span class="line"></span><br><span class="line">* `type()`</span><br><span class="line">* `isinstance()`</span><br><span class="line"></span><br><span class="line">````python</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>判断类型</p>
+</blockquote>
+<ul>
+<li><code>type()</code></li>
+<li><code>isinstance()</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>区别：</p>
 <ul>
@@ -291,7 +303,14 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 索引</span></span><br><span class="line">变量[index]</span><br><span class="line"><span class="meta">#</span><span class="bash"> 分片</span></span><br><span class="line">变量[start:end]</span><br><span class="line">变量[start:end:step]</span><br></pre></td></tr></table></figure>
 
 <p>加号<code>+</code> 是字符串的连接符， 星号 <code>*</code> 表示复制当前字符串，与之结合的数字为复制的次数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">````</span><br><span class="line"></span><br><span class="line">&gt; 转义特殊字符</span><br><span class="line"></span><br><span class="line">使用反斜杠 `\`  转义特殊字符。</span><br><span class="line"></span><br><span class="line">`raw` 字符串是一种特殊的字符串。当`r`出现在字符串起始引号之前时，为 raw 字符串。这种字符串会关闭转义机制。</span><br><span class="line"></span><br><span class="line">````python</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>转义特殊字符</p>
+</blockquote>
+<p>使用反斜杠 <code>\</code>  转义特殊字符。</p>
+<p><code>raw</code> 字符串是一种特殊的字符串。当<code>r</code>出现在字符串起始引号之前时，为 raw 字符串。这种字符串会关闭转义机制。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>字符串操作</p>
@@ -313,8 +332,82 @@
 <li><code>Python</code>中的字符串有两种索引方式，从左往右以0开始，从右往左以-1开始。</li>
 <li><code>Python</code>中的字符串不能改变。</li>
 </ul>
-<h3 id="动态类型"><a href="#动态类型" class="headerlink" title="动态类型"></a>动态类型</h3><h3 id="集合Set"><a href="#集合Set" class="headerlink" title="集合Set"></a>集合<code>Set</code></h3><h3 id="列表List"><a href="#列表List" class="headerlink" title="列表List"></a>列表<code>List</code></h3><h3 id="元组-tuple"><a href="#元组-tuple" class="headerlink" title="元组 tuple"></a>元组 <code>tuple</code></h3><h3 id="字典-Dictionary"><a href="#字典-Dictionary" class="headerlink" title="字典 Dictionary"></a>字典 <code>Dictionary</code></h3><h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><h3 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h3><h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><h3 id="迭代器和生成器"><a href="#迭代器和生成器" class="headerlink" title="迭代器和生成器"></a>迭代器和生成器</h3><h2 id="函数-function"><a href="#函数-function" class="headerlink" title="函数 (function)"></a>函数 (<code>function</code>)</h2><h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><h3 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h3><h2 id="输入和输出"><a href="#输入和输出" class="headerlink" title="输入和输出"></a>输入和输出</h2><h3 id="输出-output"><a href="#输出-output" class="headerlink" title="输出 (output)"></a>输出 (<code>output</code>)</h3><p><code>python3</code>的<code>print</code>相比于<code>python2</code>，由语句(<code>statement</code>)变为了函数(<code>function</code>)。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python2</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"hello world"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>hello world</span><br><span class="line">print(<span class="string">"hello world"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>hello world</span><br><span class="line"><span class="comment"># python3</span></span><br><span class="line">print(<span class="string">"hello world"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>hello world</span><br></pre></td></tr></table></figure>
+<h3 id="动态类型"><a href="#动态类型" class="headerlink" title="动态类型"></a>动态类型</h3><blockquote>
+<p>变量</p>
+</blockquote>
+<ol>
+<li>在<code>Python</code>中没有变量的声明以及变量的类型：</li>
+</ol>
+<ul>
+<li>变量的类型实在运行过程中自动决定的，而不是通过声明来决定的</li>
+<li>变量首次赋值时，创建它。之后的再次赋值会改变该变量的值</li>
+</ul>
+<ol start="2">
+<li>类型的概念是存在于对象中而不是变量名中。变量名是通用的，它只是在特定时刻引用某个特定的对象而已。（在<code>python</code>内部，变量实际上是指向对象内存空间的一个指针）</li>
+</ol>
+<ul>
+<li>当变量出现在表达式中时，它会马上被当前引用的对象所代替</li>
+<li>当变量出现在表达式中时，它会马上被当前引用的对象所代替</li>
+</ul>
+<ol start="3">
+<li><p>每个表达式生成的结果，<code>python</code>都创建了一个新的对象去表示这个值。</p>
+</li>
+<li><p><code>Python</code>对象缓存了不变的对象并对其进行复用，如小整数和小字符串。但是逻辑上看，每个表达式的结果值都是不同的对象，占用不同的内存。</p>
+</li>
+<li><p>每个对象都有两个标准的头部信息：</p>
+</li>
+</ol>
+<ul>
+<li>类型标志符：标识了该对象的类型</li>
+<li>引用计数器：决定了是否可以回收这个对象（引用计数器记录了当前指向该对象的引用的数目。一旦它为0，则该对象的内存空间就会自动回收）</li>
+</ul>
+<ol start="6">
+<li><p>给一个变量赋新值，并不是替换原始的对象，而是让这个变量去引用完全不同的一个对象。</p>
+</li>
+<li><p>多个变量名引用同一个对象时，称为共享引用。</p>
+</li>
+</ol>
+<ul>
+<li>在共享引用中，对象的原地修改操作会影响到所有的引用该对象的变量</li>
+<li>共享引用的多个变量之间，<code>is</code>比较的结果为<code>True</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># == 和 is</span></span><br><span class="line"><span class="comment"># == 操作符比较的是两个变量引用的对象是否具有相同的值</span></span><br><span class="line"><span class="comment"># is 操作符比较的是两个变量是否引用的是同一个对象</span></span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li><code>sys</code>模块的<code>getrefcount</code>函数会返回对象的引用次数</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sys <span class="keyword">import</span> getrefcount</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>getrefcount(<span class="number">0</span>)</span><br><span class="line"><span class="number">928</span></span><br><span class="line"><span class="comment"># 说明Python对象缓存了不变的对象并对其进行复用</span></span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>动态类型是<code>python</code>多态的基础，因为没有类型约束。Python的多态是<code>x.method</code>的方法运行时，<code>method</code>的意义取决于<code>x</code>的类型，<strong>属性总是在运行期解析</strong>。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Python提供了几种方法来查看对象的属性以及详细信息</span></span><br><span class="line"><span class="comment"># dir(X) 查看 X 所指对象的属性</span></span><br><span class="line"><span class="comment"># help(X.attr) 查看 X 所指对象的 attr 属性</span></span><br><span class="line"><span class="comment"># help(X) 查看 X 所指对象的详细信息</span></span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li><code>None</code>对象是一个特殊的<code>python</code>对象，它总是 <code>False</code>，一般用于占位。它有一块内存，是一个真正的对象。它不代表未定义，事实上它有定义。</li>
+</ol>
+<ul>
+<li><code>None</code>是所有函数和方法的默认返回值</li>
+</ul>
+<ol start="11">
+<li>任何东西都是对象类型，类型本身也是对象类型。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>type(str) <span class="comment"># str 类型本身也是对象类型</span></span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">type</span>'&gt;</span></span><br><span class="line"><span class="class">&gt;&gt;&gt; <span class="title">isinstance</span><span class="params">(<span class="string">'a'</span>,str)</span></span></span><br><span class="line"><span class="class"><span class="title">True</span></span></span><br><span class="line"><span class="class">&gt;&gt;&gt; <span class="title">str</span><span class="params">(True)</span> # 调用的是 <span class="title">str</span> 的构造函数，而不是类型转换</span></span><br><span class="line"><span class="class">'<span class="title">True</span>'</span></span><br></pre></td></tr></table></figure>
+
+<ol start="11">
+<li><code>Python</code>代码不关心特定的数据类型（<code>python</code>类型检查基本上是错误的，会破坏代码灵活性，限制代码类型），只关心接口，这就是<code>Python</code>的多态设计。</li>
+</ol>
+<ul>
+<li>一个操作的意义取决于被操作对象的类型。同样的操作对不同的对象来说意义可能不同，前提是该对象支持该操作</li>
+<li>若对象不支持某种操作，则<code>Python</code>会在运行时检测到错误并自动抛出一个异常</li>
+</ul>
+<ol start="12">
+<li><code>Python</code>可以在旧版本中开启新版本的特性，只需用在模块文件中使用</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> 特性名</span><br></pre></td></tr></table></figure>
+
+<h3 id="集合Set"><a href="#集合Set" class="headerlink" title="集合Set"></a>集合<code>Set</code></h3><h3 id="列表List"><a href="#列表List" class="headerlink" title="列表List"></a>列表<code>List</code></h3><h3 id="元组-tuple"><a href="#元组-tuple" class="headerlink" title="元组 tuple"></a>元组 <code>tuple</code></h3><h3 id="字典-Dictionary"><a href="#字典-Dictionary" class="headerlink" title="字典 Dictionary"></a>字典 <code>Dictionary</code></h3><h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><h3 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h3><h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><h3 id="迭代器和生成器"><a href="#迭代器和生成器" class="headerlink" title="迭代器和生成器"></a>迭代器和生成器</h3><h2 id="函数-function"><a href="#函数-function" class="headerlink" title="函数 (function)"></a>函数 (<code>function</code>)</h2><h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><h3 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h3><h2 id="输入和输出"><a href="#输入和输出" class="headerlink" title="输入和输出"></a>输入和输出</h2><h3 id="输出-output"><a href="#输出-output" class="headerlink" title="输出 (output)"></a>输出 (<code>output</code>)</h3><p><code>python3</code>的<code>print</code>相比于<code>python2</code>，由语句(<code>statement</code>)变为了函数(<code>function</code>)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python2print "hello world"&gt;&gt;&gt; hello worldprint("hello world")&gt;&gt;&gt; hello world# python3print("hello world")&gt;&gt;&gt; hello world</span></span><br></pre></td></tr></table></figure>
 
 <p><code>python2</code> 中的<code>print</code>可以加括号也可以不加括号。<code>python3</code>的<code>print</code>作为函数存在必须加括号。否则会抛出<code>SyntaxError</code>。</p>
 <blockquote>
@@ -324,11 +417,16 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>pi = <span class="number">3.1415926</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(pi)</span><br><span class="line"><span class="number">3.1415926</span>	<span class="comment"># 直接输出</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %f"</span> %pi)</span><br><span class="line">pi = <span class="number">3.141593</span>		<span class="comment"># 格式化输出</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %.2f"</span> %pi)</span><br><span class="line">pi = <span class="number">3.14</span>			<span class="comment"># 精度为2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %3.2f"</span> %pi)</span><br><span class="line">pi = <span class="number">3.14</span>			</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %10.2f"</span> %pi)</span><br><span class="line">pi =       <span class="number">3.14</span>		<span class="comment"># 字段宽度为10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi= %010.2f"</span> %pi)</span><br><span class="line">pi= <span class="number">0000003.14</span>		<span class="comment"># 用0填充空白</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %110.2f"</span> %pi)</span><br><span class="line">pi =                                                                                                           <span class="number">3.14</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %+f"</span> %pi)</span><br><span class="line">pi = +<span class="number">3.141593</span>		<span class="comment"># 显示正负号</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"pi = %-f"</span> %pi)</span><br><span class="line">pi = <span class="number">3.141593</span></span><br></pre></td></tr></table></figure>
 
 <p>必要的时候需要进行换行输出。<code>print()</code>是默认换行的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="输入-input"><a href="#输入-input" class="headerlink" title="输入 (input)"></a>输入 (<code>input</code>)</h3><h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><h2 id="模块与类"><a href="#模块与类" class="headerlink" title="模块与类"></a>模块与类</h2><h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2>
+<h3 id="输入-input"><a href="#输入-input" class="headerlink" title="输入 (input)"></a>输入 (<code>input</code>)</h3><h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><h2 id="模块与类"><a href="#模块与类" class="headerlink" title="模块与类"></a>模块与类</h2><h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><h3 id="模块引入"><a href="#模块引入" class="headerlink" title="模块引入"></a>模块引入</h3><h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>参考文档</p><hr>
+
+<p><a href="https://www.runoob.com/python3/python3-data-type.html" target="_blank" rel="noopener">Python3 | 菜鸟教程</a></p>
+<p><a href="https://www.bookstack.cn/read/python_learning_notes/chapter-15_python_iterator.md" target="_blank" rel="noopener">《python 学习笔记》</a></p>
+<p><a href="https://www.bookstack.cn/read/explore-python/Basic-input_output.md" target="_blank" rel="noopener">《Python 之旅》</a></p>
+
       
 
       
@@ -465,7 +563,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-Notes"><span class="toc-number">1.</span> <span class="toc-text">Python Notes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础语法"><span class="toc-number">1.1.</span> <span class="toc-text">基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符和编码"><span class="toc-number">1.1.1.</span> <span class="toc-text">字符和编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标识符"><span class="toc-number">1.1.2.</span> <span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量与常量"><span class="toc-number">1.1.3.</span> <span class="toc-text">变量与常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保留字-关键字"><span class="toc-number">1.1.4.</span> <span class="toc-text">保留字(关键字)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">1.1.5.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缩进"><span class="toc-number">1.1.6.</span> <span class="toc-text">缩进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多行语句"><span class="toc-number">1.1.7.</span> <span class="toc-text">多行语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-number">1.2.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数字-Number"><span class="toc-number">1.2.1.</span> <span class="toc-text">数字(Number)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串-String"><span class="toc-number">1.2.2.</span> <span class="toc-text">字符串(String)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态类型"><span class="toc-number">1.2.3.</span> <span class="toc-text">动态类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集合Set"><span class="toc-number">1.2.4.</span> <span class="toc-text">集合Set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表List"><span class="toc-number">1.2.5.</span> <span class="toc-text">列表List</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元组-tuple"><span class="toc-number">1.2.6.</span> <span class="toc-text">元组 tuple</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字典-Dictionary"><span class="toc-number">1.2.7.</span> <span class="toc-text">字典 Dictionary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程控制"><span class="toc-number">1.3.</span> <span class="toc-text">流程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断"><span class="toc-number">1.3.1.</span> <span class="toc-text">判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环"><span class="toc-number">1.3.2.</span> <span class="toc-text">循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代器和生成器"><span class="toc-number">1.3.3.</span> <span class="toc-text">迭代器和生成器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数-function"><span class="toc-number">1.4.</span> <span class="toc-text">函数 (function)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域"><span class="toc-number">1.4.1.</span> <span class="toc-text">作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数"><span class="toc-number">1.4.2.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高级特性"><span class="toc-number">1.4.3.</span> <span class="toc-text">高级特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输入和输出"><span class="toc-number">1.5.</span> <span class="toc-text">输入和输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#输出-output"><span class="toc-number">1.5.1.</span> <span class="toc-text">输出 (output)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输入-input"><span class="toc-number">1.5.2.</span> <span class="toc-text">输入 (input)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件"><span class="toc-number">1.6.</span> <span class="toc-text">文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块与类"><span class="toc-number">1.7.</span> <span class="toc-text">模块与类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常"><span class="toc-number">1.8.</span> <span class="toc-text">异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试"><span class="toc-number">1.9.</span> <span class="toc-text">单元测试</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-Notes"><span class="toc-number">1.</span> <span class="toc-text">Python Notes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础语法"><span class="toc-number">1.2.</span> <span class="toc-text">基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符和编码"><span class="toc-number">1.2.1.</span> <span class="toc-text">字符和编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标识符"><span class="toc-number">1.2.2.</span> <span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保留字-关键字"><span class="toc-number">1.2.3.</span> <span class="toc-text">保留字(关键字)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">1.2.4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缩进"><span class="toc-number">1.2.5.</span> <span class="toc-text">缩进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多行语句"><span class="toc-number">1.2.6.</span> <span class="toc-text">多行语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-number">1.3.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数字-Number"><span class="toc-number">1.3.1.</span> <span class="toc-text">数字(Number)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串-String"><span class="toc-number">1.3.2.</span> <span class="toc-text">字符串(String)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态类型"><span class="toc-number">1.3.3.</span> <span class="toc-text">动态类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集合Set"><span class="toc-number">1.3.4.</span> <span class="toc-text">集合Set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表List"><span class="toc-number">1.3.5.</span> <span class="toc-text">列表List</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元组-tuple"><span class="toc-number">1.3.6.</span> <span class="toc-text">元组 tuple</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字典-Dictionary"><span class="toc-number">1.3.7.</span> <span class="toc-text">字典 Dictionary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程控制"><span class="toc-number">1.4.</span> <span class="toc-text">流程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断"><span class="toc-number">1.4.1.</span> <span class="toc-text">判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环"><span class="toc-number">1.4.2.</span> <span class="toc-text">循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代器和生成器"><span class="toc-number">1.4.3.</span> <span class="toc-text">迭代器和生成器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数-function"><span class="toc-number">1.5.</span> <span class="toc-text">函数 (function)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域"><span class="toc-number">1.5.1.</span> <span class="toc-text">作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数"><span class="toc-number">1.5.2.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高级特性"><span class="toc-number">1.5.3.</span> <span class="toc-text">高级特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输入和输出"><span class="toc-number">1.6.</span> <span class="toc-text">输入和输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#输出-output"><span class="toc-number">1.6.1.</span> <span class="toc-text">输出 (output)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输入-input"><span class="toc-number">1.6.2.</span> <span class="toc-text">输入 (input)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件"><span class="toc-number">1.7.</span> <span class="toc-text">文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块与类"><span class="toc-number">1.8.</span> <span class="toc-text">模块与类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#面向对象"><span class="toc-number">1.8.1.</span> <span class="toc-text">面向对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块引入"><span class="toc-number">1.8.2.</span> <span class="toc-text">模块引入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常"><span class="toc-number">1.9.</span> <span class="toc-text">异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试"><span class="toc-number">1.10.</span> <span class="toc-text">单元测试</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
